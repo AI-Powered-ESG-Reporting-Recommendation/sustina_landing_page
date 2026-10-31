@@ -12,12 +12,9 @@ import 'package:suatina_web_project/core/network/network_manager.dart';
 
 final getIt = GetIt.instance;
 
-/// Initializes application-wide Core dependencies in the service locator.
-/// Feature-level dependencies should be registered by their respective modules
-/// as features are developed.
 Future<void> initServiceLocator() async {
-  // Storage & Preferences
   final sharedPrefs = await SharedPrefHelper.init();
+
   getIt.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
 
   getIt.registerLazySingleton<FlutterSecureStorage>(
@@ -27,14 +24,16 @@ Future<void> initServiceLocator() async {
     () => SecureStorageHelper(getIt<FlutterSecureStorage>()),
   );
 
-  // Network & Connectivity
   getIt.registerLazySingleton<Connectivity>(() => Connectivity());
+
   getIt.registerLazySingleton<NetworkManager>(() => NetworkManager());
+
   getIt.registerLazySingleton<DioFactory>(() => DioFactory());
 
   final dio = await getIt<DioFactory>().createDio();
   getIt.registerLazySingleton<Dio>(() => dio);
 
   getIt.registerLazySingleton<ApiClient>(() => ApiClient(getIt<Dio>()));
+
   getIt.registerLazySingleton<ApiHandler>(() => ApiHandler());
 }
