@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:sustina_app/core/di/service_locator.dart';
-import 'package:sustina_app/core/network/api_result.dart';
-import 'package:sustina_app/core/network/error_response_model.dart';
-import 'package:sustina_app/core/network/network_failure.dart';
-import 'package:sustina_app/core/network/network_manager.dart';
+import 'package:suatina_web_project/core/di/service_locator.dart';
+import 'package:suatina_web_project/core/network/api_result.dart';
+import 'package:suatina_web_project/core/network/error_response_model.dart';
+import 'package:suatina_web_project/core/network/network_failure.dart';
+import 'package:suatina_web_project/core/network/network_manager.dart';
 
 class ApiHandler {
   ApiHandler();

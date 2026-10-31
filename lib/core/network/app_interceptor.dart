@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:sustina_app/core/constants/api_constants.dart';
-import 'package:sustina_app/core/di/service_locator.dart';
-import 'package:sustina_app/core/helpers/secure_storage_helper.dart';
-import 'package:sustina_app/core/network/token_refresh_manager.dart';
+import 'package:suatina_web_project/core/constants/api_constants.dart';
+import 'package:suatina_web_project/core/di/service_locator.dart';
+import 'package:suatina_web_project/core/helpers/secure_storage_helper.dart';
+import 'package:suatina_web_project/core/network/token_refresh_manager.dart';
 
 class AppInterceptor extends Interceptor {
   AppInterceptor(this.dio);

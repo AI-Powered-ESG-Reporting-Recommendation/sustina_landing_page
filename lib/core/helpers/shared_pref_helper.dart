@@ -80,19 +80,22 @@ class SharedPrefHelper {
   }
 
   /// Removes a value from SharedPreferences with given [key].
-  static removeData({required String key}) async {
+  static Future<void> removeData({required String key}) async {
     AppLogger.log('SharedPrefHelper : Remove data with key : $key');
     await _prefs.remove(key);
   }
 
   /// Removes all keys and values in the SharedPreferences
-  static clearAllData() async {
+  static Future<void> clearAllData() async {
     AppLogger.log('SharedPrefHelper : Clear all data');
     await _prefs.clear();
   }
 
   /// Saves a [value] with a [key] in the FlutterSecureStorage.
-  static setSecuredString({required String key, required String value}) async {
+  static Future<void> setSecuredString({
+    required String key,
+    required String value,
+  }) async {
     AppLogger.log(
       "FlutterSecureStorage : Set secured string with key : $key and value : $value",
     );
@@ -100,21 +103,21 @@ class SharedPrefHelper {
   }
 
   /// Gets an String value from FlutterSecureStorage with given [key].
-  static getSecuredString({required String key}) async {
+  static Future<String> getSecuredString({required String key}) async {
     AppLogger.log('FlutterSecureStorage : Get secured string with key : $key');
     return await _secureStorage.read(key: key) ?? '';
   }
 
   /// Removes a value from FlutterSecureStorage with given [key].
-  static deleteSecureString({required String key}) async {
+  static Future<void> deleteSecureString({required String key}) async {
     AppLogger.log(
       'FlutterSecureStorage : Delete secured string with key : $key',
     );
-    return await _secureStorage.delete(key: key);
+    await _secureStorage.delete(key: key);
   }
 
   /// Removes all keys and values in the FlutterSecureStorage
-  static clearAllSecuredData() async {
+  static Future<void> clearAllSecuredData() async {
     AppLogger.log('FlutterSecureStorage : Clear all secured data.');
     await _secureStorage.deleteAll();
   }
