@@ -1,58 +1,59 @@
 import 'package:flutter/material.dart';
-
+import '../app_colors/custom_app_colors.dart';
 import '../app_texts/app_fonts.dart';
-import '../theme_manager/theme_extensions.dart';
 
-ThemeData getLightTheme(BuildContext context) {
+ThemeData getLightTheme([BuildContext? context]) {
+  final colors = CustomAppColors.light();
+
   return ThemeData(
-    scaffoldBackgroundColor: context.customAppColors.background,
+    scaffoldBackgroundColor: colors.background,
     brightness: Brightness.light,
     fontFamily: AppFonts.cairo,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: context.customAppColors.primary800,
+      seedColor: colors.primary800,
       brightness: Brightness.light,
     ),
     textTheme: ThemeData.light().textTheme.apply(
-      bodyColor: context.customAppColors.grey900,
-      displayColor: context.customAppColors.grey900,
+      bodyColor: colors.grey900,
+      displayColor: colors.grey900,
       fontFamily: AppFonts.cairo,
     ),
     datePickerTheme: DatePickerThemeData(
-      headerBackgroundColor: Color(0xFF1D2952),
+      headerBackgroundColor: const Color(0xFF1D2952),
       headerForegroundColor: Colors.white,
-      headerHeadlineStyle: TextStyle(
+      headerHeadlineStyle: const TextStyle(
         fontFamily: AppFonts.cairo,
         fontSize: 26,
         fontWeight: FontWeight.w500,
       ),
-      headerHelpStyle: TextStyle(fontFamily: AppFonts.cairo, fontSize: 12),
+      headerHelpStyle: const TextStyle(fontFamily: AppFonts.cairo, fontSize: 12),
       backgroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
       elevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      todayForegroundColor: WidgetStateProperty.all(Color(0xFF1D2952)),
+      todayForegroundColor: WidgetStateProperty.all(const Color(0xFF1D2952)),
       todayBackgroundColor: WidgetStateProperty.all(
-        Color(0xFF1D2952).withValues(alpha: .08),
+        const Color(0xFF1D2952).withValues(alpha: .08),
       ),
-      dayStyle: TextStyle(fontFamily: AppFonts.cairo, fontSize: 13),
+      dayStyle: const TextStyle(fontFamily: AppFonts.cairo, fontSize: 13),
       dayForegroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) return Colors.white;
-        return Color(0xFF1D2952);
+        return const Color(0xFF1D2952);
       }),
       dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) return Color(0xFF1D2952);
+        if (states.contains(WidgetState.selected)) return const Color(0xFF1D2952);
         return Colors.transparent;
       }),
       dayOverlayColor: WidgetStateProperty.all(
-        Color(0xFF1D2952).withValues(alpha: .08),
+        const Color(0xFF1D2952).withValues(alpha: .08),
       ),
       cancelButtonStyle: TextButton.styleFrom(
-        foregroundColor: Color(0xFF1D2952),
-        textStyle: TextStyle(fontFamily: AppFonts.cairo, fontSize: 13),
+        foregroundColor: const Color(0xFF1D2952),
+        textStyle: const TextStyle(fontFamily: AppFonts.cairo, fontSize: 13),
       ),
       confirmButtonStyle: TextButton.styleFrom(
-        foregroundColor: Color(0xFF1D2952),
-        textStyle: TextStyle(
+        foregroundColor: const Color(0xFF1D2952),
+        textStyle: const TextStyle(
           fontFamily: AppFonts.cairo,
           fontSize: 13,
           fontWeight: FontWeight.w600,
@@ -63,13 +64,13 @@ ThemeData getLightTheme(BuildContext context) {
         fontSize: 11,
         color: Colors.grey.shade500,
       ),
-      yearStyle: TextStyle(fontFamily: AppFonts.cairo),
+      yearStyle: const TextStyle(fontFamily: AppFonts.cairo),
       yearForegroundColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) return Colors.white;
-        return Color(0xFF1D2952);
+        return const Color(0xFF1D2952);
       }),
       yearBackgroundColor: WidgetStateProperty.resolveWith((states) {
-        if (states.contains(WidgetState.selected)) return Color(0xFF1D2952);
+        if (states.contains(WidgetState.selected)) return const Color(0xFF1D2952);
         return Colors.transparent;
       }),
     ),

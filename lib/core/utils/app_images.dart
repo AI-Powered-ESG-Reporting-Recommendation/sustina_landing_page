@@ -12,4 +12,7 @@ class AppImages {
       'assets/images/recommendation_3.png';
 
   static const String dataBackground = 'assets/images/data_background.png';
+  static const String heroGlobe = 'assets/images/hero_globe.jpg';
+  static const String heroEarth = 'assets/images/hero_earth.png';
+  static const String heroBgEco = 'assets/images/hero_bg_eco.png';
 }

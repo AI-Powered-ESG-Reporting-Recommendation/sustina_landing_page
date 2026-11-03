@@ -1,46 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Sustina - منصة ويب مدعومة بالذكاء الاصطناعي لإدارة بيانات الاستدامة وحساب البصمة الكربونية وإعداد تقارير ESG.">
+  <meta name="keywords" content="Sustina, ESG, Sustainability, Carbon Footprint, Scope 1, Scope 2, Scope 3, AI OCR, استدامة, بصمة كربونية, حوكمة, بيئة">
+  <meta name="author" content="Sustina Platform">
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sustina | منصة إدارة بيانات الاستدامة بالذكاء الاصطناعي">
+  <meta property="og:description" content="منصة متكاملة للمؤسسات لجمع وتنظيم وتحليل بيانات ESG وحساب الانبعاثات وإصدار التقارير الاحترافية.">
+  <meta property="og:image" content="splash_logo.png">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="suatina_web_project">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Sustina">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>suatina_web_project</title>
+  <title>Sustina | منصة إدارة بيانات الاستدامة ومؤشرات ESG</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Preload splash logo for instantaneous display -->
+  <link rel="preload" href="splash_logo.png" as="image">
+
+  <style>
+    /* Reset & Base Setup */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #FFFFFF;
+      font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Minimal Sustina Brand Splash Screen */
+    #sustina-splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #EDF5F1 55%, #D9E8E2 100%);
+      z-index: 999999;
+      transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    #sustina-splash.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      animation: splashEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity;
+    }
+
+    .splash-logo {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .splash-title {
+      font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.8px;
+      color: #043C2D; /* primary600 */
+      text-rendering: optimizeLegibility;
+      margin: 0;
+    }
+
+    /* Subtle Entrance Animation */
+    @keyframes splashEntrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1.0);
+      }
+    }
+
+    /* Dark Mode Support */
+    @media (prefers-color-scheme: dark) {
+      html, body {
+        background-color: #0C1412;
+      }
+
+      #sustina-splash {
+        background: radial-gradient(circle at 50% 50%, #15221F 0%, #0C1412 70%, #06110E 100%);
+      }
+
+      .splash-title {
+        color: #F8FAFC; /* neutral900 */
+      }
+    }
+
+    /* Accessibility: Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .splash-brand {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+      #sustina-splash {
+        transition: opacity 0.2s linear;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+  <!-- Minimal Branded Splash Screen (ONLY logo + Sustina text) -->
+  <div id="sustina-splash" role="status" aria-label="Sustina">
+    <div class="splash-brand">
+      <img src="splash_logo.png" alt="Sustina" class="splash-logo" width="96" height="96" />
+      <span class="splash-title">Sustina</span>
+    </div>
+  </div>
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <script>
+    // Smooth transition from HTML splash to Flutter app
+    (function() {
+      let isDismissed = false;
+
+      function removeSplash() {
+        if (isDismissed) return;
+        isDismissed = true;
+
+        const splash = document.getElementById('sustina-splash');
+        if (splash) {
+          splash.classList.add('fade-out');
+          setTimeout(function() {
+            if (splash.parentNode) {
+              splash.parentNode.removeChild(splash);
+            }
+          }, 480);
+        }
+      }
+
+      // 1. Listen for Flutter first frame event dispatched by the Flutter Web engine
+      window.addEventListener('flutter-first-frame', removeSplash);
+
+      // 2. Expose global hook for Flutter Dart code to call explicitly upon mounting
+      window.dismissSustinaSplash = removeSplash;
+    })();
+  </script>
+
+  <!-- Modern Flutter Web Bootstrap -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
