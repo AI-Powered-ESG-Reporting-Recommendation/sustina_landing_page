@@ -183,7 +183,7 @@ class _LandingHeroSectionState extends State<LandingHeroSection>
                         ambientController: _ambientController,
                         disableAnimations: disableAnimations,
                         maxSize: isTablet ? 350 : 255,
-                        showFloatingChips: isTablet,
+                        showFloatingChips: false,
                       ),
                     ),
                   ],
@@ -643,10 +643,12 @@ class _HeroTrustStrip extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        item.$2,
-                        style: AppTextStyles.font12SemiBold.copyWith(
-                          color: colors.neutral800,
+                      Flexible(
+                        child: Text(
+                          item.$2,
+                          style: AppTextStyles.font12SemiBold.copyWith(
+                            color: colors.neutral800,
+                          ),
                         ),
                       ),
                     ],

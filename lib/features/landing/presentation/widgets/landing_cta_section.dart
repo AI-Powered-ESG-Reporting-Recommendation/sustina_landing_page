@@ -10,7 +10,12 @@ import 'package:suatina_web_project/core/utils/app_icons.dart';
 import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
 
 class LandingCtaSection extends StatelessWidget {
-  const LandingCtaSection({super.key});
+  const LandingCtaSection({
+    super.key,
+    required this.onBookDemoPressed,
+  });
+
+  final VoidCallback onBookDemoPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -217,9 +222,12 @@ class LandingCtaSection extends StatelessWidget {
                               ),
                             ),
                             OutlinedButton.icon(
-                              onPressed: () => context.go(Routes.login),
-                              icon: const Icon(Icons.login_rounded, size: 18),
-                              label: Text(l10n.ctaLoginButton),
+                              onPressed: onBookDemoPressed,
+                              icon: const Icon(
+                                Icons.calendar_month_rounded,
+                                size: 18,
+                              ),
+                              label: Text(l10n.heroCtaDemo),
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: onCtaPrimary,
                                 side: BorderSide(

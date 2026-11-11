@@ -2,14 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:suatina_web_project/core/localization/app_localizations.dart';
 import 'package:suatina_web_project/core/localization/locale_cubit.dart';
 import 'package:suatina_web_project/core/responsive/responsive.dart';
-import 'package:suatina_web_project/core/routing/routes.dart';
 import 'package:suatina_web_project/core/theme/app_texts/app_text_styles.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_cubit.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
+import 'package:suatina_web_project/core/widgets/sustina_social_links.dart';
 import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
 import 'package:suatina_web_project/features/landing/presentation/models/landing_nav_item.dart';
 
@@ -183,9 +182,24 @@ class LandingHeader extends StatelessWidget {
                         ),
                       ),
 
-                    if (isDesktop) SizedBox(width: isLargeDesktop ? 16 : 8),
+                    if (isDesktop) SizedBox(width: isLargeDesktop ? 14 : 8),
 
-                    // 3. Action Controls: Language, Theme, Sign In / Drawer
+                    // 3. Social Media Links (Desktop & Tablet) + Language + Theme
+                    if (!isMobile) ...[
+                      SustinaSocialLinksRow(
+                        compact: true,
+                        spacing: isLargeDesktop ? 6 : 4,
+                      ),
+                      Container(
+                        width: 1,
+                        height: 20,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: isLargeDesktop ? 10 : 7,
+                        ),
+                        color: colors.grey200,
+                      ),
+                    ],
+
                     _LanguageSelectorPill(
                       isArabic: isArabic,
                       compact: !isDesktop,
@@ -200,13 +214,7 @@ class LandingHeader extends StatelessWidget {
                       onToggle: () => context.read<ThemeCubit>().toggleTheme(),
                     ),
 
-                    if (isDesktop) ...[
-                      const SizedBox(width: 10),
-                      _HeaderLoginButton(
-                        label: l10n.navLogin,
-                        onTap: () => context.go(Routes.login),
-                      ),
-                    ] else ...[
+                    if (!isDesktop) ...[
                       const SizedBox(width: 4),
                       IconButton(
                         constraints: const BoxConstraints(
@@ -487,74 +495,6 @@ class _HeaderThemeSwitcher extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _HeaderLoginButton extends StatefulWidget {
-  const _HeaderLoginButton({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  State<_HeaderLoginButton> createState() => _HeaderLoginButtonState();
-}
-
-class _HeaderLoginButtonState extends State<_HeaderLoginButton> {
-  bool _isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.customAppColors;
-    final isDark = context.isDarkMode;
-
-    final bgColor = isDark
-        ? (_isHovered ? colors.primary700 : colors.primary600)
-        : (_isHovered ? colors.primary700 : colors.primary500);
-    final fgColor = colors.grey0;
-
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: widget.onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          transform: _isHovered
-              ? Matrix4.translationValues(0, -1, 0)
-              : Matrix4.identity(),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
-            color: bgColor,
-            borderRadius: BorderRadius.circular(22),
-            boxShadow: [
-              BoxShadow(
-                color: colors.primary500.withValues(
-                  alpha: _isHovered ? 0.30 : 0.16,
-                ),
-                blurRadius: _isHovered ? 12 : 6,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.login_rounded, size: 15, color: fgColor),
-              const SizedBox(width: 6),
-              Text(
-                widget.label,
-                style: AppTextStyles.font12Bold.copyWith(
-                  fontSize: 12.5,
-                  color: fgColor,
-                ),
-              ),
-            ],
           ),
         ),
       ),

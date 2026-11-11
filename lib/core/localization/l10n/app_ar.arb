@@ -365,5 +365,10 @@
   "dashMonthMay": "مايو",
   "dashMonthJun": "يونيو",
   "heroCtaDemo": "طلب عرض توضيحي",
-  "heroTrustLiveBadge": "منصة ذكية معتمدة لإدارة بيانات الاستدامة"
+  "heroTrustLiveBadge": "منصة ذكية معتمدة لإدارة بيانات الاستدامة",
+  "socialFollowUs": "تابع Sustina",
+  "socialFacebookLabel": "Sustina على فيسبوك",
+  "socialInstagramLabel": "Sustina على إنستغرام",
+  "socialLinkedInLabel": "Sustina على لينكدإن",
+  "socialXLabel": "Sustina على منصة X"
 }

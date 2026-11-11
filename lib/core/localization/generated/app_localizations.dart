@@ -2071,6 +2071,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Certified AI-Powered Sustainability Platform'**
   String get heroTrustLiveBadge;
+
+  /// No description provided for @socialFollowUs.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow Sustina'**
+  String get socialFollowUs;
+
+  /// No description provided for @socialFacebookLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustina on Facebook'**
+  String get socialFacebookLabel;
+
+  /// No description provided for @socialInstagramLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustina on Instagram'**
+  String get socialInstagramLabel;
+
+  /// No description provided for @socialLinkedInLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustina on LinkedIn'**
+  String get socialLinkedInLabel;
+
+  /// No description provided for @socialXLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustina on X'**
+  String get socialXLabel;
 }
 
 class _AppLocalizationsDelegate

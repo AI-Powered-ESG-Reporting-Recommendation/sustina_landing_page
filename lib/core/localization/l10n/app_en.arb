@@ -368,5 +368,10 @@
   "dashMonthMay": "May",
   "dashMonthJun": "Jun",
   "heroCtaDemo": "Book a Demo",
-  "heroTrustLiveBadge": "Certified AI-Powered Sustainability Platform"
+  "heroTrustLiveBadge": "Certified AI-Powered Sustainability Platform",
+  "socialFollowUs": "Follow Sustina",
+  "socialFacebookLabel": "Sustina on Facebook",
+  "socialInstagramLabel": "Sustina on Instagram",
+  "socialLinkedInLabel": "Sustina on LinkedIn",
+  "socialXLabel": "Sustina on X"
 }

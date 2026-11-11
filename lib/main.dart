@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:suatina_web_project/core/di/service_locator.dart';
 import 'package:suatina_web_project/core/localization/app_localizations.dart';
 import 'package:suatina_web_project/core/localization/locale_cubit.dart';
@@ -11,6 +12,7 @@ import 'package:suatina_web_project/core/theme/theme_manager/theme_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  usePathUrlStrategy();
 
   // Initialize Core DI singletons (Storage, Network, Connectivity, Cubits)
   await initServiceLocator();

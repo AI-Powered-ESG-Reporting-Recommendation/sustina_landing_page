@@ -1064,4 +1064,19 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get heroTrustLiveBadge =>
       'Certified AI-Powered Sustainability Platform';
+
+  @override
+  String get socialFollowUs => 'Follow Sustina';
+
+  @override
+  String get socialFacebookLabel => 'Sustina on Facebook';
+
+  @override
+  String get socialInstagramLabel => 'Sustina on Instagram';
+
+  @override
+  String get socialLinkedInLabel => 'Sustina on LinkedIn';
+
+  @override
+  String get socialXLabel => 'Sustina on X';
 }

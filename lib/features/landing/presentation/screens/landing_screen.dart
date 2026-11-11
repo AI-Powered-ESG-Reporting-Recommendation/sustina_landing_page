@@ -246,7 +246,10 @@ class _LandingScreenState extends State<LandingScreen> {
                 ),
 
                 // Call To Action Banner
-                const LandingCtaSection(),
+                LandingCtaSection(
+                  onBookDemoPressed: () =>
+                      _scrollToSection(LandingNavCatalog.demoId),
+                ),
 
                 // Footer
                 KeyedSubtree(

@@ -646,22 +646,22 @@ InputDecoration _sustinaInputDecoration(
       horizontal: 14,
       vertical: alignIconTop ? 14 : 13,
     ),
-    prefixIcon: Padding(
-      padding: EdgeInsetsDirectional.only(
-        start: 12,
-        end: 10,
-        top: alignIconTop ? 12 : 0,
-      ),
-      child: prefixSvgPath != null
-          ? SustinaSvgIcon(
-              assetPath: prefixSvgPath,
-              size: 18,
-              color: iconColor,
-              fallbackIcon: prefixIcon,
-            )
-          : Icon(prefixIcon, size: 19, color: iconColor),
-    ),
-    prefixIconConstraints: const BoxConstraints(minWidth: 42, minHeight: 24),
+    prefixIcon: alignIconTop
+        ? null
+        : Padding(
+            padding: const EdgeInsetsDirectional.only(start: 12, end: 10),
+            child: prefixSvgPath != null
+                ? SustinaSvgIcon(
+                    assetPath: prefixSvgPath,
+                    size: 18,
+                    color: iconColor,
+                    fallbackIcon: prefixIcon,
+                  )
+                : Icon(prefixIcon, size: 19, color: iconColor),
+          ),
+    prefixIconConstraints: alignIconTop
+        ? null
+        : const BoxConstraints(minWidth: 42, minHeight: 24),
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
       borderSide: BorderSide(color: colors.grey200, width: 1.2),
@@ -749,20 +749,36 @@ class SustinaSuccessGraphic extends StatelessWidget {
         shape: BoxShape.circle,
         gradient: RadialGradient(
           colors: [
-            colors.primary500.withValues(alpha: isDark ? 0.24 : 0.14),
+            colors.primary500.withValues(alpha: isDark ? 0.30 : 0.16),
             colors.primary500.withValues(alpha: 0.0),
           ],
         ),
       ),
-      child: SvgPicture.asset(
-        AppIcons.done,
-        width: size,
-        height: size * 0.84,
-        fit: BoxFit.contain,
-        placeholderBuilder: (_) => Icon(
-          Icons.check_circle_rounded,
-          size: size * 0.7,
-          color: colors.primary500,
+      child: Container(
+        padding: EdgeInsets.all(isDark ? 14 : 4),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: isDark ? colors.primary800 : colors.white.withValues(alpha: 0),
+          boxShadow: isDark
+              ? [
+                  BoxShadow(
+                    color: colors.primary500.withValues(alpha: 0.35),
+                    blurRadius: 24,
+                    spreadRadius: 2,
+                  ),
+                ]
+              : null,
+        ),
+        child: SvgPicture.asset(
+          AppIcons.done,
+          width: isDark ? size * 0.82 : size,
+          height: (isDark ? size * 0.82 : size) * 0.84,
+          fit: BoxFit.contain,
+          placeholderBuilder: (_) => Icon(
+            Icons.check_circle_rounded,
+            size: size * 0.7,
+            color: colors.primary500,
+          ),
         ),
       ),
     );

@@ -1057,4 +1057,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get heroTrustLiveBadge => 'منصة ذكية معتمدة لإدارة بيانات الاستدامة';
+
+  @override
+  String get socialFollowUs => 'تابع Sustina';
+
+  @override
+  String get socialFacebookLabel => 'Sustina على فيسبوك';
+
+  @override
+  String get socialInstagramLabel => 'Sustina على إنستغرام';
+
+  @override
+  String get socialLinkedInLabel => 'Sustina على لينكدإن';
+
+  @override
+  String get socialXLabel => 'Sustina على منصة X';
 }

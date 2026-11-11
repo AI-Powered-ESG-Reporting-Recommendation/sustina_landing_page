@@ -422,31 +422,33 @@ class _LandingFeaturesSectionState extends State<LandingFeaturesSection>
         ),
         const SizedBox(height: 44),
         for (int row = 0; row < 3; row++) ...[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: _buildCard(
-                  index: row * 2,
-                  capability: capabilities[row * 2],
-                  portAlignment: _PortSide.end,
-                  floatAmplitude: floatAmplitude,
-                  disableAnimations: disableAnimations,
-                  activeIndex: activeIndex,
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: _buildCard(
+                    index: row * 2,
+                    capability: capabilities[row * 2],
+                    portAlignment: _PortSide.end,
+                    floatAmplitude: floatAmplitude,
+                    disableAnimations: disableAnimations,
+                    activeIndex: activeIndex,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 56),
-              Expanded(
-                child: _buildCard(
-                  index: row * 2 + 1,
-                  capability: capabilities[row * 2 + 1],
-                  portAlignment: _PortSide.start,
-                  floatAmplitude: floatAmplitude,
-                  disableAnimations: disableAnimations,
-                  activeIndex: activeIndex,
+                const SizedBox(width: 56),
+                Expanded(
+                  child: _buildCard(
+                    index: row * 2 + 1,
+                    capability: capabilities[row * 2 + 1],
+                    portAlignment: _PortSide.start,
+                    floatAmplitude: floatAmplitude,
+                    disableAnimations: disableAnimations,
+                    activeIndex: activeIndex,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           if (row < 2) const SizedBox(height: 22),
         ],
@@ -1080,7 +1082,7 @@ class _EcosystemConnectorPainter extends CustomPainter {
         path = _buildTabletPath(trunkStart, cardEnd);
       } else {
         final spineX = isRtl ? size.width - 13 : 13.0;
-        final hubStart = Offset(spineX, hub.bottom);
+        final hubStart = Offset(hub.center.dx, hub.bottom);
         path = _buildMobilePath(hubStart, cardEnd, spineX);
       }
 
@@ -1194,10 +1196,26 @@ class _EcosystemConnectorPainter extends CustomPainter {
 
   Path _buildMobilePath(Offset hubStart, Offset cardEnd, double spineX) {
     final goingRight = cardEnd.dx > spineX;
-    final r = 12.0;
-    final path = Path()..moveTo(spineX, hubStart.dy);
+    final r = 10.0;
+    final dropY = hubStart.dy + 14.0;
+    final movingRightFromHub = spineX > hubStart.dx;
+    final path = Path()..moveTo(hubStart.dx, hubStart.dy);
 
-    if ((cardEnd.dy - hubStart.dy).abs() > r) {
+    // Emerge smoothly from bottom center of Hub into the vertical side spine
+    path.lineTo(hubStart.dx, dropY - r);
+    path.quadraticBezierTo(
+      hubStart.dx,
+      dropY,
+      movingRightFromHub ? hubStart.dx + r : hubStart.dx - r,
+      dropY,
+    );
+    path.lineTo(
+      movingRightFromHub ? spineX - r : spineX + r,
+      dropY,
+    );
+    path.quadraticBezierTo(spineX, dropY, spineX, dropY + r);
+
+    if ((cardEnd.dy - dropY).abs() > r * 2) {
       path.lineTo(spineX, cardEnd.dy - r);
       path.quadraticBezierTo(
         spineX,

@@ -1,19 +1,17 @@
-import 'dart:async';
-
 import 'package:flutter/widgets.dart';
 
 /// A subtle, performant entrance animation that fades, gently slides,
 /// and optionally scales its [child] widget into place when entering the viewport.
 ///
-/// Automatically respects browser accessibility settings (reduced motion),
-/// detaches scroll listeners after revealing once, and cancels pending timers on disposal.
+/// Uses a single [AnimationController] with an [Interval] (avoiding fragile timers),
+/// detaches scroll listeners after revealing once, and respects reduced-motion settings.
 class AppRevealAnimation extends StatefulWidget {
   const AppRevealAnimation({
     super.key,
     required this.child,
     this.delay = Duration.zero,
-    this.duration = const Duration(milliseconds: 580),
-    this.offset = const Offset(0, 0.06),
+    this.duration = const Duration(milliseconds: 520),
+    this.offset = const Offset(0, 0.045),
     this.beginScale = 0.985,
     this.curve = Curves.easeOutCubic,
     this.triggerOnVisible = true,
@@ -40,7 +38,6 @@ class _AppRevealAnimationState extends State<AppRevealAnimation>
   late final Animation<Offset> _slideAnimation;
   late final Animation<double> _scaleAnimation;
 
-  Timer? _delayTimer;
   ScrollPosition? _scrollPosition;
   bool _hasTriggered = false;
   bool _postFrameScheduled = false;
@@ -48,14 +45,29 @@ class _AppRevealAnimationState extends State<AppRevealAnimation>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: widget.duration);
+
+    final totalMs =
+        widget.delay.inMilliseconds + widget.duration.inMilliseconds;
+    final totalDuration = Duration(milliseconds: totalMs > 0 ? totalMs : 1);
+    final startInterval = totalMs > 0
+        ? (widget.delay.inMilliseconds / totalMs).clamp(0.0, 0.85)
+        : 0.0;
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: totalDuration,
+    );
+
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed && mounted) {
         widget.onRevealed?.call();
       }
     });
 
-    final curved = CurvedAnimation(parent: _controller, curve: widget.curve);
+    final curved = CurvedAnimation(
+      parent: _controller,
+      curve: Interval(startInterval, 1.0, curve: widget.curve),
+    );
 
     _fadeAnimation = curved;
 
@@ -70,7 +82,8 @@ class _AppRevealAnimationState extends State<AppRevealAnimation>
     ).animate(curved);
 
     if (!widget.triggerOnVisible) {
-      _scheduleTrigger();
+      _hasTriggered = true;
+      _controller.forward();
     }
   }
 
@@ -80,18 +93,12 @@ class _AppRevealAnimationState extends State<AppRevealAnimation>
 
     if (MediaQuery.maybeDisableAnimationsOf(context) ?? false) {
       _detachScrollListener();
-      _delayTimer?.cancel();
       _hasTriggered = true;
       _controller.value = 1.0;
       return;
     }
 
     if (_hasTriggered) return;
-
-    if (!widget.triggerOnVisible) {
-      _scheduleTrigger();
-      return;
-    }
 
     final scrollable = Scrollable.maybeOf(context);
     final newPosition = scrollable?.position;
@@ -124,7 +131,7 @@ class _AppRevealAnimationState extends State<AppRevealAnimation>
     if (!mounted || _hasTriggered) return;
 
     if (_scrollPosition == null) {
-      _scheduleTrigger();
+      _triggerReveal();
       return;
     }
 
@@ -139,23 +146,18 @@ class _AppRevealAnimationState extends State<AppRevealAnimation>
     final viewportHeight = MediaQuery.sizeOf(context).height;
     final bottomY = topLeft.dy + renderObject.size.height;
 
-    // Trigger slightly before element is fully inside viewport for smooth reveal
-    if (topLeft.dy <= viewportHeight * 0.96 && bottomY >= -40) {
-      _scheduleTrigger();
+    // Trigger cleanly slightly before the widget enters the viewport
+    if (topLeft.dy <= viewportHeight * 1.08 && bottomY >= -60) {
+      _triggerReveal();
     }
   }
 
-  void _scheduleTrigger() {
+  void _triggerReveal() {
     if (_hasTriggered) return;
     _hasTriggered = true;
     _detachScrollListener();
-
-    if (widget.delay == Duration.zero) {
-      if (mounted) _controller.forward();
-    } else {
-      _delayTimer = Timer(widget.delay, () {
-        if (mounted) _controller.forward();
-      });
+    if (mounted) {
+      _controller.forward();
     }
   }
 
@@ -167,7 +169,6 @@ class _AppRevealAnimationState extends State<AppRevealAnimation>
   @override
   void dispose() {
     _detachScrollListener();
-    _delayTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -184,7 +185,10 @@ class _AppRevealAnimationState extends State<AppRevealAnimation>
       opacity: _fadeAnimation,
       child: SlideTransition(
         position: _slideAnimation,
-        child: ScaleTransition(scale: _scaleAnimation, child: widget.child),
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: widget.child,
+        ),
       ),
     );
   }

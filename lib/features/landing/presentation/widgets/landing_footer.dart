@@ -5,6 +5,7 @@ import 'package:suatina_web_project/core/responsive/responsive.dart';
 import 'package:suatina_web_project/core/routing/routes.dart';
 import 'package:suatina_web_project/core/theme/app_texts/app_text_styles.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
+import 'package:suatina_web_project/core/widgets/sustina_social_links.dart';
 import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
 import 'package:suatina_web_project/features/landing/presentation/models/landing_nav_item.dart';
 
@@ -45,12 +46,12 @@ class LandingFooter extends StatelessWidget {
 
     final portalLinks = [
       _FooterLink(
-        label: l10n.footerLinkLogin,
-        onTap: () => context.go(Routes.login),
-      ),
-      _FooterLink(
         label: l10n.footerLinkRegister,
         onTap: () => context.go(Routes.register),
+      ),
+      _FooterLink(
+        label: l10n.footerLinkDemo,
+        onTap: () => onNavigateToSection(LandingNavCatalog.demoId),
       ),
       _FooterLink(
         label: l10n.footerLinkTerms,
@@ -267,6 +268,8 @@ class _BrandColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -283,6 +286,18 @@ class _BrandColumn extends StatelessWidget {
             color: textColor,
             height: 1.65,
           ),
+        ),
+        const SizedBox(height: 18),
+        Text(
+          l10n.socialFollowUs,
+          style: AppTextStyles.font12Bold.copyWith(
+            color: textColor.withValues(alpha: 0.92),
+          ),
+        ),
+        const SizedBox(height: 10),
+        const SustinaSocialLinksRow(
+          onDarkSurface: true,
+          spacing: 10,
         ),
       ],
     );

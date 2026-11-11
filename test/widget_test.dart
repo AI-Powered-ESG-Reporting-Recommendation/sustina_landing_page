@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:suatina_web_project/core/constants/social_links.dart';
 import 'package:suatina_web_project/core/helpers/app_validators.dart';
 import 'package:suatina_web_project/core/helpers/shared_pref_helper.dart';
 import 'package:suatina_web_project/core/localization/app_localizations.dart';
@@ -9,8 +10,12 @@ import 'package:suatina_web_project/core/localization/locale_cubit.dart';
 import 'package:suatina_web_project/core/theme/theme_data/dark_theme_data.dart';
 import 'package:suatina_web_project/core/theme/theme_data/light_theme_data.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_cubit.dart';
+import 'package:suatina_web_project/core/widgets/sustina_social_links.dart';
 import 'package:suatina_web_project/features/landing/presentation/screens/landing_screen.dart';
 import 'package:suatina_web_project/features/landing/presentation/widgets/landing_demo_section.dart';
+import 'package:suatina_web_project/features/landing/presentation/widgets/landing_footer.dart';
+import 'package:suatina_web_project/features/landing/presentation/widgets/landing_header.dart';
+import 'package:suatina_web_project/features/landing/presentation/widgets/landing_nav_drawer.dart';
 import 'package:suatina_web_project/features/registration/presentation/screens/company_registration_screen.dart';
 
 Future<Widget> _buildTestHarness({
@@ -69,69 +74,156 @@ void main() {
     });
   });
 
-  group('LandingScreen responsive & theme rendering', () {
-    testWidgets('renders cleanly on Desktop English Light Mode without overflow', (
-      tester,
-    ) async {
-      tester.view.physicalSize = const Size(1440, 900);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-
-      final app = await _buildTestHarness(
-        child: const LandingScreen(),
-        locale: const Locale('en'),
-        themeMode: ThemeMode.light,
+  group('SustinaSocialCatalog', () {
+    test('exposes exact official social URLs without Linktree replacement', () {
+      expect(
+        SustinaSocialCatalog.facebookUrl,
+        'https://www.facebook.com/sustiina',
       );
-      await tester.pumpWidget(app);
-      await tester.pump(const Duration(milliseconds: 200));
-
-      expect(find.text('Home'), findsWidgets);
-      expect(find.text('ESG Pillars'), findsWidgets);
-      expect(find.text('Capabilities'), findsWidgets);
-      expect(find.text('Workflow'), findsWidgets);
-      expect(find.text('Book a Demo'), findsWidgets);
-      expect(find.text('Onboarding'), findsWidgets);
-    });
-
-    testWidgets('renders cleanly on Tablet Arabic Dark Mode (RTL) without overflow', (
-      tester,
-    ) async {
-      tester.view.physicalSize = const Size(800, 1024);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-
-      final app = await _buildTestHarness(
-        child: const LandingScreen(),
-        locale: const Locale('ar'),
-        themeMode: ThemeMode.dark,
+      expect(
+        SustinaSocialCatalog.instagramUrl,
+        'https://www.instagram.com/__sustina__',
       );
-      await tester.pumpWidget(app);
-      await tester.pump(const Duration(milliseconds: 200));
-
-      expect(find.text('Sustina'), findsWidgets);
-      expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
-    });
-
-    testWidgets('renders cleanly on Mobile English Light Mode without overflow', (
-      tester,
-    ) async {
-      tester.view.physicalSize = const Size(390, 844);
-      tester.view.devicePixelRatio = 1.0;
-      addTearDown(tester.view.resetPhysicalSize);
-      addTearDown(tester.view.resetDevicePixelRatio);
-
-      final app = await _buildTestHarness(
-        child: const LandingScreen(),
-        locale: const Locale('en'),
-        themeMode: ThemeMode.light,
+      expect(
+        SustinaSocialCatalog.linkedinUrl,
+        'https://www.linkedin.com/company/sustiina/',
       );
-      await tester.pumpWidget(app);
-      await tester.pump(const Duration(milliseconds: 200));
-
-      expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
+      expect(
+        SustinaSocialCatalog.xUrl,
+        'https://x.com/__sustina__',
+      );
     });
+  });
+
+  group('LandingScreen responsive, social & no-login verification', () {
+    testWidgets(
+      'Desktop English Light Mode has social icons, zero Login buttons, and zero overflow',
+      (tester) async {
+        tester.view.physicalSize = const Size(1440, 900);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+
+        final app = await _buildTestHarness(
+          child: const LandingScreen(),
+          locale: const Locale('en'),
+          themeMode: ThemeMode.light,
+        );
+        await tester.pumpWidget(app);
+        await tester.pump(const Duration(milliseconds: 200));
+
+        // Login button completely removed from Landing Page
+        expect(find.text('Sign In'), findsNothing);
+        expect(find.text('تسجيل الدخول'), findsNothing);
+
+        // Navbar matches actual landing sections & embeds social links
+        expect(
+          find.descendant(
+            of: find.byType(LandingHeader),
+            matching: find.byType(SustinaSocialLinksRow),
+          ),
+          findsOneWidget,
+        );
+        expect(
+          find.descendant(
+            of: find.byType(LandingFooter),
+            matching: find.byType(SustinaSocialLinksRow),
+          ),
+          findsOneWidget,
+        );
+        expect(find.text('Home'), findsWidgets);
+        expect(find.text('ESG Pillars'), findsWidgets);
+        expect(find.text('Capabilities'), findsWidgets);
+        expect(find.text('Workflow'), findsWidgets);
+        expect(find.text('Book a Demo'), findsWidgets);
+        expect(find.text('Onboarding'), findsWidgets);
+      },
+    );
+
+    testWidgets(
+      'Standard Desktop 1024px fits navbar + social icons without overflow',
+      (tester) async {
+        tester.view.physicalSize = const Size(1024, 800);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+
+        final app = await _buildTestHarness(
+          child: const LandingScreen(),
+          locale: const Locale('ar'),
+          themeMode: ThemeMode.dark,
+        );
+        await tester.pumpWidget(app);
+        await tester.pump(const Duration(milliseconds: 200));
+
+        expect(find.text('تسجيل الدخول'), findsNothing);
+        expect(
+          find.descendant(
+            of: find.byType(LandingHeader),
+            matching: find.byType(SustinaSocialLinksRow),
+          ),
+          findsOneWidget,
+        );
+      },
+    );
+
+    testWidgets(
+      'Tablet Arabic Dark Mode (RTL) renders header social icons cleanly',
+      (tester) async {
+        tester.view.physicalSize = const Size(768, 1024);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+
+        final app = await _buildTestHarness(
+          child: const LandingScreen(),
+          locale: const Locale('ar'),
+          themeMode: ThemeMode.dark,
+        );
+        await tester.pumpWidget(app);
+        await tester.pump(const Duration(milliseconds: 200));
+
+        expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
+        expect(
+          find.descendant(
+            of: find.byType(LandingHeader),
+            matching: find.byType(SustinaSocialLinksRow),
+          ),
+          findsOneWidget,
+        );
+      },
+    );
+
+    testWidgets(
+      'Mobile English Light Mode opens drawer with social links and no Login button',
+      (tester) async {
+        tester.view.physicalSize = const Size(390, 844);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+
+        final app = await _buildTestHarness(
+          child: const LandingScreen(),
+          locale: const Locale('en'),
+          themeMode: ThemeMode.light,
+        );
+        await tester.pumpWidget(app);
+        await tester.pump(const Duration(milliseconds: 200));
+
+        await tester.tap(find.byIcon(Icons.menu_rounded));
+        await tester.pump(const Duration(milliseconds: 400));
+
+        expect(find.byType(LandingNavDrawer), findsOneWidget);
+        expect(
+          find.descendant(
+            of: find.byType(LandingNavDrawer),
+            matching: find.byType(SustinaSocialLinksRow),
+          ),
+          findsOneWidget,
+        );
+        expect(find.text('Sign In'), findsNothing);
+      },
+    );
   });
 
   group('LandingDemoSection flow', () {
@@ -151,13 +243,11 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
-      // Attempt submit with empty fields -> shows validation errors
       await tester.ensureVisible(find.text('Request Live Demo'));
       await tester.tap(find.text('Request Live Demo'));
       await tester.pumpAndSettle();
       expect(find.text('This field is required'), findsWidgets);
 
-      // Fill all required fields
       final textFields = find.byType(TextFormField);
       await tester.enterText(textFields.at(0), 'Sarah Al-Qahtani');
       await tester.enterText(textFields.at(1), 'Horizon Industrial Group');
@@ -165,13 +255,11 @@ void main() {
       await tester.enterText(textFields.at(3), '+966501234567');
       await tester.enterText(textFields.at(4), 'ESG Director');
 
-      // Select Industry dropdown
       await tester.tap(find.byType(DropdownButtonFormField<String>).first);
       await tester.pumpAndSettle();
       await tester.tap(find.text('Industrial & Manufacturing').last);
       await tester.pumpAndSettle();
 
-      // Submit valid request
       await tester.ensureVisible(find.text('Request Live Demo'));
       await tester.tap(find.text('Request Live Demo'));
       await tester.pump(const Duration(milliseconds: 800));
@@ -199,8 +287,10 @@ void main() {
         await tester.pumpWidget(app);
         await tester.pumpAndSettle();
 
-        // Notice emphasizing no upfront payment or package selection
-        expect(find.textContaining('No package selection or payment'), findsOneWidget);
+        expect(
+          find.textContaining('No package selection or payment'),
+          findsOneWidget,
+        );
 
         final textFields = find.byType(TextFormField);
         await tester.enterText(textFields.at(0), 'Arabia Green Co.');
@@ -209,25 +299,21 @@ void main() {
         await tester.enterText(textFields.at(3), '+966551234567');
 
         final dropdowns = find.byType(DropdownButtonFormField<String>);
-        // Industry
         await tester.tap(dropdowns.at(0));
         await tester.pumpAndSettle();
         await tester.tap(find.text('Energy, Oil & Petrochemicals').last);
         await tester.pumpAndSettle();
 
-        // Company Size
         await tester.tap(dropdowns.at(1));
         await tester.pumpAndSettle();
         await tester.tap(find.text('51 – 250 Employees').last);
         await tester.pumpAndSettle();
 
-        // Country
         await tester.tap(dropdowns.at(2));
         await tester.pumpAndSettle();
         await tester.tap(find.text('Saudi Arabia').last);
         await tester.pumpAndSettle();
 
-        // Submit registration
         await tester.ensureVisible(find.text('Submit Company Registration'));
         await tester.tap(find.text('Submit Company Registration'));
         await tester.pump(const Duration(milliseconds: 900));

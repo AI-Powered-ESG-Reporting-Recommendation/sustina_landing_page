@@ -7,6 +7,7 @@ import 'package:suatina_web_project/core/routing/routes.dart';
 import 'package:suatina_web_project/core/theme/app_texts/app_text_styles.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_cubit.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
+import 'package:suatina_web_project/core/widgets/sustina_social_links.dart';
 import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
 import 'package:suatina_web_project/features/landing/presentation/models/landing_nav_item.dart';
 
@@ -148,12 +149,39 @@ class LandingNavDrawer extends StatelessWidget {
               ),
             ),
 
-            // Bottom Action Buttons
+            // Bottom Social Links & Primary Registration CTA
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isDark ? colors.grey100 : colors.grey50,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: colors.grey200),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          l10n.socialFollowUs,
+                          style: AppTextStyles.font12Bold.copyWith(
+                            color: colors.neutral700,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        const SustinaSocialLinksRow(
+                          compact: false,
+                          spacing: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   SustinaPrimaryButton(
                     label: l10n.navRegister,
                     fullWidth: true,
@@ -161,17 +189,6 @@ class LandingNavDrawer extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                       context.go(Routes.register);
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  SustinaSecondaryButton(
-                    label: l10n.navLogin,
-                    icon: Icons.login_rounded,
-                    fullWidth: true,
-                    borderRadius: 14,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      context.go(Routes.login);
                     },
                   ),
                 ],
