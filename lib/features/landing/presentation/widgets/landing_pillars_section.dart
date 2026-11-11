@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:suatina_web_project/core/helpers/app_reveal_animation.dart';
 import 'package:suatina_web_project/core/localization/app_localizations.dart';
 import 'package:suatina_web_project/core/responsive/responsive.dart';
+import 'package:suatina_web_project/core/theme/app_texts/app_text_styles.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
+import 'package:suatina_web_project/core/utils/app_icons.dart';
+import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
 
 class LandingPillarsSection extends StatelessWidget {
   const LandingPillarsSection({super.key});
@@ -12,181 +15,116 @@ class LandingPillarsSection extends StatelessWidget {
     final colors = context.customAppColors;
     final l10n = context.l10n;
     final isDesktop = context.isDesktopOrLarger;
+    final isDark = context.isDarkMode;
 
-    final pillarECard = _PillarCard(
-      code: 'E',
-      title: l10n.pillarETitle,
-      englishTitle: l10n.pillarESubtitle,
-      color: colors.primary500,
-      lightColor: colors.primary100,
-      icon: Icons.forest_rounded,
-      summary: l10n.pillarEDesc,
-      metricsTitle: l10n.pillarEMetricsTitle,
-      metrics: [
-        l10n.pillarEMetric1,
-        l10n.pillarEMetric2,
-        l10n.pillarEMetric3,
-        l10n.pillarEMetric4,
-        l10n.pillarEMetric5,
-      ],
-    );
-
-    final pillarSCard = _PillarCard(
-      code: 'S',
-      title: l10n.pillarSTitle,
-      englishTitle: l10n.pillarSSubtitle,
-      color: colors.secondary500,
-      lightColor: colors.secondary100,
-      icon: Icons.groups_rounded,
-      summary: l10n.pillarSDesc,
-      metricsTitle: l10n.pillarSMetricsTitle,
-      metrics: [
-        l10n.pillarSMetric1,
-        l10n.pillarSMetric2,
-        l10n.pillarSMetric3,
-        l10n.pillarSMetric4,
-        l10n.pillarSMetric5,
-      ],
-    );
-
-    final pillarGCard = _PillarCard(
-      code: 'G',
-      title: l10n.pillarGTitle,
-      englishTitle: l10n.pillarGSubtitle,
-      color: colors.info700,
-      lightColor: colors.info300,
-      icon: Icons.gavel_rounded,
-      summary: l10n.pillarGDesc,
-      metricsTitle: l10n.pillarGMetricsTitle,
-      metrics: [
-        l10n.pillarGMetric1,
-        l10n.pillarGMetric2,
-        l10n.pillarGMetric3,
-        l10n.pillarGMetric4,
-        l10n.pillarGMetric5,
-      ],
-    );
+    final pillarCards = [
+      _PillarCard(
+        code: 'E',
+        title: l10n.pillarETitle,
+        subtitle: l10n.pillarESubtitle,
+        accentColor: colors.primary500,
+        badgeBg: isDark ? colors.primary100 : colors.primary100,
+        svgIconPath: AppIcons.leaf,
+        summary: l10n.pillarEDesc,
+        metricsTitle: l10n.pillarEMetricsTitle,
+        metrics: [
+          l10n.pillarEMetric1,
+          l10n.pillarEMetric2,
+          l10n.pillarEMetric3,
+          l10n.pillarEMetric4,
+          l10n.pillarEMetric5,
+        ],
+      ),
+      _PillarCard(
+        code: 'S',
+        title: l10n.pillarSTitle,
+        subtitle: l10n.pillarSSubtitle,
+        accentColor: colors.secondary500,
+        badgeBg: isDark ? colors.secondary100 : colors.secondary100,
+        svgIconPath: AppIcons.organization,
+        summary: l10n.pillarSDesc,
+        metricsTitle: l10n.pillarSMetricsTitle,
+        metrics: [
+          l10n.pillarSMetric1,
+          l10n.pillarSMetric2,
+          l10n.pillarSMetric3,
+          l10n.pillarSMetric4,
+          l10n.pillarSMetric5,
+        ],
+      ),
+      _PillarCard(
+        code: 'G',
+        title: l10n.pillarGTitle,
+        subtitle: l10n.pillarGSubtitle,
+        accentColor: colors.info700,
+        badgeBg: isDark
+            ? colors.info300
+            : colors.info300.withValues(alpha: 0.25),
+        svgIconPath: AppIcons.carbonPricing,
+        summary: l10n.pillarGDesc,
+        metricsTitle: l10n.pillarGMetricsTitle,
+        metrics: [
+          l10n.pillarGMetric1,
+          l10n.pillarGMetric2,
+          l10n.pillarGMetric3,
+          l10n.pillarGMetric4,
+          l10n.pillarGMetric5,
+        ],
+      ),
+    ];
 
     return Container(
       width: double.infinity,
-      color: colors.white,
-      padding: EdgeInsets.symmetric(
-        vertical: context.responsiveValue<double>(
-          mobile: 48,
-          tablet: 64,
-          desktop: 80,
-        ),
-        horizontal: context.responsiveValue<double>(
-          mobile: 16,
-          tablet: 24,
-          desktop: 40,
-        ),
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: AppBreakpoints.maxContentWidth),
-          child: Column(
-            children: [
-              // Section Header
-              AppRevealAnimation(
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: colors.secondary100,
-                        borderRadius: BorderRadius.circular(999),
-                        border: Border.all(color: colors.secondary300),
-                      ),
-                      child: Text(
-                        l10n.pillarsCategory,
-                        style: TextStyle(
-                          fontSize: 12.5,
-                          fontWeight: FontWeight.w700,
-                          color: colors.secondary700,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 14),
-                    Text(
-                      l10n.pillarsTitle,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: context.responsiveValue<double>(
-                          mobile: 24,
-                          tablet: 30,
-                          desktop: 34,
-                        ),
-                        fontWeight: FontWeight.w800,
-                        color: colors.neutral900,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 720),
-                      child: Text(
-                        l10n.pillarsSubtitle,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 15.5,
-                          color: colors.neutral700,
-                          height: 1.6,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 48),
-
-              // 3 Pillars Grid
-              if (isDesktop)
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: AppRevealAnimation(
-                        delay: const Duration(milliseconds: 100),
-                        child: pillarECard,
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      child: AppRevealAnimation(
-                        delay: const Duration(milliseconds: 200),
-                        child: pillarSCard,
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      child: AppRevealAnimation(
-                        delay: const Duration(milliseconds: 300),
-                        child: pillarGCard,
-                      ),
-                    ),
-                  ],
-                )
-              else
-                Column(
-                  children: [
-                    AppRevealAnimation(
-                      delay: const Duration(milliseconds: 80),
-                      child: pillarECard,
-                    ),
-                    const SizedBox(height: 20),
-                    AppRevealAnimation(
-                      delay: const Duration(milliseconds: 140),
-                      child: pillarSCard,
-                    ),
-                    const SizedBox(height: 20),
-                    AppRevealAnimation(
-                      delay: const Duration(milliseconds: 200),
-                      child: pillarGCard,
-                    ),
-                  ],
-                ),
-            ],
+      color: colors.background,
+      child: AdaptiveContentContainer(
+        padding: EdgeInsets.symmetric(
+          vertical: context.responsiveValue<double>(
+            mobile: 52,
+            tablet: 68,
+            desktop: 88,
           ),
+          horizontal: ResponsivePadding.pageHorizontal(context),
+        ),
+        child: Column(
+          children: [
+            SustinaSectionHeader(
+              category: l10n.pillarsCategory,
+              title: l10n.pillarsTitle,
+              subtitle: l10n.pillarsSubtitle,
+              badgeSvgPath: AppIcons.leaf,
+              useSecondaryAccent: true,
+            ),
+            SizedBox(height: context.responsiveValue(mobile: 32, desktop: 52)),
+            if (isDesktop)
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (int i = 0; i < pillarCards.length; i++) ...[
+                      Expanded(
+                        child: AppRevealAnimation(
+                          delay: Duration(milliseconds: 90 * i),
+                          child: pillarCards[i],
+                        ),
+                      ),
+                      if (i < pillarCards.length - 1) const SizedBox(width: 24),
+                    ],
+                  ],
+                ),
+              )
+            else
+              Column(
+                children: [
+                  for (int i = 0; i < pillarCards.length; i++) ...[
+                    AppRevealAnimation(
+                      delay: Duration(milliseconds: 80 * i),
+                      child: pillarCards[i],
+                    ),
+                    if (i < pillarCards.length - 1) const SizedBox(height: 18),
+                  ],
+                ],
+              ),
+          ],
         ),
       ),
     );
@@ -197,10 +135,10 @@ class _PillarCard extends StatefulWidget {
   const _PillarCard({
     required this.code,
     required this.title,
-    required this.englishTitle,
-    required this.color,
-    required this.lightColor,
-    required this.icon,
+    required this.subtitle,
+    required this.accentColor,
+    required this.badgeBg,
+    required this.svgIconPath,
     required this.summary,
     required this.metricsTitle,
     required this.metrics,
@@ -208,10 +146,10 @@ class _PillarCard extends StatefulWidget {
 
   final String code;
   final String title;
-  final String englishTitle;
-  final Color color;
-  final Color lightColor;
-  final IconData icon;
+  final String subtitle;
+  final Color accentColor;
+  final Color badgeBg;
+  final String svgIconPath;
   final String summary;
   final String metricsTitle;
   final List<String> metrics;
@@ -237,55 +175,82 @@ class _PillarCardState extends State<_PillarCard> {
         transform: Matrix4.translationValues(0, _isHovered ? -6 : 0, 0),
         decoration: BoxDecoration(
           color: colors.white,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(22),
           border: Border.all(
-            color: _isHovered ? widget.color : colors.grey200,
-            width: _isHovered ? 1.8 : 1.2,
+            color: _isHovered
+                ? widget.accentColor.withValues(alpha: 0.78)
+                : colors.grey200,
+            width: _isHovered ? 1.6 : 1.2,
           ),
           boxShadow: [
             BoxShadow(
               color: _isHovered
-                  ? widget.color.withValues(alpha: 0.12)
-                  : colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
+                  ? widget.accentColor.withValues(alpha: isDark ? 0.18 : 0.12)
+                  : colors.black.withValues(alpha: isDark ? 0.26 : 0.04),
               blurRadius: _isHovered ? 28 : 14,
               offset: Offset(0, _isHovered ? 10 : 4),
             ),
           ],
         ),
-        padding: const EdgeInsets.all(28),
+        padding: const EdgeInsets.all(26),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top Badge & Code
+            // Animated top accent line
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 240),
+              height: 3.5,
+              width: _isHovered ? 72 : 36,
+              decoration: BoxDecoration(
+                color: widget.accentColor,
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+            const SizedBox(height: 18),
+
+            // Top SVG Icon & ESG Code Emblem
             Row(
               children: [
-                Container(
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 220),
                   width: 52,
                   height: 52,
                   decoration: BoxDecoration(
-                    color: isDark
-                        ? widget.color.withValues(alpha: 0.18)
-                        : widget.lightColor,
+                    color: widget.badgeBg,
                     borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: widget.accentColor.withValues(
+                        alpha: _isHovered ? 0.45 : 0.15,
+                      ),
+                    ),
                   ),
-                  child: Icon(widget.icon, color: widget.color, size: 28),
+                  alignment: Alignment.center,
+                  child: SustinaSvgIcon(
+                    assetPath: widget.svgIconPath,
+                    size: 25,
+                    color: widget.accentColor,
+                  ),
                 ),
                 const Spacer(),
-                Container(
-                  width: 38,
-                  height: 38,
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 220),
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
-                    color: widget.color.withValues(alpha: 0.08),
+                    color: _isHovered
+                        ? widget.accentColor
+                        : widget.accentColor.withValues(alpha: 0.10),
                     shape: BoxShape.circle,
-                    border: Border.all(color: widget.color.withValues(alpha: 0.3)),
+                    border: Border.all(
+                      color: widget.accentColor.withValues(alpha: 0.35),
+                    ),
                   ),
                   alignment: Alignment.center,
                   child: Text(
                     widget.code,
-                    style: TextStyle(
-                      fontSize: 18,
+                    style: AppTextStyles.font18Bold.copyWith(
                       fontWeight: FontWeight.w900,
-                      color: widget.color,
+                      color: _isHovered ? colors.grey0 : widget.accentColor,
                     ),
                   ),
                 ),
@@ -293,22 +258,20 @@ class _PillarCardState extends State<_PillarCard> {
             ),
             const SizedBox(height: 20),
 
-            // Titles
+            // Pillar Titles
             Text(
               widget.title,
-              style: TextStyle(
-                fontSize: 22,
+              style: AppTextStyles.font20Bold.copyWith(
+                fontSize: 21,
                 fontWeight: FontWeight.w800,
                 color: colors.neutral900,
               ),
             ),
+            const SizedBox(height: 2),
             Text(
-              widget.englishTitle,
-              style: TextStyle(
-                fontSize: 12.5,
-                fontWeight: FontWeight.w600,
-                color: colors.grey600,
-                letterSpacing: 0.8,
+              widget.subtitle,
+              style: AppTextStyles.font12SemiBold.copyWith(
+                color: colors.neutral600,
               ),
             ),
             const SizedBox(height: 12),
@@ -316,53 +279,47 @@ class _PillarCardState extends State<_PillarCard> {
             // Summary
             Text(
               widget.summary,
-              style: TextStyle(
-                fontSize: 14,
+              style: AppTextStyles.font14Regular.copyWith(
                 color: colors.neutral700,
-                height: 1.5,
+                height: 1.55,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 18),
             Divider(color: colors.grey200),
             const SizedBox(height: 14),
 
             // Key Metrics Title
             Text(
               widget.metricsTitle,
-              style: TextStyle(
-                fontSize: 12.5,
-                fontWeight: FontWeight.bold,
-                color: widget.color,
+              style: AppTextStyles.font12Bold.copyWith(
+                fontSize: 13,
+                color: widget.accentColor,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
 
-            // Metrics bullet list
+            // Metrics Checklist
             ...widget.metrics.map(
               (metric) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(bottom: 9),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 5),
-                      child: Container(
-                        width: 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          color: widget.color,
-                          shape: BoxShape.circle,
-                        ),
+                      child: Icon(
+                        Icons.check_circle_rounded,
+                        size: 14,
+                        color: widget.accentColor,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 9),
                     Expanded(
                       child: Text(
                         metric,
-                        style: TextStyle(
-                          fontSize: 13,
+                        style: AppTextStyles.font13Regular.copyWith(
                           color: colors.neutral800,
-                          height: 1.45,
+                          height: 1.48,
                         ),
                       ),
                     ),

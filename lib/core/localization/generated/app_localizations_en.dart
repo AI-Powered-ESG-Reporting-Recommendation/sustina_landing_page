@@ -25,19 +25,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navPillars => 'ESG Pillars';
 
   @override
-  String get navFeatures => 'Smart Capabilities';
+  String get navFeatures => 'Capabilities';
 
   @override
-  String get navWorkflow => 'Data Workflow';
+  String get navWorkflow => 'Workflow';
+
+  @override
+  String get navDemo => 'Book a Demo';
+
+  @override
+  String get navRegisterSection => 'Onboarding';
 
   @override
   String get navLogin => 'Sign In';
 
   @override
-  String get navRegister => 'Register Organization';
+  String get navRegister => 'Register Company';
 
   @override
   String get navContact => 'Contact Us';
+
+  @override
+  String get navCloseDrawer => 'Close menu';
+
+  @override
+  String get navOpenDrawer => 'Open navigation menu';
 
   @override
   String get mainMenu => 'Main Menu';
@@ -50,6 +62,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get langSwitchTooltip => 'تغيير إلى العربية';
+
+  @override
+  String get langNameAr => 'العربية';
+
+  @override
+  String get langNameEn => 'English';
 
   @override
   String get heroBadge =>
@@ -67,10 +85,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get heroSubtitle =>
-      'An integrated enterprise platform connecting operations, HSE, and governance to streamline data gathering, automate carbon calculations (Scope 1, 2, 3), and generate audit-ready compliance reports.';
+      'Together towards a more sustainable future — Automate greenhouse gas accounting (Scope 1, 2, 3), streamline operational ESG metrics with AI, and generate audit-ready compliance reports.';
 
   @override
-  String get heroCtaStart => 'Start Now — Register';
+  String get heroCtaStart => 'Register Your Company';
 
   @override
   String get heroCtaExplore => 'Explore Pillars & Capabilities';
@@ -85,7 +103,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get heroTrustPill3 => 'Interactive AI ESG Assistant';
 
   @override
-  String get heroTrustPill4 => 'CBAM & Grievance Ready';
+  String get heroTrustPill4 => 'CBAM & Audit-Ready Export';
+
+  @override
+  String get heroScrollTooltip => 'Scroll to explore';
+
+  @override
+  String get heroChipScope => 'Scope 1, 2, 3';
+
+  @override
+  String get heroChipOcr => 'AI OCR Engine';
+
+  @override
+  String get heroChipEsg => 'ESG Score 92%';
 
   @override
   String get previewKpiEsgScore => 'Overall ESG Score';
@@ -156,7 +186,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Optimizing chiller load scheduling during peak hours will reduce Scope 2 grid emissions by 14%.';
 
   @override
-  String get pillarsCategory => 'Three ESG Core Dimensions';
+  String get pillarsCategory => 'ESG Pillars';
 
   @override
   String get pillarsTitle =>
@@ -261,15 +291,43 @@ class AppLocalizationsEn extends AppLocalizations {
       'Grievance resolution mechanism within SLA (45 days)';
 
   @override
-  String get featuresCategory => 'Smart Platform Capabilities';
+  String get featuresCategory => 'Smart Capabilities';
 
   @override
-  String get featuresTitle =>
-      'Advanced Tools for Smart, Connected Sustainability Management';
+  String get featuresTitle => 'Connected Sustainability Intelligence Ecosystem';
 
   @override
   String get featuresSubtitle =>
-      'Sustina is designed to combine effortless data entry, powerful AI analytics, and rigorous compliance with regulatory standards.';
+      'Six intelligent capabilities orchestrated around one central AI engine — uniting data ingestion, carbon math, department workflows, and compliance reporting.';
+
+  @override
+  String get ecosystemHubBadge => 'SUSTINA AI CORE';
+
+  @override
+  String get ecosystemHubTitle => 'Central Intelligence Hub';
+
+  @override
+  String get ecosystemHubSubtitle =>
+      'Real-time orchestration connecting operational streams into verified ESG outcomes';
+
+  @override
+  String get ecosystemNodeEnergy => 'Energy';
+
+  @override
+  String get ecosystemNodeWater => 'Water';
+
+  @override
+  String get ecosystemNodeSuppliers => 'Suppliers';
+
+  @override
+  String get ecosystemNodePolicies => 'Policies';
+
+  @override
+  String get ecosystemConnectedStatus => 'Connected';
+
+  @override
+  String get ecosystemInteractiveHint =>
+      'Hover or select any capability card to trace its live connection stream';
 
   @override
   String get feature1Title => 'Interactive AI Assistant (AI Chat)';
@@ -289,10 +347,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'AI OCR technology to scan utility bills and invoices, automatically extracting consumption data (electricity, fuel, water) without tedious manual entry.';
 
   @override
-  String get feature2Badge => 'AI OCR Extraction';
+  String get feature2Badge => 'AI OCR';
 
   @override
-  String get feature3Title => 'Standardized Carbon Footprint Calculation';
+  String get feature3Title => 'Standardized Carbon Calculation';
 
   @override
   String get feature3Desc =>
@@ -302,7 +360,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get feature3Badge => 'Scope 1, 2, 3';
 
   @override
-  String get feature4Title => 'Department Allocation & Task Tracking';
+  String get feature4Title => 'Department Allocation & Tracking';
 
   @override
   String get feature4Desc =>
@@ -319,7 +377,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Track supplier compliance with codes of conduct, evaluate supply chain sustainability, and support Scope 3 calculations for CBAM export compliance.';
 
   @override
-  String get feature5Badge => 'Supply Chain & CBAM';
+  String get feature5Badge => 'Supply & CBAM';
 
   @override
   String get feature6Title => 'Certified Professional Reporting';
@@ -329,10 +387,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Generate official sustainability reports in one click (audit-ready PDF & Excel) aligned with international standards for investors and regulators.';
 
   @override
-  String get feature6Badge => 'Audit-Ready Reports';
+  String get feature6Badge => 'Audit-Ready';
 
   @override
-  String get workflowCategory => 'Sustainability Data Lifecycle';
+  String get workflowCategory => 'Workflow';
 
   @override
   String get workflowTitle =>
@@ -341,6 +399,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get workflowSubtitle =>
       'Four integrated steps ensuring data accuracy, automated calculations, and rapid regulatory report generation with confidence.';
+
+  @override
+  String get workflowStepLabel => 'Step';
 
   @override
   String get step1Num => '01';
@@ -383,6 +444,406 @@ class AppLocalizationsEn extends AppLocalizations {
       'Generate comprehensive ESG reports compliant with national and global requirements, ready for external audit.';
 
   @override
+  String get demoCategory => 'Book a Demo';
+
+  @override
+  String get demoTitle => 'See Sustina in Action for Your Organization';
+
+  @override
+  String get demoSubtitle =>
+      'Request a guided demonstration tailored to your sector. Explore automated Scope 1–3 carbon tracking, AI bill extraction, and audit-ready ESG reporting with our specialists.';
+
+  @override
+  String get demoBenefit1Title => 'Tailored Sector Walkthrough';
+
+  @override
+  String get demoBenefit1Desc =>
+      'Live demo configured around your industry metrics, energy profile, and compliance targets.';
+
+  @override
+  String get demoBenefit2Title => 'Live AI OCR & RAG Assistant';
+
+  @override
+  String get demoBenefit2Desc =>
+      'Watch raw utility bills convert into verified emissions insights and actionable reductions.';
+
+  @override
+  String get demoBenefit3Title => 'Governance & Team Architecture';
+
+  @override
+  String get demoBenefit3Desc =>
+      'Review multi-department workflows, supplier scoring, and executive reporting exports.';
+
+  @override
+  String get demoTrustNote =>
+      'Response within 1 business day • Available in Arabic & English';
+
+  @override
+  String get demoFormTitle => 'Request Your Live Demonstration';
+
+  @override
+  String get demoFormSubtitle =>
+      'Fill in your contact details and our team will reach out to schedule a convenient session.';
+
+  @override
+  String get demoSubmitButton => 'Request Live Demo';
+
+  @override
+  String get demoSubmitting => 'Sending Request...';
+
+  @override
+  String get demoSuccessBadge => 'Demo Request Received';
+
+  @override
+  String get demoSuccessTitle => 'Thank You! Your Demo Request Is Confirmed';
+
+  @override
+  String get demoSuccessMessage =>
+      'Our Sustina advisory team has received your demo request and will contact you shortly to coordinate the demonstration date and agenda.';
+
+  @override
+  String get demoSuccessRef => 'Reference ID';
+
+  @override
+  String get demoSuccessSchedule => 'Preferred Timing';
+
+  @override
+  String get demoBookAnother => 'Request Another Demo';
+
+  @override
+  String get fieldFullName => 'Full Name';
+
+  @override
+  String get hintFullName => 'e.g., Sarah Al-Qahtani';
+
+  @override
+  String get fieldCompanyName => 'Company Name';
+
+  @override
+  String get hintCompanyName => 'e.g., Horizon Industrial Group';
+
+  @override
+  String get fieldBusinessEmail => 'Business Email';
+
+  @override
+  String get hintBusinessEmail => 'name@company.com';
+
+  @override
+  String get fieldPhone => 'Phone Number';
+
+  @override
+  String get hintPhone => '+966 5X XXX XXXX';
+
+  @override
+  String get fieldJobTitle => 'Job Title / Position';
+
+  @override
+  String get hintJobTitle => 'e.g., Sustainability Manager';
+
+  @override
+  String get fieldIndustry => 'Industry / Business Sector';
+
+  @override
+  String get hintIndustry => 'Select your industry sector';
+
+  @override
+  String get fieldPreferredDate => 'Preferred Demo Date';
+
+  @override
+  String get hintPreferredDate => 'Select preferred date';
+
+  @override
+  String get fieldPreferredTime => 'Preferred Time Slot';
+
+  @override
+  String get timeSlotMorning => 'Morning (9 AM – 12 PM)';
+
+  @override
+  String get timeSlotAfternoon => 'Afternoon (12 PM – 4 PM)';
+
+  @override
+  String get timeSlotEvening => 'Evening (4 PM – 7 PM)';
+
+  @override
+  String get fieldNotes => 'Additional Requirements (Optional)';
+
+  @override
+  String get hintNotes =>
+      'Share target standards (GRI, CBAM), number of facilities, or questions...';
+
+  @override
+  String get sectorManufacturing => 'Industrial & Manufacturing';
+
+  @override
+  String get sectorEnergy => 'Energy, Oil & Petrochemicals';
+
+  @override
+  String get sectorRealEstate => 'Real Estate & Construction';
+
+  @override
+  String get sectorLogistics => 'Logistics & Transportation';
+
+  @override
+  String get sectorFinance => 'Banking & Financial Services';
+
+  @override
+  String get sectorRetail => 'Retail, Hospitality & Food';
+
+  @override
+  String get sectorHealthcare => 'Healthcare & Pharmaceuticals';
+
+  @override
+  String get sectorTechnology => 'Technology & Telecommunications';
+
+  @override
+  String get sectorOther => 'Other Business Sector';
+
+  @override
+  String get sizeSmall => '1 – 50 Employees';
+
+  @override
+  String get sizeMedium => '51 – 250 Employees';
+
+  @override
+  String get sizeLarge => '251 – 1,000 Employees';
+
+  @override
+  String get sizeEnterprise => '1,000+ Employees';
+
+  @override
+  String get countrySaudi => 'Saudi Arabia';
+
+  @override
+  String get countryEgypt => 'Egypt';
+
+  @override
+  String get countryUae => 'United Arab Emirates';
+
+  @override
+  String get countryQatar => 'Qatar';
+
+  @override
+  String get countryKuwait => 'Kuwait';
+
+  @override
+  String get countryBahrain => 'Bahrain';
+
+  @override
+  String get countryOman => 'Oman';
+
+  @override
+  String get countryJordan => 'Jordan';
+
+  @override
+  String get countryOther => 'Other Country';
+
+  @override
+  String get valRequiredField => 'This field is required';
+
+  @override
+  String get valNameMin => 'Must be at least 2 characters';
+
+  @override
+  String get valEmailRequired => 'Business email is required';
+
+  @override
+  String get valEmailInvalid => 'Please enter a valid email address';
+
+  @override
+  String get valPhoneRequired => 'Phone number is required';
+
+  @override
+  String get valPhoneInvalid => 'Please enter a valid phone number';
+
+  @override
+  String get valIndustryRequired => 'Please select an industry sector';
+
+  @override
+  String get valCountryRequired => 'Please select a country';
+
+  @override
+  String get valCompanySizeRequired => 'Please select company size';
+
+  @override
+  String get regOverviewCategory => 'Onboarding';
+
+  @override
+  String get regOverviewTitle =>
+      'Transparent 6-Stage Company Registration Without Upfront Payment';
+
+  @override
+  String get regOverviewSubtitle =>
+      'Joining Sustina begins with submitting your basic company profile. No package selection or immediate billing happens online — our admin team collaborates with you first to tailor the right plan.';
+
+  @override
+  String get regOverviewNoPaymentPill =>
+      'No immediate subscription or automatic payment upon registration';
+
+  @override
+  String get regOverviewCta => 'Register Your Company';
+
+  @override
+  String get regOverviewSecondaryCta => 'Book a Demo First';
+
+  @override
+  String get regPageBackToHome => 'Back to Landing Page';
+
+  @override
+  String get regPageBadge => 'Consultative Enterprise Onboarding';
+
+  @override
+  String get regPageTitle => 'Register Your Company on Sustina';
+
+  @override
+  String get regPageSubtitle =>
+      'Start by sharing your organization\'s basic details. Our administration team will follow up to assess your ESG requirements and recommend the optimal subscription package before payment and activation.';
+
+  @override
+  String get regTimelineTitle => '6-Stage Onboarding Roadmap';
+
+  @override
+  String get regTimelineSubtitle =>
+      'Follow every milestone from initial request to full workspace activation';
+
+  @override
+  String get regStage1Title => 'Submit Basic Company Info';
+
+  @override
+  String get regStage1Desc =>
+      'Provide company name, official email, contact person, sector, size, and country.';
+
+  @override
+  String get regStage2Title => 'Registration Confirmation';
+
+  @override
+  String get regStage2Desc =>
+      'Receive instant confirmation that your onboarding request has been logged.';
+
+  @override
+  String get regStage3Title => 'Admin Follow-Up & Assessment';
+
+  @override
+  String get regStage3Desc =>
+      'Sustina administration contacts you to evaluate business needs and recommend packages.';
+
+  @override
+  String get regStage4Title => 'Package Selection & Agreement';
+
+  @override
+  String get regStage4Desc =>
+      'Your team and our administration agree on the most suitable subscription package.';
+
+  @override
+  String get regStage5Title => 'Package Payment';
+
+  @override
+  String get regStage5Desc =>
+      'Complete invoice payment according to the agreed package terms.';
+
+  @override
+  String get regStage6Title => 'Platform Activation';
+
+  @override
+  String get regStage6Desc =>
+      'Once payment is confirmed, the admin team activates your organization\'s platform access.';
+
+  @override
+  String get regStatusActive => 'Active Step';
+
+  @override
+  String get regStatusCompleted => 'Completed';
+
+  @override
+  String get regStatusNext => 'Up Next';
+
+  @override
+  String get regStatusUpcoming => 'Upcoming';
+
+  @override
+  String get regFormTitle => 'Stage 1 — Basic Company Information';
+
+  @override
+  String get regFormNotice =>
+      'Important: No package selection or payment is required during initial registration. Our administration team will coordinate with you after submission.';
+
+  @override
+  String get fieldCompanyEmail => 'Company Email';
+
+  @override
+  String get hintCompanyEmail => 'info@company.com';
+
+  @override
+  String get fieldContactPerson => 'Contact Person\'s Full Name';
+
+  @override
+  String get hintContactPerson => 'e.g., Khalid Al-Harbi';
+
+  @override
+  String get fieldCompanySize => 'Company Size';
+
+  @override
+  String get hintCompanySize => 'Select employee count range';
+
+  @override
+  String get fieldCountry => 'Country';
+
+  @override
+  String get hintCountry => 'Select country';
+
+  @override
+  String get fieldRegNotes => 'Additional Notes or ESG Scope (Optional)';
+
+  @override
+  String get hintRegNotes =>
+      'Briefly share number of branches, facilities, or key sustainability targets...';
+
+  @override
+  String get regSubmitButton => 'Submit Company Registration';
+
+  @override
+  String get regSubmitting => 'Submitting Registration...';
+
+  @override
+  String get regSuccessBadge => 'Stage 2 Complete • Awaiting Admin Follow-up';
+
+  @override
+  String get regSuccessTitle => 'Registration Request Received Successfully!';
+
+  @override
+  String get regSuccessDesc =>
+      'Thank you for registering your organization with Sustina. No package has been charged or locked in. Our administration team will contact you shortly to understand your business requirements, evaluate your ESG needs, and recommend the most suitable subscription package.';
+
+  @override
+  String get regSuccessNextTitle =>
+      'What Happens Next in Your Onboarding Journey?';
+
+  @override
+  String get regSuccessNextBody =>
+      'Our administration team will reach out to discuss available packages, finalize the right plan together, coordinate payment upon agreement, and activate full platform access for your organization.';
+
+  @override
+  String get regSuccessRefLabel => 'Registration Reference';
+
+  @override
+  String get regSummaryTitle => 'Submitted Company Profile';
+
+  @override
+  String get regBackToLanding => 'Return to Landing Page';
+
+  @override
+  String get regRegisterAnother => 'Submit Another Registration';
+
+  @override
+  String get loginPlaceholderTitle => 'Organization Portal Sign In';
+
+  @override
+  String get loginPlaceholderSubtitle =>
+      'The sign-in portal is dedicated to activated enterprise workspaces. If your organization has not been onboarded yet, please submit a registration request first.';
+
+  @override
+  String get backToLanding => 'Return to Landing Page';
+
+  @override
   String get ctaBadge => 'Get Started Today | Sustainable Impact';
 
   @override
@@ -393,7 +854,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Join pioneering enterprises that rely on Sustina to automate sustainability reporting, reduce carbon emissions, and satisfy regulatory mandates.';
 
   @override
-  String get ctaRegisterButton => 'Register New Organization';
+  String get ctaRegisterButton => 'Register Your Company';
 
   @override
   String get ctaLoginButton => 'Sign In';
@@ -413,22 +874,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get footerPortalLinks => 'Platform Portal';
 
   @override
-  String get footerLinkAbout => 'About Platform';
+  String get footerLinkAbout => 'Home';
 
   @override
-  String get footerLinkPillars => 'Three ESG Pillars';
+  String get footerLinkPillars => 'ESG Pillars';
 
   @override
-  String get footerLinkFeatures => 'Smart Capabilities';
+  String get footerLinkFeatures => 'Capabilities';
 
   @override
-  String get footerLinkWorkflow => 'Data Workflow';
+  String get footerLinkWorkflow => 'Workflow';
+
+  @override
+  String get footerLinkDemo => 'Book a Demo';
+
+  @override
+  String get footerLinkOnboarding => 'Onboarding';
 
   @override
   String get footerLinkLogin => 'Sign In';
 
   @override
-  String get footerLinkRegister => 'Register Organization';
+  String get footerLinkRegister => 'Register Company';
 
   @override
   String get footerLinkTerms => 'Terms & Conditions';
@@ -531,7 +998,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get refHeroSubtitle => 'Together towards a more sustainable future';
 
   @override
-  String get refHeroCta => 'Start Now';
+  String get refHeroCta => 'Register Company';
 
   @override
   String get featureSmartAnalytics => 'Smart Analytics';

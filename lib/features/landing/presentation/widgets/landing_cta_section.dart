@@ -4,7 +4,10 @@ import 'package:suatina_web_project/core/helpers/app_reveal_animation.dart';
 import 'package:suatina_web_project/core/localization/app_localizations.dart';
 import 'package:suatina_web_project/core/responsive/responsive.dart';
 import 'package:suatina_web_project/core/routing/routes.dart';
+import 'package:suatina_web_project/core/theme/app_texts/app_text_styles.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
+import 'package:suatina_web_project/core/utils/app_icons.dart';
+import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
 
 class LandingCtaSection extends StatelessWidget {
   const LandingCtaSection({super.key});
@@ -14,176 +17,239 @@ class LandingCtaSection extends StatelessWidget {
     final colors = context.customAppColors;
     final l10n = context.l10n;
     final isMobile = context.isMobile;
-    final isRtl = Directionality.of(context) == TextDirection.rtl;
+    final isRtl = context.isRtl;
     final isDark = context.isDarkMode;
+
+    // Theme-safe deep emerald gradient & high-contrast light foreground
+    final gradientColors = isDark
+        ? [colors.primary300, colors.primary200, colors.primary100]
+        : [colors.primary600, colors.primary800, colors.primary900];
+    final onCtaPrimary = isDark ? colors.neutral900 : colors.grey0;
+    final onCtaMuted = onCtaPrimary.withValues(alpha: 0.84);
+    final onCtaSubtle = onCtaPrimary.withValues(alpha: 0.72);
+    final goldButtonBg = colors.secondary500;
+    final goldButtonFg = isDark ? colors.grey0 : colors.primary900;
 
     return Container(
       width: double.infinity,
-      color: isDark ? colors.background : colors.white,
-      padding: EdgeInsets.symmetric(
-        vertical: context.responsiveValue<double>(
-          mobile: 48,
-          tablet: 64,
-          desktop: 80,
+      color: colors.grey50,
+      child: AdaptiveContentContainer(
+        padding: EdgeInsets.symmetric(
+          vertical: context.responsiveValue<double>(
+            mobile: 48,
+            tablet: 64,
+            desktop: 80,
+          ),
+          horizontal: ResponsivePadding.pageHorizontal(context),
         ),
-        horizontal: context.responsiveValue<double>(
-          mobile: 16,
-          tablet: 24,
-          desktop: 40,
-        ),
-      ),
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: AppBreakpoints.maxContentWidth),
-          child: AppRevealAnimation(
+        child: AppRevealAnimation(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(26),
             child: Container(
-              padding: EdgeInsets.symmetric(
-                vertical: isMobile ? 36 : 56,
-                horizontal: isMobile ? 24 : 48,
-              ),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    colors.primary600,
-                    colors.primary800,
-                    colors.primary900,
-                  ],
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
+                  colors: gradientColors,
+                  begin: AlignmentDirectional.topEnd,
+                  end: AlignmentDirectional.bottomStart,
                 ),
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(26),
+                border: Border.all(
+                  color: isDark
+                      ? colors.primary500.withValues(alpha: 0.32)
+                      : colors.primary400.withValues(alpha: 0.22),
+                  width: 1.2,
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: colors.primary600.withValues(alpha: isDark ? 0.35 : 0.28),
-                    blurRadius: 36,
-                    offset: const Offset(0, 16),
+                    color: (isDark ? colors.black : colors.primary700)
+                        .withValues(alpha: isDark ? 0.45 : 0.25),
+                    blurRadius: 34,
+                    offset: const Offset(0, 14),
                   ),
                 ],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Stack(
                 children: [
-                  // Top badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: colors.secondary500.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(999),
-                      border: Border.all(
-                        color: colors.secondary400.withValues(alpha: 0.4),
+                  // Subtle decorative ambient circles inside CTA card
+                  PositionedDirectional(
+                    top: -60,
+                    end: -60,
+                    child: Container(
+                      width: 220,
+                      height: 220,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [
+                            colors.secondary500.withValues(alpha: 0.16),
+                            colors.secondary500.withValues(alpha: 0.0),
+                          ],
+                        ),
                       ),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                  ),
+                  PositionedDirectional(
+                    bottom: -70,
+                    start: -50,
+                    child: Container(
+                      width: 240,
+                      height: 240,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [
+                            colors.primary500.withValues(alpha: 0.22),
+                            colors.primary500.withValues(alpha: 0.0),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Foreground CTA Content
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: isMobile ? 36 : 56,
+                      horizontal: isMobile ? 22 : 48,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.rocket_launch_rounded, size: 16, color: colors.secondary300),
-                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: colors.secondary500.withValues(alpha: 0.20),
+                            borderRadius: BorderRadius.circular(999),
+                            border: Border.all(
+                              color: colors.secondary400.withValues(alpha: 0.45),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SustinaSvgIcon(
+                                assetPath: AppIcons.getStarted,
+                                size: 15,
+                                color: isDark
+                                    ? colors.secondary600
+                                    : colors.secondary300,
+                                fallbackIcon: Icons.rocket_launch_rounded,
+                              ),
+                              const SizedBox(width: 8),
+                              Flexible(
+                                child: Text(
+                                  l10n.ctaBadge,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyles.font12Bold.copyWith(
+                                    color: isDark
+                                        ? colors.secondary700
+                                        : colors.secondary200,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
                         Text(
-                          l10n.ctaBadge,
-                          style: TextStyle(
-                            fontSize: 12.5,
-                            fontWeight: FontWeight.bold,
-                            color: colors.secondary200,
+                          l10n.ctaTitle,
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.font32Bold.copyWith(
+                            fontSize: context.responsiveValue<double>(
+                              mobile: 24,
+                              tablet: 31,
+                              desktop: 36,
+                            ),
+                            fontWeight: FontWeight.w900,
+                            color: onCtaPrimary,
+                            height: 1.3,
+                          ),
+                        ),
+                        const SizedBox(height: 14),
+
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 640),
+                          child: Text(
+                            l10n.ctaSubtitle,
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.font16Regular.copyWith(
+                              fontSize: isMobile ? 14 : 16,
+                              color: onCtaMuted,
+                              height: 1.6,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+
+                        Wrap(
+                          spacing: 14,
+                          runSpacing: 12,
+                          alignment: WrapAlignment.center,
+                          children: [
+                            ElevatedButton.icon(
+                              onPressed: () => context.go(Routes.register),
+                              icon: Icon(
+                                isRtl
+                                    ? Icons.arrow_back_rounded
+                                    : Icons.arrow_forward_rounded,
+                                size: 18,
+                              ),
+                              label: Text(l10n.ctaRegisterButton),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: goldButtonBg,
+                                foregroundColor: goldButtonFg,
+                                elevation: 0,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: isMobile ? 24 : 30,
+                                  vertical: isMobile ? 14 : 16,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                textStyle: AppTextStyles.font16Bold.copyWith(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                            OutlinedButton.icon(
+                              onPressed: () => context.go(Routes.login),
+                              icon: const Icon(Icons.login_rounded, size: 18),
+                              label: Text(l10n.ctaLoginButton),
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: onCtaPrimary,
+                                side: BorderSide(
+                                  color: onCtaPrimary.withValues(alpha: 0.72),
+                                  width: 1.4,
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: isMobile ? 22 : 28,
+                                  vertical: isMobile ? 14 : 16,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                textStyle: AppTextStyles.font16Bold.copyWith(
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 26),
+
+                        Text(
+                          l10n.ctaGuarantees,
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.font12SemiBold.copyWith(
+                            color: onCtaSubtle,
                           ),
                         ),
                       ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Headline
-                  Text(
-                    l10n.ctaTitle,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: context.responsiveValue<double>(
-                        mobile: 24,
-                        tablet: 32,
-                        desktop: 36,
-                      ),
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      height: 1.3,
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-
-                  // Subtitle
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 640),
-                    child: Text(
-                      l10n.ctaSubtitle,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: isMobile ? 14 : 16.5,
-                        color: Colors.white.withValues(alpha: 0.88),
-                        height: 1.6,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-
-                  // Buttons
-                  Wrap(
-                    spacing: 14,
-                    runSpacing: 12,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () => context.push(Routes.register),
-                        icon: Icon(
-                          isRtl ? Icons.arrow_back_rounded : Icons.arrow_forward_rounded,
-                          size: 18,
-                        ),
-                        label: Text(l10n.ctaRegisterButton),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: colors.secondary500,
-                          foregroundColor: colors.primary900,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: isMobile ? 24 : 32,
-                            vertical: isMobile ? 14 : 16,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          textStyle: const TextStyle(
-                            fontSize: 15.5,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                      ),
-                      OutlinedButton.icon(
-                        onPressed: () => context.push(Routes.login),
-                        icon: const Icon(Icons.login_rounded, size: 18),
-                        label: Text(l10n.ctaLoginButton),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          side: const BorderSide(color: Colors.white, width: 1.4),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: isMobile ? 22 : 28,
-                            vertical: isMobile ? 14 : 16,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          textStyle: const TextStyle(
-                            fontSize: 15.5,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 28),
-
-                  // Guarantees Note
-                  Text(
-                    l10n.ctaGuarantees,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white.withValues(alpha: 0.72),
-                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],

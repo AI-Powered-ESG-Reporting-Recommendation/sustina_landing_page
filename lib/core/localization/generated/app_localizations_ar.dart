@@ -32,13 +32,25 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navWorkflow => 'آلية العمل';
 
   @override
+  String get navDemo => 'حجز عرض';
+
+  @override
+  String get navRegisterSection => 'انضمام الشركات';
+
+  @override
   String get navLogin => 'تسجيل الدخول';
 
   @override
-  String get navRegister => 'تسجيل مؤسسة جديدة';
+  String get navRegister => 'تسجيل شركة';
 
   @override
   String get navContact => 'تواصل معنا';
+
+  @override
+  String get navCloseDrawer => 'إغلاق القائمة';
+
+  @override
+  String get navOpenDrawer => 'فتح قائمة التنقل';
 
   @override
   String get mainMenu => 'القائمة الرئيسية';
@@ -51,6 +63,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get langSwitchTooltip => 'Switch to English';
+
+  @override
+  String get langNameAr => 'العربية';
+
+  @override
+  String get langNameEn => 'English';
 
   @override
   String get heroBadge =>
@@ -67,10 +85,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get heroSubtitle =>
-      'منصة مؤسسية متكاملة تربط العمليات التشغيلية، السلامة HSE، والحوكمة لتسهيل جمع البيانات، أتمتة حساب البصمة الكربونية (Scope 1, 2, 3)، وإصدار تقارير الامتثال المعتمدة للمستثمرين والجهات التنظيمية.';
+      'معاً نحو مستقبل أكثر استدامة — أتمتة حساب البصمة الكربونية (Scope 1, 2, 3)، جمع بيانات الاستدامة بالذكاء الاصطناعي، وإصدار تقارير الامتثال المعتمدة بدقة عالية.';
 
   @override
-  String get heroCtaStart => 'ابدأ الآن — تسجيل المنشأة';
+  String get heroCtaStart => 'تسجيل مؤسستك الآن';
 
   @override
   String get heroCtaExplore => 'استكشف الركائز والمزايا';
@@ -85,7 +103,19 @@ class AppLocalizationsAr extends AppLocalizations {
   String get heroTrustPill3 => 'مساعد تفاعلي بالذكاء الاصطناعي';
 
   @override
-  String get heroTrustPill4 => 'متوافق مع CBAM ونظام الشكاوى';
+  String get heroTrustPill4 => 'متوافق مع CBAM وجاهز للتدقيق';
+
+  @override
+  String get heroScrollTooltip => 'انتقل لاستكشاف المنصة';
+
+  @override
+  String get heroChipScope => 'النطاقات 1، 2، 3';
+
+  @override
+  String get heroChipOcr => 'مسح الفواتير AI OCR';
+
+  @override
+  String get heroChipEsg => 'مؤشر ESG 92%';
 
   @override
   String get previewKpiEsgScore => 'مؤشر الامتثال الكلي ESG';
@@ -156,7 +186,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'إعادة جدولة تشغيل المبردات المركزية خارج أوقات الذروة تخفض انبعاثات النطاق 2 بنسبة 14%.';
 
   @override
-  String get pillarsCategory => 'المحاور الثلاثة الأساسية';
+  String get pillarsCategory => 'ركائز ESG';
 
   @override
   String get pillarsTitle =>
@@ -258,14 +288,43 @@ class AppLocalizationsAr extends AppLocalizations {
       'آلية حل الشكاوى الداخلية خلال المدد المحددة (45 يوماً)';
 
   @override
-  String get featuresCategory => 'قدرات المنصة الذكية | Platform Capabilities';
+  String get featuresCategory => 'القدرات الذكية';
 
   @override
-  String get featuresTitle => 'أدوات متطورة لإدارة استدامة ذكية ومترابطة';
+  String get featuresTitle => 'منظومة ذكاء مترابطة لإدارة الاستدامة المؤسسية';
 
   @override
   String get featuresSubtitle =>
-      'صُممت منصة Sustina لتجمع بين سهولة إدخال البيانات، قوة التحليل بالذكاء الاصطناعي، والالتزام الصارم بالمعايير واللوائح التنظيمية.';
+      'ست قدرات ذكية تعمل بتناغم حول نواة الذكاء الاصطناعي المركزية — تربط جمع البيانات، حساب الانبعاثات، حوكمة الأقسام، وإصدار التقارير المعتمدة.';
+
+  @override
+  String get ecosystemHubBadge => 'نواة ساستينا الذكية';
+
+  @override
+  String get ecosystemHubTitle => 'محرك الذكاء المركزي';
+
+  @override
+  String get ecosystemHubSubtitle =>
+      'تزامن لحظي يربط كافة تدفقات البيانات التشغيلية بمؤشرات الامتثال';
+
+  @override
+  String get ecosystemNodeEnergy => 'الطاقة';
+
+  @override
+  String get ecosystemNodeWater => 'المياه';
+
+  @override
+  String get ecosystemNodeSuppliers => 'الموردون';
+
+  @override
+  String get ecosystemNodePolicies => 'السياسات';
+
+  @override
+  String get ecosystemConnectedStatus => 'متصل';
+
+  @override
+  String get ecosystemInteractiveHint =>
+      'مرّر المؤشر أو اختر أي بطاقة لتتبع مسار ارتباطها المباشر بالمنظومة';
 
   @override
   String get feature1Title => 'المساعد الذكي التفاعلي (AI Chat)';
@@ -285,7 +344,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'تقنية ذكاء اصطناعي لمسح الفواتير والمستندات واستخراج قيم الاستهلاك (كهرباء، وقود، مياه) بدقة متناهية ودون الحاجة للإدخال اليدوي المرهق.';
 
   @override
-  String get feature2Badge => 'AI OCR Extraction';
+  String get feature2Badge => 'AI OCR';
 
   @override
   String get feature3Title => 'حساب البصمة الكربونية بدقة معيارية';
@@ -315,7 +374,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'تتبع امتثال الموردين لمدونة قواعد السلوك وتقييم استدامة سلسلة التوريد لدعم حساب انبعاثات Scope 3 والامتثال للوائح التصدير الأوروبية (CBAM).';
 
   @override
-  String get feature5Badge => 'Supply Chain & CBAM';
+  String get feature5Badge => 'Supply & CBAM';
 
   @override
   String get feature6Title => 'تقارير احترافية وتصدير معتمد';
@@ -325,10 +384,10 @@ class AppLocalizationsAr extends AppLocalizations {
       'إصدار تقارير الاستدامة الرسمية بضغطة زر بصيغ PDF و Excel معتمدة ومتوافقة مع المعايير العالمية للمستثمرين والجهات الرقابية والمصارف التمويلية.';
 
   @override
-  String get feature6Badge => 'Audit-Ready Reports';
+  String get feature6Badge => 'تقارير معتمدة';
 
   @override
-  String get workflowCategory => 'دورة حياة بيانات الاستدامة | Data Lifecycle';
+  String get workflowCategory => 'آلية العمل';
 
   @override
   String get workflowTitle =>
@@ -337,6 +396,9 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get workflowSubtitle =>
       'أربع خطوات متكاملة تضمن دقة البيانات، أتمتة الحسابات، وسرعة إصدار التقارير التنظيمية بكل ثقة.';
+
+  @override
+  String get workflowStepLabel => 'الخطوة';
 
   @override
   String get step1Num => '01';
@@ -379,6 +441,405 @@ class AppLocalizationsAr extends AppLocalizations {
       'توليد تقارير ESG شاملة متوافقة مع المتطلبات الوطنية والدولية وتصديرها بصيغ متعددة جاهزة للتدقيق الخارجي.';
 
   @override
+  String get demoCategory => 'حجز عرض';
+
+  @override
+  String get demoTitle => 'شاهد منصة Sustina مخصصة لبيئة عمل مؤسستك';
+
+  @override
+  String get demoSubtitle =>
+      'اطلب عرضاً توضيحياً مباشراً مع خبرائنا لاستعراض أتمتة البصمة الكربونية (Scope 1–3)، قراءة الفواتير بالذكاء الاصطناعي، وإصدار تقارير ESG المعتمدة.';
+
+  @override
+  String get demoBenefit1Title => 'جولة عملية مخصصة لقطاعك';
+
+  @override
+  String get demoBenefit1Desc =>
+      'استعراض حي للمؤشرات البيئية والحوكمية بما يتناسب مع طبيعة منشآتك وأهداف الامتثال.';
+
+  @override
+  String get demoBenefit2Title => 'تجربة AI OCR والمساعد الذكي';
+
+  @override
+  String get demoBenefit2Desc =>
+      'شاهد تحويل الفواتير فوراً إلى بيانات انبعاثات دقيقة وتوصيات عملية لخفض التكاليف والأثر.';
+
+  @override
+  String get demoBenefit3Title => 'تصميم هيكل الصلاحيات والموردين';
+
+  @override
+  String get demoBenefit3Desc =>
+      'مناقشة توزيع المهام على الأقسام، تتبع الموردين، وتصدير تقارير التدقيق.';
+
+  @override
+  String get demoTrustNote =>
+      'نرد خلال يوم عمل واحد • الجلسات متاحة بالعربية والإنجليزية';
+
+  @override
+  String get demoFormTitle => 'اطلب عرضك التوضيحي المباشر';
+
+  @override
+  String get demoFormSubtitle =>
+      'املأ البيانات التالية وسيتواصل معك فريقنا لتنسيق الموعد الأنسب لك.';
+
+  @override
+  String get demoSubmitButton => 'إرسال طلب العرض التوضيحي';
+
+  @override
+  String get demoSubmitting => 'جاري إرسال الطلب...';
+
+  @override
+  String get demoSuccessBadge => 'تم تأكيد طلب العرض';
+
+  @override
+  String get demoSuccessTitle => 'تم استلام طلب العرض التوضيحي بنجاح';
+
+  @override
+  String get demoSuccessMessage =>
+      'شكراً لتواصلك معنا! تم تسجيل طلبك بنجاح، وسيتواصل معك فريق Sustina قريباً لتنسيق موعد العرض التوضيحي ومناقشة متطلبات مؤسستك.';
+
+  @override
+  String get demoSuccessRef => 'الرقم المرجعي';
+
+  @override
+  String get demoSuccessSchedule => 'الموعد المفضل';
+
+  @override
+  String get demoBookAnother => 'تقديم طلب عرض آخر';
+
+  @override
+  String get fieldFullName => 'الاسم الكامل';
+
+  @override
+  String get hintFullName => 'مثال: سارة القحطاني';
+
+  @override
+  String get fieldCompanyName => 'اسم الشركة / المؤسسة';
+
+  @override
+  String get hintCompanyName => 'مثال: مجموعة الأفق الصناعية';
+
+  @override
+  String get fieldBusinessEmail => 'البريد الإلكتروني الرسمي';
+
+  @override
+  String get hintBusinessEmail => 'name@company.com';
+
+  @override
+  String get fieldPhone => 'رقم الهاتف';
+
+  @override
+  String get hintPhone => '+966 5X XXX XXXX';
+
+  @override
+  String get fieldJobTitle => 'المسمى الوظيفي';
+
+  @override
+  String get hintJobTitle => 'مثال: مدير الاستدامة والامتثال';
+
+  @override
+  String get fieldIndustry => 'القطاع / النشاط التجاري';
+
+  @override
+  String get hintIndustry => 'اختر القطاع التجاري';
+
+  @override
+  String get fieldPreferredDate => 'التاريخ المفضل للعرض';
+
+  @override
+  String get hintPreferredDate => 'اختر التاريخ المفضل';
+
+  @override
+  String get fieldPreferredTime => 'الفترة الزمنية المفضلة';
+
+  @override
+  String get timeSlotMorning => 'صباحاً (9 ص – 12 م)';
+
+  @override
+  String get timeSlotAfternoon => 'ظهراً (12 م – 4 م)';
+
+  @override
+  String get timeSlotEvening => 'مساءً (4 م – 7 م)';
+
+  @override
+  String get fieldNotes => 'رسالة أو متطلبات إضافية (اختياري)';
+
+  @override
+  String get hintNotes =>
+      'اذكر المعايير المستهدفة (مثل GRI أو CBAM) أو عدد المنشآت أو أي استفسار...';
+
+  @override
+  String get sectorManufacturing => 'الصناعة والتصنيع';
+
+  @override
+  String get sectorEnergy => 'الطاقة والنفط والبتروكيماويات';
+
+  @override
+  String get sectorRealEstate => 'العقارات والإنشاءات';
+
+  @override
+  String get sectorLogistics => 'اللوجستيات والنقل';
+
+  @override
+  String get sectorFinance => 'البنوك والخدمات المالية';
+
+  @override
+  String get sectorRetail => 'التجزئة والضيافة والأغذية';
+
+  @override
+  String get sectorHealthcare => 'الرعاية الصحية والأدوية';
+
+  @override
+  String get sectorTechnology => 'التقنية والاتصالات';
+
+  @override
+  String get sectorOther => 'قطاع آخر';
+
+  @override
+  String get sizeSmall => '1 – 50 موظفاً';
+
+  @override
+  String get sizeMedium => '51 – 250 موظفاً';
+
+  @override
+  String get sizeLarge => '251 – 1,000 موظف';
+
+  @override
+  String get sizeEnterprise => 'أكثر من 1,000 موظف';
+
+  @override
+  String get countrySaudi => 'المملكة العربية السعودية';
+
+  @override
+  String get countryEgypt => 'جمهورية مصر العربية';
+
+  @override
+  String get countryUae => 'الإمارات العربية المتحدة';
+
+  @override
+  String get countryQatar => 'دولة قطر';
+
+  @override
+  String get countryKuwait => 'دولة الكويت';
+
+  @override
+  String get countryBahrain => 'مملكة البحرين';
+
+  @override
+  String get countryOman => 'سلطنة عُمان';
+
+  @override
+  String get countryJordan => 'المملكة الأردنية الهاشمية';
+
+  @override
+  String get countryOther => 'دولة أخرى';
+
+  @override
+  String get valRequiredField => 'هذا الحقل مطلوب';
+
+  @override
+  String get valNameMin => 'يرجى إدخال حرفين على الأقل';
+
+  @override
+  String get valEmailRequired => 'البريد الإلكتروني الرسمي مطلوب';
+
+  @override
+  String get valEmailInvalid => 'يرجى إدخال بريد إلكتروني صحيح';
+
+  @override
+  String get valPhoneRequired => 'رقم الهاتف مطلوب';
+
+  @override
+  String get valPhoneInvalid => 'يرجى إدخال رقم هاتف صحيح';
+
+  @override
+  String get valIndustryRequired => 'يرجى اختيار القطاع';
+
+  @override
+  String get valCountryRequired => 'يرجى اختيار الدولة';
+
+  @override
+  String get valCompanySizeRequired => 'يرجى اختيار حجم الشركة';
+
+  @override
+  String get regOverviewCategory => 'انضمام الشركات';
+
+  @override
+  String get regOverviewTitle =>
+      'رحلة تسجيل مؤسسية من 6 مراحل دون اختيار باقة أو دفع فوري';
+
+  @override
+  String get regOverviewSubtitle =>
+      'يبدأ التسجيل في Sustina بإرسال البيانات الأساسية لشركتك فقط. لا يتم طلب باقة اشتراك أو دفع إلكتروني فوري، بل يتواصل معك فريق الإدارة أولاً لتقييم احتياجاتكم وتحديد الباقة الأنسب.';
+
+  @override
+  String get regOverviewNoPaymentPill =>
+      'التسجيل الأولي لا يعني الاشتراك الفوري أو الدفع التلقائي';
+
+  @override
+  String get regOverviewCta => 'تسجيل شركتك الآن';
+
+  @override
+  String get regOverviewSecondaryCta => 'احجز عرضاً توضيحياً أولاً';
+
+  @override
+  String get regPageBackToHome => 'العودة للصفحة الرئيسية';
+
+  @override
+  String get regPageBadge => 'رحلة انضمام استشارية للمؤسسات';
+
+  @override
+  String get regPageTitle => 'تسجيل مؤسستك في منصة Sustina';
+
+  @override
+  String get regPageSubtitle =>
+      'قدّم البيانات الأساسية لمؤسستك أدناه. سيتولى فريق الإدارة التواصل معك لتقييم احتياجاتك، مناقشة الباقات المتاحة، واعتماد الباقة الأنسب قبل الدفع والتفعيل.';
+
+  @override
+  String get regTimelineTitle => 'مراحل الانضمام الست';
+
+  @override
+  String get regTimelineSubtitle =>
+      'تابع مسار التسجيل خطوة بخطوة حتى تفعيل حساب المنشأة';
+
+  @override
+  String get regStage1Title => 'تقديم البيانات الأساسية';
+
+  @override
+  String get regStage1Desc =>
+      'إدخال اسم الشركة، البريد الرسمي، مسؤول التواصل، القطاع، الحجم، والدولة.';
+
+  @override
+  String get regStage2Title => 'تأكيد استلام التسجيل';
+
+  @override
+  String get regStage2Desc =>
+      'ظهور شاشة تأكيد واضحة باستلام طلب انضمام الشركة بنجاح.';
+
+  @override
+  String get regStage3Title => 'متابعة فريق الإدارة';
+
+  @override
+  String get regStage3Desc =>
+      'تواصل إدارة Sustina لفهم متطلبات العمل وتقييم الاحتياجات واقتراح الباقة الأنسب.';
+
+  @override
+  String get regStage4Title => 'اختيار واعتماد الباقة';
+
+  @override
+  String get regStage4Desc =>
+      'الاتفاق المشترك بين العميل وفريق الإدارة على باقة الاشتراك المناسبة.';
+
+  @override
+  String get regStage5Title => 'إتمام عملية الدفع';
+
+  @override
+  String get regStage5Desc =>
+      'تنفيذ إجراءات الدفع وفقاً للباقة المعتمدة والمتفق عليها.';
+
+  @override
+  String get regStage6Title => 'تفعيل المنصة';
+
+  @override
+  String get regStage6Desc =>
+      'يقوم فريق الإدارة بتفعيل وصول الشركة الكامل إلى المنصة بعد تأكيد الدفع.';
+
+  @override
+  String get regStatusActive => 'الخطوة الحالية';
+
+  @override
+  String get regStatusCompleted => 'مكتمل';
+
+  @override
+  String get regStatusNext => 'الخطوة التالية';
+
+  @override
+  String get regStatusUpcoming => 'مرحلة قادمة';
+
+  @override
+  String get regFormTitle => 'الخطوة 1 — البيانات الأساسية للشركة';
+
+  @override
+  String get regFormNotice =>
+      'تنويه مهم: لا يُطلب اختيار باقة أو دفع أي مبلغ عند التسجيل الأولي. يتولى فريق الإدارة مناقشة الباقات والتأكيد معك بعد استلام الطلب.';
+
+  @override
+  String get fieldCompanyEmail => 'البريد الإلكتروني للشركة';
+
+  @override
+  String get hintCompanyEmail => 'info@company.com';
+
+  @override
+  String get fieldContactPerson => 'الاسم الكامل لمسؤول التواصل';
+
+  @override
+  String get hintContactPerson => 'مثال: خالد الحربي';
+
+  @override
+  String get fieldCompanySize => 'حجم الشركة';
+
+  @override
+  String get hintCompanySize => 'اختر فئة عدد الموظفين';
+
+  @override
+  String get fieldCountry => 'الدولة';
+
+  @override
+  String get hintCountry => 'اختر الدولة';
+
+  @override
+  String get fieldRegNotes => 'ملاحظات أو نطاق العمل الأولي (اختياري)';
+
+  @override
+  String get hintRegNotes =>
+      'اذكر باختصار عدد الفروع أو المصانع أو أولويات تقارير الاستدامة...';
+
+  @override
+  String get regSubmitButton => 'إرسال طلب تسجيل الشركة';
+
+  @override
+  String get regSubmitting => 'جاري إرسال طلب التسجيل...';
+
+  @override
+  String get regSuccessBadge => 'الخطوة 2 مكتملة • بانتظار متابعة الإدارة';
+
+  @override
+  String get regSuccessTitle => 'تم استلام طلب تسجيل الشركة بنجاح!';
+
+  @override
+  String get regSuccessDesc =>
+      'تم تسجيل بيانات مؤسستك بنجاح دون أي اشتراك تلقائي أو خصم مالي. سيتواصل معك فريق إدارة Sustina قريباً لفهم متطلبات عملك، تقييم احتياجاتك، مناقشة الباقات المتاحة، واقتراح الباقة الأنسب لك.';
+
+  @override
+  String get regSuccessNextTitle => 'الخطوات القادمة في رحلة التفعيل';
+
+  @override
+  String get regSuccessNextBody =>
+      'يتواصل معك فريق الإدارة لتقييم الاحتياجات واقتراح الباقة المناسبة، ثم يتم الاتفاق واعتماد الباقة وإتمام الدفع، وبعدها يُفعّل فريق الإدارة حساب شركتك على المنصة.';
+
+  @override
+  String get regSuccessRefLabel => 'الرقم المرجعي للتسجيل';
+
+  @override
+  String get regSummaryTitle => 'بيانات الشركة المُرسلة';
+
+  @override
+  String get regBackToLanding => 'العودة إلى الصفحة الرئيسية';
+
+  @override
+  String get regRegisterAnother => 'تسجيل شركة أخرى';
+
+  @override
+  String get loginPlaceholderTitle => 'تسجيل دخول بوابة المؤسسات';
+
+  @override
+  String get loginPlaceholderSubtitle =>
+      'بوابة تسجيل الدخول مخصصة لحسابات المؤسسات التي تم تفعيلها عبر فريق الإدارة. إذا لم تسجل مؤسستك بعد، يُرجى إرسال طلب تسجيل الشركة أولاً.';
+
+  @override
+  String get backToLanding => 'العودة للصفحة التعريفية';
+
+  @override
   String get ctaBadge => 'ابدأ التحول الآن | Get Started Today';
 
   @override
@@ -389,7 +850,7 @@ class AppLocalizationsAr extends AppLocalizations {
       'انضم إلى المنشآت الرائدة التي تعتمد على Sustina لأتمتة تقارير الاستدامة، خفض الانبعاثات، والامتثال للمتطلبات التنظيمية.';
 
   @override
-  String get ctaRegisterButton => 'تسجيل مؤسسة جديدة';
+  String get ctaRegisterButton => 'تسجيل شركة جديدة';
 
   @override
   String get ctaLoginButton => 'تسجيل الدخول';
@@ -409,22 +870,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get footerPortalLinks => 'بوابة المنصة';
 
   @override
-  String get footerLinkAbout => 'عن المنصة';
+  String get footerLinkAbout => 'الرئيسية';
 
   @override
-  String get footerLinkPillars => 'ركائز ESG الثلاث';
+  String get footerLinkPillars => 'ركائز ESG';
 
   @override
-  String get footerLinkFeatures => 'المزايا الذكية';
+  String get footerLinkFeatures => 'القدرات الذكية';
 
   @override
   String get footerLinkWorkflow => 'آلية العمل';
 
   @override
+  String get footerLinkDemo => 'حجز عرض';
+
+  @override
+  String get footerLinkOnboarding => 'انضمام الشركات';
+
+  @override
   String get footerLinkLogin => 'تسجيل الدخول';
 
   @override
-  String get footerLinkRegister => 'تسجيل مؤسسة جديدة';
+  String get footerLinkRegister => 'تسجيل شركة جديدة';
 
   @override
   String get footerLinkTerms => 'الشروط والأحكام';
@@ -526,7 +993,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get refHeroSubtitle => 'معاً نحو مستقبل أكثر استدامة';
 
   @override
-  String get refHeroCta => 'ابدأ الآن';
+  String get refHeroCta => 'تسجيل شركة';
 
   @override
   String get featureSmartAnalytics => 'تحليل ذكي';

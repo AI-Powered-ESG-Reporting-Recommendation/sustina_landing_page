@@ -730,10 +730,10 @@ class _AreaChartPainter extends CustomPainter {
 
     // Tooltip text "92%"
     final tooltipTp = TextPainter(
-      text: const TextSpan(
+      text: TextSpan(
         text: '92%',
         style: TextStyle(
-          color: Colors.white,
+          color: colors.grey0 as Color,
           fontSize: 10.5,
           fontWeight: FontWeight.w900,
           fontFamily: 'Cairo',

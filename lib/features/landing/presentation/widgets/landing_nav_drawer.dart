@@ -4,16 +4,20 @@ import 'package:go_router/go_router.dart';
 import 'package:suatina_web_project/core/localization/app_localizations.dart';
 import 'package:suatina_web_project/core/localization/locale_cubit.dart';
 import 'package:suatina_web_project/core/routing/routes.dart';
+import 'package:suatina_web_project/core/theme/app_texts/app_text_styles.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_cubit.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
-import 'package:suatina_web_project/core/utils/app_images.dart';
+import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
+import 'package:suatina_web_project/features/landing/presentation/models/landing_nav_item.dart';
 
 class LandingNavDrawer extends StatelessWidget {
   const LandingNavDrawer({
     super.key,
+    required this.activeSectionId,
     required this.onNavigateToSection,
   });
 
+  final String activeSectionId;
   final void Function(String sectionKey) onNavigateToSection;
 
   @override
@@ -22,10 +26,11 @@ class LandingNavDrawer extends StatelessWidget {
     final l10n = context.l10n;
     final isRtl = context.isArabic;
     final isDark = context.isDarkMode;
+    final navItems = LandingNavCatalog.items(l10n);
 
     return Drawer(
       backgroundColor: colors.white,
-      surfaceTintColor: Colors.transparent,
+      surfaceTintColor: colors.white.withValues(alpha: 0),
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,104 +40,78 @@ class LandingNavDrawer extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               child: Row(
                 children: [
-                  Image.asset(
-                    AppImages.logo,
-                    height: 38,
-                    fit: BoxFit.contain,
-                    errorBuilder: (context, error, stackTrace) => Text(
-                      'SUSTINA',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: colors.primary500,
-                      ),
-                    ),
+                  const SustinaBrandLogo(
+                    logoSize: 34,
+                    wordmarkFontSize: 20,
                   ),
                   const Spacer(),
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(Icons.close_rounded, color: colors.grey700),
-                    tooltip: 'Close',
+                    icon: Icon(Icons.close_rounded, color: colors.neutral700),
+                    tooltip: l10n.navCloseDrawer,
                   ),
                 ],
               ),
             ),
-            const Divider(height: 1),
+            Divider(height: 1, color: colors.grey200),
 
-            // Navigation Links
+            // Navigation Links matching actual Landing Page sections
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 12,
+                ),
                 children: [
-                  _DrawerItem(
-                    icon: Icons.info_outline_rounded,
-                    label: l10n.navAbout,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      onNavigateToSection('about');
-                    },
-                  ),
-                  _DrawerItem(
-                    icon: Icons.pie_chart_outline_rounded,
-                    label: l10n.navPillars,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      onNavigateToSection('pillars');
-                    },
-                  ),
-                  _DrawerItem(
-                    icon: Icons.auto_awesome_rounded,
-                    label: l10n.navFeatures,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      onNavigateToSection('features');
-                    },
-                  ),
-                  _DrawerItem(
-                    icon: Icons.alt_route_rounded,
-                    label: l10n.navWorkflow,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      onNavigateToSection('workflow');
-                    },
-                  ),
-                  _DrawerItem(
-                    icon: Icons.contact_support_outlined,
-                    label: l10n.navContact,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      onNavigateToSection('contact');
-                    },
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-                    child: Divider(height: 1),
+                  for (final item in navItems) ...[
+                    _DrawerItem(
+                      svgIconPath: item.svgIconPath,
+                      label: item.label,
+                      isActive: activeSectionId == item.sectionId,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        onNavigateToSection(item.sectionId);
+                      },
+                    ),
+                    const SizedBox(height: 4),
+                  ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 10,
+                    ),
+                    child: Divider(height: 1, color: colors.grey200),
                   ),
 
                   // Language Switcher Tile
                   ListTile(
-                    leading: Icon(Icons.language_rounded, color: colors.primary500, size: 22),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    leading: Icon(
+                      Icons.language_rounded,
+                      color: isDark ? colors.primary600 : colors.primary500,
+                      size: 22,
+                    ),
                     title: Text(
-                      isRtl ? 'اللغة: العربية (English)' : 'Language: English (العربية)',
-                      style: TextStyle(
-                        fontSize: 14.5,
-                        fontWeight: FontWeight.w600,
+                      isRtl ? l10n.langNameAr : l10n.langNameEn,
+                      style: AppTextStyles.font14SemiBold.copyWith(
                         color: colors.neutral900,
-                        fontFamily: 'Cairo',
                       ),
                     ),
                     trailing: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
-                        color: colors.primary500.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(6),
+                        color: colors.primary500.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
                         isRtl ? 'EN' : 'عربي',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: colors.primary600,
+                        style: AppTextStyles.font12Bold.copyWith(
+                          color: isDark ? colors.primary700 : colors.primary600,
                         ),
                       ),
                     ),
@@ -141,23 +120,27 @@ class LandingNavDrawer extends StatelessWidget {
 
                   // Theme Mode Switcher Tile
                   ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     leading: Icon(
-                      isDark ? Icons.light_mode_rounded : Icons.dark_mode_outlined,
-                      color: isDark ? colors.secondary400 : colors.primary500,
+                      isDark
+                          ? Icons.light_mode_rounded
+                          : Icons.dark_mode_outlined,
+                      color: isDark ? colors.secondary500 : colors.primary500,
                       size: 22,
                     ),
                     title: Text(
                       isDark ? l10n.themeLight : l10n.themeDark,
-                      style: TextStyle(
-                        fontSize: 14.5,
-                        fontWeight: FontWeight.w600,
+                      style: AppTextStyles.font14SemiBold.copyWith(
                         color: colors.neutral900,
                       ),
                     ),
                     trailing: Switch(
                       value: isDark,
-                      activeThumbColor: colors.secondary400,
-                      onChanged: (_) => context.read<ThemeCubit>().toggleTheme(),
+                      activeThumbColor: colors.secondary500,
+                      onChanged: (_) =>
+                          context.read<ThemeCubit>().toggleTheme(),
                     ),
                     onTap: () => context.read<ThemeCubit>().toggleTheme(),
                   ),
@@ -165,49 +148,31 @@ class LandingNavDrawer extends StatelessWidget {
               ),
             ),
 
-            // Action Buttons
+            // Bottom Action Buttons
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ElevatedButton.icon(
+                  SustinaPrimaryButton(
+                    label: l10n.navRegister,
+                    fullWidth: true,
+                    borderRadius: 14,
                     onPressed: () {
                       Navigator.of(context).pop();
-                      context.push(Routes.register);
+                      context.go(Routes.register);
                     },
-                    icon: Icon(
-                      isRtl ? Icons.arrow_back_rounded : Icons.arrow_forward_rounded,
-                      size: 16,
-                    ),
-                    label: Text(l10n.navRegister),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: colors.primary500,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
                   ),
                   const SizedBox(height: 10),
-                  OutlinedButton(
+                  SustinaSecondaryButton(
+                    label: l10n.navLogin,
+                    icon: Icons.login_rounded,
+                    fullWidth: true,
+                    borderRadius: 14,
                     onPressed: () {
                       Navigator.of(context).pop();
-                      context.push(Routes.login);
+                      context.go(Routes.login);
                     },
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: colors.primary600,
-                      side: BorderSide(color: colors.primary400, width: 1.2),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      l10n.navLogin,
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
                   ),
                 ],
               ),
@@ -221,30 +186,54 @@ class LandingNavDrawer extends StatelessWidget {
 
 class _DrawerItem extends StatelessWidget {
   const _DrawerItem({
-    required this.icon,
+    required this.svgIconPath,
     required this.label,
+    required this.isActive,
     required this.onTap,
   });
 
-  final IconData icon;
+  final String svgIconPath;
   final String label;
+  final bool isActive;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.customAppColors;
+    final isDark = context.isDarkMode;
+    final accentColor = isDark ? colors.primary700 : colors.primary600;
 
-    return ListTile(
-      leading: Icon(icon, color: colors.primary500, size: 22),
-      title: Text(
-        label,
-        style: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w600,
-          color: colors.neutral900,
+    return Material(
+      color: isActive
+          ? colors.primary500.withValues(alpha: isDark ? 0.16 : 0.10)
+          : colors.white.withValues(alpha: 0),
+      borderRadius: BorderRadius.circular(12),
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        leading: SustinaSvgIcon(
+          assetPath: svgIconPath,
+          size: 20,
+          color: isActive ? accentColor : colors.neutral600,
         ),
+        title: Text(
+          label,
+          style: AppTextStyles.font14SemiBold.copyWith(
+            fontWeight: isActive ? FontWeight.w800 : FontWeight.w600,
+            color: isActive ? accentColor : colors.neutral900,
+          ),
+        ),
+        trailing: isActive
+            ? Container(
+                width: 7,
+                height: 7,
+                decoration: BoxDecoration(
+                  color: accentColor,
+                  shape: BoxShape.circle,
+                ),
+              )
+            : null,
+        onTap: onTap,
       ),
-      onTap: onTap,
     );
   }
 }

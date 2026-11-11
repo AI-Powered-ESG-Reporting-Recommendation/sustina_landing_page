@@ -1,25 +1,26 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:suatina_web_project/core/helpers/app_reveal_animation.dart';
 import 'package:suatina_web_project/core/localization/app_localizations.dart';
 import 'package:suatina_web_project/core/responsive/responsive.dart';
 import 'package:suatina_web_project/core/routing/routes.dart';
+import 'package:suatina_web_project/core/theme/app_texts/app_text_styles.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
+import 'package:suatina_web_project/core/utils/app_icons.dart';
 import 'package:suatina_web_project/core/utils/app_images.dart';
+import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
 
-/// Redesigned Minimalist Hero Section:
-/// - Completely removes heavy charts and dashboard previews.
-/// - Focuses on high-impact typography, dual CTAs (Start Now & Book Demo),
-///   and the isolated 3D Earth globe illustration as the majestic visual centerpiece.
-/// - Clean eco-themed background with rolling hills and city skyline.
-/// - Bottom feature pill bar and smooth scroll-down indicator.
 class LandingHeroSection extends StatefulWidget {
   const LandingHeroSection({
     super.key,
     required this.onExplorePressed,
+    required this.onBookDemoPressed,
   });
 
   final VoidCallback onExplorePressed;
+  final VoidCallback onBookDemoPressed;
 
   @override
   State<LandingHeroSection> createState() => _LandingHeroSectionState();
@@ -27,28 +28,20 @@ class LandingHeroSection extends StatefulWidget {
 
 class _LandingHeroSectionState extends State<LandingHeroSection>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _floatController;
-  late final Animation<double> _floatAnimation;
+  late final AnimationController _ambientController;
 
   @override
   void initState() {
     super.initState();
-    _floatController = AnimationController(
+    _ambientController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 3400),
-    )..repeat(reverse: true);
-
-    _floatAnimation = Tween<double>(begin: -5.0, end: 5.0).animate(
-      CurvedAnimation(
-        parent: _floatController,
-        curve: Curves.easeInOutSine,
-      ),
-    );
+      duration: const Duration(milliseconds: 5200),
+    )..repeat();
   }
 
   @override
   void dispose() {
-    _floatController.dispose();
+    _ambientController.dispose();
     super.dispose();
   }
 
@@ -57,25 +50,31 @@ class _LandingHeroSectionState extends State<LandingHeroSection>
     final colors = context.customAppColors;
     final l10n = context.l10n;
     final isDark = context.isDarkMode;
-    final isDesktop = context.screenWidth >= 1024;
-    final isTablet = context.screenWidth >= 768 && !isDesktop;
-    final isMobile = context.screenWidth < 768;
+    final isDesktop = context.isDesktopOrLarger;
+    final isTablet = context.isTablet;
+    final isMobile = context.isMobile;
+    final disableAnimations =
+        MediaQuery.maybeDisableAnimationsOf(context) ?? false;
 
-    final horizontalPadding = context.responsiveValue<double>(
-      mobile: 16.0,
-      tablet: 28.0,
-      desktop: 44.0,
-      largeDesktop: 64.0,
+    final topPadding = context.responsiveValue<double>(
+      mobile: 18,
+      tablet: 28,
+      desktop: 38,
+      largeDesktop: 48,
+    );
+    final bottomPadding = context.responsiveValue<double>(
+      mobile: 36,
+      tablet: 48,
+      desktop: 56,
     );
 
     return Stack(
       children: [
-        // 1. Eco Background Image Layer with Theme-Aware Overlay
+        // 1. Eco Horizon Background with Theme-Adaptive Overlay
         Positioned.fill(
           child: Stack(
             fit: StackFit.expand,
             children: [
-              // Eco background image (assets/images/hero_bg_eco.png)
               Image.asset(
                 AppImages.heroBgEco,
                 fit: BoxFit.cover,
@@ -85,9 +84,8 @@ class _LandingHeroSectionState extends State<LandingHeroSection>
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          colors.primary100.withValues(alpha: 0.35),
+                          colors.primary100.withValues(alpha: 0.4),
                           colors.background,
-                          colors.secondary100.withValues(alpha: 0.25),
                         ],
                         begin: Alignment.topRight,
                         end: Alignment.bottomLeft,
@@ -96,20 +94,19 @@ class _LandingHeroSectionState extends State<LandingHeroSection>
                   );
                 },
               ),
-
-              // Theme adaptation overlay
               Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: isDark
                         ? [
-                            colors.background.withValues(alpha: 0.86),
-                            colors.background.withValues(alpha: 0.94),
+                            colors.background.withValues(alpha: 0.85),
+                            colors.background.withValues(alpha: 0.90),
+                            colors.background,
                           ]
                         : [
-                            colors.white.withValues(alpha: 0.30),
-                            colors.white.withValues(alpha: 0.10),
-                            colors.white.withValues(alpha: 0.45),
+                            colors.background.withValues(alpha: 0.48),
+                            colors.background.withValues(alpha: 0.24),
+                            colors.background.withValues(alpha: 0.72),
                           ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -120,219 +117,244 @@ class _LandingHeroSectionState extends State<LandingHeroSection>
           ),
         ),
 
-        // 2. Main Hero Content
-        Padding(
+        // 2. Main Hero Content constrained via AdaptiveContentContainer
+        AdaptiveContentContainer(
           padding: EdgeInsets.only(
-            left: horizontalPadding,
-            right: horizontalPadding,
-            top: isDesktop ? 36 : 20,
-            bottom: isMobile ? 40 : 56,
+            left: ResponsivePadding.pageHorizontal(context),
+            right: ResponsivePadding.pageHorizontal(context),
+            top: topPadding,
+            bottom: bottomPadding,
           ),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: AppBreakpoints.maxContentWidth),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Desktop 2-column layout or Mobile/Tablet stacked
-                  if (isDesktop)
-                    _buildDesktopLayout(context, colors, l10n)
-                  else
-                    _buildMobileTabletLayout(context, colors, l10n, isTablet),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (isDesktop)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 12,
+                      child: AppRevealAnimation(
+                        triggerOnVisible: false,
+                        delay: const Duration(milliseconds: 60),
+                        child: _HeroCopyAndActions(
+                          l10n: l10n,
+                          ambientController: _ambientController,
+                          disableAnimations: disableAnimations,
+                          onBookDemoPressed: widget.onBookDemoPressed,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 44),
+                    Expanded(
+                      flex: 11,
+                      child: AppRevealAnimation(
+                        triggerOnVisible: false,
+                        delay: const Duration(milliseconds: 160),
+                        child: _HeroEarthCenterpiece(
+                          ambientController: _ambientController,
+                          disableAnimations: disableAnimations,
+                          maxSize: context.isLargeDesktop ? 460 : 410,
+                          showFloatingChips: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              else
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    AppRevealAnimation(
+                      triggerOnVisible: false,
+                      child: _HeroCopyAndActions(
+                        l10n: l10n,
+                        ambientController: _ambientController,
+                        disableAnimations: disableAnimations,
+                        isCentered: true,
+                        onBookDemoPressed: widget.onBookDemoPressed,
+                      ),
+                    ),
+                    const SizedBox(height: 28),
+                    AppRevealAnimation(
+                      triggerOnVisible: false,
+                      delay: const Duration(milliseconds: 140),
+                      child: _HeroEarthCenterpiece(
+                        ambientController: _ambientController,
+                        disableAnimations: disableAnimations,
+                        maxSize: isTablet ? 350 : 255,
+                        showFloatingChips: isTablet,
+                      ),
+                    ),
+                  ],
+                ),
 
-                  SizedBox(height: isDesktop ? 48 : 32),
+              SizedBox(height: isDesktop ? 44 : 28),
 
-                  // Bottom Bar: 3-Feature Pill Bar & Scroll Down Button
-                  _buildBottomBar(context, colors, l10n, isMobile),
-                ],
+              // 3. Trust Capabilities Strip & Scroll Down Action
+              AppRevealAnimation(
+                triggerOnVisible: false,
+                delay: const Duration(milliseconds: 240),
+                child: _HeroTrustStrip(
+                  isMobile: isMobile,
+                  onScrollExplore: widget.onExplorePressed,
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ],
-    );
-  }
-
-  // ---------------------------------------------------------------------------
-  // DESKTOP LAYOUT (>= 1024px): Spacious Minimalist Split
-  // ---------------------------------------------------------------------------
-  Widget _buildDesktopLayout(
-    BuildContext context,
-    dynamic colors,
-    AppLocalizations l10n,
-  ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Text & CTAs Column
-        Expanded(
-          flex: 12,
-          child: AppRevealAnimation(
-            delay: const Duration(milliseconds: 100),
-            child: _HeroTextAndActions(
-              l10n: l10n,
-              colors: colors,
-              onExplorePressed: widget.onExplorePressed,
-            ),
-          ),
-        ),
-        const SizedBox(width: 48),
-
-        // 3D Earth Globe Visual Centerpiece (No clutter, pure beauty)
-        Expanded(
-          flex: 11,
-          child: AppRevealAnimation(
-            delay: const Duration(milliseconds: 220),
-            child: _EarthVisualCenterpiece(
-              floatAnimation: _floatAnimation,
-              colors: colors,
-              maxHeight: 460,
-              maxWidth: 440,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // ---------------------------------------------------------------------------
-  // MOBILE & TABLET LAYOUT (< 1024px): Centered Elegance
-  // ---------------------------------------------------------------------------
-  Widget _buildMobileTabletLayout(
-    BuildContext context,
-    dynamic colors,
-    AppLocalizations l10n,
-    bool isTablet,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Text & CTAs (Centered)
-        AppRevealAnimation(
-          child: _HeroTextAndActions(
-            l10n: l10n,
-            colors: colors,
-            isCentered: true,
-            onExplorePressed: widget.onExplorePressed,
-          ),
-        ),
-        const SizedBox(height: 32),
-
-        // 3D Earth Globe Visual Centerpiece
-        AppRevealAnimation(
-          delay: const Duration(milliseconds: 180),
-          child: _EarthVisualCenterpiece(
-            floatAnimation: _floatAnimation,
-            colors: colors,
-            maxHeight: isTablet ? 360 : 280,
-            maxWidth: isTablet ? 360 : 280,
-          ),
-        ),
-      ],
-    );
-  }
-
-  // ---------------------------------------------------------------------------
-  // BOTTOM BAR: SCROLL DOWN BUTTON
-  // ---------------------------------------------------------------------------
-  Widget _buildBottomBar(
-    BuildContext context,
-    dynamic colors,
-    AppLocalizations l10n,
-    bool isMobile,
-  ) {
-    final isDark = context.isDarkMode;
-    final isArabic = context.isArabic;
-
-    return Align(
-      alignment: isArabic ? Alignment.centerLeft : Alignment.centerRight,
-      child: _ScrollDownCircleButton(
-        colors: colors,
-        isDark: isDark,
-        onPressed: widget.onExplorePressed,
-      ),
     );
   }
 }
 
-// -----------------------------------------------------------------------------
-// HERO TEXT AND DUAL ACTIONS COMPONENT
-// -----------------------------------------------------------------------------
-
-class _HeroTextAndActions extends StatelessWidget {
-  const _HeroTextAndActions({
+class _HeroCopyAndActions extends StatelessWidget {
+  const _HeroCopyAndActions({
     required this.l10n,
-    required this.colors,
-    required this.onExplorePressed,
+    required this.ambientController,
+    required this.disableAnimations,
+    required this.onBookDemoPressed,
     this.isCentered = false,
   });
 
   final AppLocalizations l10n;
-  final dynamic colors;
-  final VoidCallback onExplorePressed;
+  final AnimationController ambientController;
+  final bool disableAnimations;
+  final VoidCallback onBookDemoPressed;
   final bool isCentered;
 
   @override
   Widget build(BuildContext context) {
-    final isDesktop = context.screenWidth >= 1024;
-    final isMobile = context.screenWidth < 768;
-    final isArabic = context.isArabic;
+    final colors = context.customAppColors;
+    final isDark = context.isDarkMode;
+
+    final titleFontSize = context.responsiveValue<double>(
+      mobile: 28,
+      tablet: 37,
+      desktop: 44,
+      largeDesktop: 50,
+    );
+    final subtitleFontSize = context.responsiveValue<double>(
+      mobile: 14,
+      tablet: 15.5,
+      desktop: 16.5,
+      largeDesktop: 17.5,
+    );
 
     return Column(
       crossAxisAlignment:
           isCentered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
-        // 1. High-Impact Headline
+        // Live ESG Badge with Pulsing Dot
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+          decoration: BoxDecoration(
+            color: colors.white.withValues(alpha: isDark ? 0.85 : 0.90),
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(
+              color: colors.primary500.withValues(alpha: isDark ? 0.42 : 0.28),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: colors.black.withValues(alpha: isDark ? 0.22 : 0.04),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RepaintBoundary(
+                child: AnimatedBuilder(
+                  animation: ambientController,
+                  builder: (context, _) {
+                    final pulse = disableAnimations
+                        ? 0.6
+                        : 0.45 +
+                            0.55 *
+                                (0.5 +
+                                    0.5 *
+                                        math.sin(
+                                          ambientController.value * 2 * math.pi,
+                                        ));
+                    return Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: colors.primary500,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: colors.primary500.withValues(
+                              alpha: 0.55 * pulse,
+                            ),
+                            blurRadius: 8 * pulse,
+                            spreadRadius: 2 * pulse,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(width: 9),
+              Flexible(
+                child: Text(
+                  l10n.heroTrustLiveBadge,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.font12Bold.copyWith(
+                    color: isDark ? colors.primary700 : colors.primary600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        // Headline
         Text(
           l10n.refHeroTitle,
-          style: TextStyle(
-            fontSize: isDesktop ? 50 : (isMobile ? 28 : 38),
+          textAlign: isCentered ? TextAlign.center : TextAlign.start,
+          style: AppTextStyles.font48Bold.copyWith(
+            fontSize: titleFontSize,
             fontWeight: FontWeight.w900,
             color: colors.neutral900,
-            fontFamily: 'Cairo',
             height: 1.24,
-            letterSpacing: -0.5,
           ),
-          textAlign: isCentered ? TextAlign.center : TextAlign.start,
         ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 16),
 
-        // 2. Subtitle & Value Proposition
-        Text(
-          isArabic
-              ? 'معاً نحو مستقبل أكثر استدامة — أتمتة حساب البصمة الكربونية (Scope 1, 2, 3)، جمع البيانات بالذكاء الاصطناعي، وإصدار تقارير ESG المعتمدة.'
-              : 'Together towards a more sustainable future — Automate greenhouse gas accounting (Scope 1, 2, 3), streamline operational ESG metrics with AI, and generate audit-ready compliance reports.',
-          style: TextStyle(
-            fontSize: isDesktop ? 17 : (isMobile ? 14 : 15.5),
-            fontWeight: FontWeight.w500,
-            color: colors.grey700,
-            fontFamily: 'Cairo',
-            height: 1.6,
+        // Subtitle
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 620),
+          child: Text(
+            l10n.heroSubtitle,
+            textAlign: isCentered ? TextAlign.center : TextAlign.start,
+            style: AppTextStyles.font16Medium.copyWith(
+              fontSize: subtitleFontSize,
+              color: colors.neutral700,
+              height: 1.65,
+            ),
           ),
-          textAlign: isCentered ? TextAlign.center : TextAlign.start,
         ),
-        const SizedBox(height: 36),
+        const SizedBox(height: 30),
 
-        // 3. Dual Calls To Action (Primary: Start Now, Secondary: Book Demo)
+        // Dual CTAs
         Wrap(
           spacing: 14,
           runSpacing: 12,
           alignment: isCentered ? WrapAlignment.center : WrapAlignment.start,
           children: [
-            // Primary CTA: "ابدأ الآن" / "Start Now"
-            _PrimaryCtaButton(
-              label: l10n.refHeroCta,
-              colors: colors,
-              isArabic: isArabic,
+            SustinaPrimaryButton(
+              label: l10n.heroCtaStart,
               onPressed: () => context.go(Routes.register),
             ),
-
-            // Secondary CTA: "طلب عرض توضيحي" / "Book a Demo"
-            _SecondaryCtaButton(
+            SustinaSecondaryButton(
               label: l10n.heroCtaDemo,
-              colors: colors,
-              isArabic: isArabic,
-              onPressed: onExplorePressed,
+              icon: Icons.calendar_month_rounded,
+              onPressed: onBookDemoPressed,
             ),
           ],
         ),
@@ -341,230 +363,206 @@ class _HeroTextAndActions extends StatelessWidget {
   }
 }
 
-// -----------------------------------------------------------------------------
-// PRIMARY CTA BUTTON
-// -----------------------------------------------------------------------------
-
-class _PrimaryCtaButton extends StatefulWidget {
-  const _PrimaryCtaButton({
-    required this.label,
-    required this.colors,
-    required this.isArabic,
-    required this.onPressed,
+class _HeroEarthCenterpiece extends StatelessWidget {
+  const _HeroEarthCenterpiece({
+    required this.ambientController,
+    required this.disableAnimations,
+    required this.maxSize,
+    required this.showFloatingChips,
   });
 
-  final String label;
-  final dynamic colors;
-  final bool isArabic;
-  final VoidCallback onPressed;
-
-  @override
-  State<_PrimaryCtaButton> createState() => _PrimaryCtaButtonState();
-}
-
-class _PrimaryCtaButtonState extends State<_PrimaryCtaButton> {
-  bool _isHovered = false;
+  final AnimationController ambientController;
+  final bool disableAnimations;
+  final double maxSize;
+  final bool showFloatingChips;
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: widget.onPressed,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          transform: _isHovered
-              ? Matrix4.translationValues(0, -2, 0)
-              : Matrix4.identity(),
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-          decoration: BoxDecoration(
-            color: widget.colors.primary900,
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: [
-              BoxShadow(
-                color: (widget.colors.primary900 as Color)
-                    .withValues(alpha: _isHovered ? 0.38 : 0.22),
-                blurRadius: _isHovered ? 20 : 12,
-                offset: Offset(0, _isHovered ? 8 : 4),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Directional arrow icon
-              Icon(
-                widget.isArabic
-                    ? Icons.arrow_back_rounded
-                    : Icons.arrow_forward_rounded,
-                color: widget.colors.white,
-                size: 18,
-              ),
-              const SizedBox(width: 10),
-
-              // Button label
-              Text(
-                widget.label,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: widget.colors.white,
-                  fontFamily: 'Cairo',
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// -----------------------------------------------------------------------------
-// SECONDARY CTA BUTTON (BOOK A DEMO)
-// -----------------------------------------------------------------------------
-
-class _SecondaryCtaButton extends StatefulWidget {
-  const _SecondaryCtaButton({
-    required this.label,
-    required this.colors,
-    required this.isArabic,
-    required this.onPressed,
-  });
-
-  final String label;
-  final dynamic colors;
-  final bool isArabic;
-  final VoidCallback onPressed;
-
-  @override
-  State<_SecondaryCtaButton> createState() => _SecondaryCtaButtonState();
-}
-
-class _SecondaryCtaButtonState extends State<_SecondaryCtaButton> {
-  bool _isHovered = false;
-
-  @override
-  Widget build(BuildContext context) {
+    final colors = context.customAppColors;
+    final l10n = context.l10n;
     final isDark = context.isDarkMode;
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: widget.onPressed,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          transform: _isHovered
-              ? Matrix4.translationValues(0, -2, 0)
-              : Matrix4.identity(),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          decoration: BoxDecoration(
-            color: _isHovered
-                ? (widget.colors.primary500 as Color).withValues(alpha: 0.12)
-                : (widget.colors.white as Color)
-                    .withValues(alpha: isDark ? 0.08 : 0.85),
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(
-              color: _isHovered
-                  ? (widget.colors.primary600 as Color)
-                  : (widget.colors.grey300 as Color)
-                      .withValues(alpha: isDark ? 0.35 : 0.9),
-              width: 1.2,
+    return RepaintBoundary(
+      child: SizedBox(
+        height: maxSize + 24,
+        child: Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            // Breathing radial aura behind globe
+            AnimatedBuilder(
+              animation: ambientController,
+              builder: (context, _) {
+                final t = disableAnimations
+                    ? 0.5
+                    : 0.5 +
+                        0.5 * math.sin(ambientController.value * 2 * math.pi);
+                return Container(
+                  width: maxSize * (0.82 + 0.06 * t),
+                  height: maxSize * (0.82 + 0.06 * t),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        colors.primary500.withValues(
+                          alpha: isDark ? 0.24 : 0.20,
+                        ),
+                        colors.secondary500.withValues(
+                          alpha: isDark ? 0.09 : 0.07,
+                        ),
+                        colors.background.withValues(alpha: 0),
+                      ],
+                      stops: const [0.0, 0.55, 1.0],
+                    ),
+                  ),
+                );
+              },
             ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.calendar_month_outlined,
-                color: widget.colors.primary700,
-                size: 17,
+
+            // Levitating 3D Earth Globe
+            AnimatedBuilder(
+              animation: ambientController,
+              builder: (context, child) {
+                final dy = disableAnimations
+                    ? 0.0
+                    : 6.0 * math.sin(ambientController.value * 2 * math.pi);
+                return Transform.translate(
+                  offset: Offset(0, dy),
+                  child: child,
+                );
+              },
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: maxSize,
+                  maxWidth: maxSize,
+                ),
+                child: Image.asset(
+                  AppImages.heroEarth,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      AppImages.heroGlobe,
+                      fit: BoxFit.contain,
+                    );
+                  },
+                ),
               ),
-              const SizedBox(width: 8),
-              Text(
-                widget.label,
-                style: TextStyle(
-                  fontSize: 14.5,
-                  fontWeight: FontWeight.bold,
-                  color: widget.colors.neutral900,
-                  fontFamily: 'Cairo',
+            ),
+
+            // Floating Micro-KPI Chips (Desktop & Tablet)
+            if (showFloatingChips) ...[
+              PositionedDirectional(
+                top: maxSize * 0.08,
+                start: 6,
+                child: _FloatingHeroBadge(
+                  ambientController: ambientController,
+                  phase: 0.4,
+                  disableAnimations: disableAnimations,
+                  svgIconPath: AppIcons.emissions,
+                  label: l10n.heroChipScope,
+                  accentColor: colors.primary500,
+                ),
+              ),
+              PositionedDirectional(
+                top: maxSize * 0.26,
+                end: 2,
+                child: _FloatingHeroBadge(
+                  ambientController: ambientController,
+                  phase: 2.1,
+                  disableAnimations: disableAnimations,
+                  svgIconPath: AppIcons.documentUploadIcon,
+                  label: l10n.heroChipOcr,
+                  accentColor: colors.secondary500,
+                ),
+              ),
+              PositionedDirectional(
+                bottom: maxSize * 0.14,
+                start: 16,
+                child: _FloatingHeroBadge(
+                  ambientController: ambientController,
+                  phase: 3.9,
+                  disableAnimations: disableAnimations,
+                  svgIconPath: AppIcons.leaf,
+                  label: l10n.heroChipEsg,
+                  accentColor: colors.info700,
                 ),
               ),
             ],
-          ),
+          ],
         ),
       ),
     );
   }
 }
 
-// -----------------------------------------------------------------------------
-// 3D EARTH VISUAL CENTERPIECE
-// -----------------------------------------------------------------------------
-
-class _EarthVisualCenterpiece extends StatelessWidget {
-  const _EarthVisualCenterpiece({
-    required this.floatAnimation,
-    required this.colors,
-    required this.maxHeight,
-    required this.maxWidth,
+class _FloatingHeroBadge extends StatelessWidget {
+  const _FloatingHeroBadge({
+    required this.ambientController,
+    required this.phase,
+    required this.disableAnimations,
+    required this.svgIconPath,
+    required this.label,
+    required this.accentColor,
   });
 
-  final Animation<double> floatAnimation;
-  final dynamic colors;
-  final double maxHeight;
-  final double maxWidth;
+  final AnimationController ambientController;
+  final double phase;
+  final bool disableAnimations;
+  final String svgIconPath;
+  final String label;
+  final Color accentColor;
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.customAppColors;
+    final isDark = context.isDarkMode;
+
     return AnimatedBuilder(
-      animation: floatAnimation,
+      animation: ambientController,
       builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(0, floatAnimation.value),
-          child: child,
-        );
+        final dy = disableAnimations
+            ? 0.0
+            : 5.0 * math.sin(ambientController.value * 2 * math.pi + phase);
+        return Transform.translate(offset: Offset(0, dy), child: child);
       },
-      child: Center(
-        child: Stack(
-          alignment: Alignment.center,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          color: colors.white.withValues(alpha: isDark ? 0.92 : 0.95),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: accentColor.withValues(alpha: isDark ? 0.45 : 0.28),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: colors.black.withValues(alpha: isDark ? 0.34 : 0.08),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // Ambient Radial Green Glow beneath the pedestal
             Container(
-              width: maxWidth * 0.85,
-              height: maxHeight * 0.75,
+              width: 26,
+              height: 26,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    (colors.primary500 as Color).withValues(alpha: 0.22),
-                    (colors.primary500 as Color).withValues(alpha: 0.08),
-                    Colors.transparent,
-                  ],
-                  stops: const [0.0, 0.5, 1.0],
-                ),
+                color: accentColor.withValues(alpha: 0.14),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              alignment: Alignment.center,
+              child: SustinaSvgIcon(
+                assetPath: svgIconPath,
+                size: 14,
+                color: accentColor,
               ),
             ),
-
-            // Isolated 3D Earth Globe with Rings & Leaves
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: maxHeight,
-                maxWidth: maxWidth,
-              ),
-              child: Image.asset(
-                AppImages.heroEarth,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    AppImages.heroGlobe,
-                    fit: BoxFit.contain,
-                  );
-                },
+            const SizedBox(width: 8),
+            Text(
+              label,
+              style: AppTextStyles.font12Bold.copyWith(
+                color: colors.neutral900,
               ),
             ),
           ],
@@ -574,23 +572,113 @@ class _EarthVisualCenterpiece extends StatelessWidget {
   }
 }
 
-// -----------------------------------------------------------------------------
-// SCROLL DOWN CIRCLE BUTTON
-// -----------------------------------------------------------------------------
+class _HeroTrustStrip extends StatelessWidget {
+  const _HeroTrustStrip({
+    required this.isMobile,
+    required this.onScrollExplore,
+  });
+
+  final bool isMobile;
+  final VoidCallback onScrollExplore;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.customAppColors;
+    final l10n = context.l10n;
+    final isDark = context.isDarkMode;
+
+    final trustItems = [
+      (AppIcons.emissions, l10n.heroTrustPill1),
+      (AppIcons.documentUploadIcon, l10n.heroTrustPill2),
+      (AppIcons.chat, l10n.heroTrustPill3),
+      (AppIcons.report, l10n.heroTrustPill4),
+    ];
+
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 14 : 20,
+        vertical: isMobile ? 14 : 16,
+      ),
+      decoration: BoxDecoration(
+        color: colors.white.withValues(alpha: isDark ? 0.80 : 0.90),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: colors.grey200.withValues(alpha: isDark ? 0.75 : 0.95),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: colors.black.withValues(alpha: isDark ? 0.25 : 0.04),
+            blurRadius: 20,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Wrap(
+              spacing: isMobile ? 12 : 24,
+              runSpacing: 10,
+              alignment:
+                  isMobile ? WrapAlignment.center : WrapAlignment.spaceBetween,
+              children: [
+                for (final item in trustItems)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 28,
+                        height: 28,
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? colors.primary100
+                              : colors.primary100.withValues(alpha: 0.7),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        alignment: Alignment.center,
+                        child: SustinaSvgIcon(
+                          assetPath: item.$1,
+                          size: 15,
+                          color: isDark ? colors.primary700 : colors.primary600,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        item.$2,
+                        style: AppTextStyles.font12SemiBold.copyWith(
+                          color: colors.neutral800,
+                        ),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          ),
+          if (!isMobile) ...[
+            const SizedBox(width: 16),
+            _ScrollDownCircleButton(
+              tooltip: l10n.heroScrollTooltip,
+              onPressed: onScrollExplore,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
 
 class _ScrollDownCircleButton extends StatefulWidget {
   const _ScrollDownCircleButton({
-    required this.colors,
-    required this.isDark,
+    required this.tooltip,
     required this.onPressed,
   });
 
-  final dynamic colors;
-  final bool isDark;
+  final String tooltip;
   final VoidCallback onPressed;
 
   @override
-  State<_ScrollDownCircleButton> createState() => _ScrollDownCircleButtonState();
+  State<_ScrollDownCircleButton> createState() =>
+      _ScrollDownCircleButtonState();
 }
 
 class _ScrollDownCircleButtonState extends State<_ScrollDownCircleButton> {
@@ -598,41 +686,38 @@ class _ScrollDownCircleButtonState extends State<_ScrollDownCircleButton> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: widget.onPressed,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          width: 38,
-          height: 38,
-          transform: _isHovered
-              ? Matrix4.translationValues(0, 3, 0)
-              : Matrix4.identity(),
-          decoration: BoxDecoration(
-            color: (widget.colors.white as Color)
-                .withValues(alpha: widget.isDark ? 0.88 : 0.96),
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: (widget.colors.grey200 as Color)
-                  .withValues(alpha: widget.isDark ? 0.35 : 0.8),
-              width: 1,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: (widget.colors.black as Color)
-                    .withValues(alpha: widget.isDark ? 0.3 : 0.05),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
+    final colors = context.customAppColors;
+    final isDark = context.isDarkMode;
+
+    return Tooltip(
+      message: widget.tooltip,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: GestureDetector(
+          onTap: widget.onPressed,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: 38,
+            height: 38,
+            transform: _isHovered
+                ? Matrix4.translationValues(0, 3, 0)
+                : Matrix4.identity(),
+            decoration: BoxDecoration(
+              color: _isHovered ? colors.primary500 : colors.grey100,
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: _isHovered ? colors.primary500 : colors.grey200,
               ),
-            ],
-          ),
-          child: Icon(
-            Icons.arrow_downward_rounded,
-            size: 18,
-            color: widget.colors.primary700,
+            ),
+            child: Icon(
+              Icons.arrow_downward_rounded,
+              size: 18,
+              color: _isHovered
+                  ? colors.grey0
+                  : (isDark ? colors.primary700 : colors.primary600),
+            ),
           ),
         ),
       ),

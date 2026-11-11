@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:suatina_web_project/core/localization/app_localizations.dart';
 import 'package:suatina_web_project/core/responsive/adaptive_content_container.dart';
+import 'package:suatina_web_project/core/responsive/responsive_extensions.dart';
 import 'package:suatina_web_project/core/routing/routes.dart';
+import 'package:suatina_web_project/core/theme/app_texts/app_text_styles.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
+import 'package:suatina_web_project/core/utils/app_icons.dart';
+import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
 import 'package:suatina_web_project/features/landing/presentation/screens/landing_screen.dart';
+import 'package:suatina_web_project/features/registration/presentation/screens/company_registration_screen.dart';
 import 'package:suatina_web_project/features/splash/presentation/screens/splash_screen.dart';
 
 abstract class AppRouter {
@@ -27,17 +33,11 @@ abstract class AppRouter {
         ),
         GoRoute(
           path: Routes.login,
-          builder: (context, state) => const _PlaceholderAuthScreen(
-            title: 'شاشة تسجيل الدخول',
-            subtitle: 'سيتم بناء هذه الشاشة في المرحلة المخصصة لشاشات المصادقة (Auth).',
-          ),
+          builder: (context, state) => const _PlaceholderAuthScreen(),
         ),
         GoRoute(
           path: Routes.register,
-          builder: (context, state) => const _PlaceholderAuthScreen(
-            title: 'شاشة تسجيل مؤسسة جديدة',
-            subtitle: 'سيتم بناء نموذج تسجيل المؤسسة في مرحلة واجهات المصادقة والتسجيل.',
-          ),
+          builder: (context, state) => const CompanyRegistrationScreen(),
         ),
       ],
     );
@@ -45,85 +45,105 @@ abstract class AppRouter {
 }
 
 class _PlaceholderAuthScreen extends StatelessWidget {
-  const _PlaceholderAuthScreen({
-    required this.title,
-    required this.subtitle,
-  });
-
-  final String title;
-  final String subtitle;
+  const _PlaceholderAuthScreen();
 
   @override
   Widget build(BuildContext context) {
     final colors = context.customAppColors;
+    final l10n = context.l10n;
+    final isDark = context.isDarkMode;
+    final isRtl = context.isRtl;
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_forward_rounded, color: colors.primary600),
-            onPressed: () => context.go(Routes.landing),
-            tooltip: 'العودة للصفحة الرئيسية',
+    return Scaffold(
+      backgroundColor: colors.background,
+      appBar: AppBar(
+        backgroundColor: colors.white,
+        surfaceTintColor: colors.white.withValues(alpha: 0),
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            isRtl ? Icons.arrow_forward_rounded : Icons.arrow_back_rounded,
+            color: isDark ? colors.primary700 : colors.primary600,
           ),
-          title: Text(
-            title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: colors.neutral900,
-            ),
+          onPressed: () => context.go(Routes.landing),
+          tooltip: l10n.backToLanding,
+        ),
+        title: Text(
+          l10n.loginPlaceholderTitle,
+          style: AppTextStyles.font16Bold.copyWith(
+            color: colors.neutral900,
           ),
         ),
-        body: Center(
-          child: AdaptiveFormContainer(
-            child: Container(
-              padding: const EdgeInsets.all(32),
-              decoration: BoxDecoration(
-                color: colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: colors.grey200),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.construction_rounded, size: 48, color: colors.secondary500),
-                  const SizedBox(height: 16),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: colors.neutral900,
-                    ),
+      ),
+      body: Center(
+        child: AdaptiveFormContainer(
+          child: Container(
+            padding: const EdgeInsets.all(32),
+            decoration: BoxDecoration(
+              color: colors.white,
+              borderRadius: BorderRadius.circular(22),
+              border: Border.all(color: colors.grey200),
+              boxShadow: [
+                BoxShadow(
+                  color: colors.black.withValues(alpha: isDark ? 0.28 : 0.05),
+                  blurRadius: 24,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? colors.secondary100
+                        : colors.secondary100.withValues(alpha: 0.9),
+                    shape: BoxShape.circle,
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    subtitle,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: colors.neutral700,
-                      height: 1.5,
-                    ),
+                  alignment: Alignment.center,
+                  child: SustinaSvgIcon(
+                    assetPath: AppIcons.organization,
+                    size: 30,
+                    color: colors.secondary500,
                   ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () => context.go(Routes.landing),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: colors.primary500,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: const Text('العودة للصفحة التعريفية'),
+                ),
+                const SizedBox(height: 18),
+                Text(
+                  l10n.loginPlaceholderTitle,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.font20Bold.copyWith(
+                    color: colors.neutral900,
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  l10n.loginPlaceholderSubtitle,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.font14Regular.copyWith(
+                    color: colors.neutral700,
+                    height: 1.6,
+                  ),
+                ),
+                const SizedBox(height: 26),
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    SustinaPrimaryButton(
+                      label: l10n.navRegister,
+                      onPressed: () => context.go(Routes.register),
+                    ),
+                    SustinaSecondaryButton(
+                      label: l10n.backToLanding,
+                      onPressed: () => context.go(Routes.landing),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
