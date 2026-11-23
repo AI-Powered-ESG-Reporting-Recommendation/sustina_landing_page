@@ -105,22 +105,24 @@ class SustinaSvgIcon extends StatelessWidget {
 class SustinaSectionHeader extends StatelessWidget {
   const SustinaSectionHeader({
     super.key,
-    required this.category,
+    this.category,
     required this.title,
     required this.subtitle,
     this.badgeIcon,
     this.badgeSvgPath,
     this.useSecondaryAccent = false,
     this.maxSubtitleWidth = 700,
+    this.showBadge = false,
   });
 
-  final String category;
+  final String? category;
   final String title;
   final String subtitle;
   final IconData? badgeIcon;
   final String? badgeSvgPath;
   final bool useSecondaryAccent;
   final double maxSubtitleWidth;
+  final bool showBadge;
 
   @override
   Widget build(BuildContext context) {
@@ -148,37 +150,39 @@ class SustinaSectionHeader extends StatelessWidget {
     return AppRevealAnimation(
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-            decoration: BoxDecoration(
-              color: pillBg,
-              borderRadius: BorderRadius.circular(999),
-              border: Border.all(color: pillBorder),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (badgeSvgPath != null) ...[
-                  SustinaSvgIcon(
-                    assetPath: badgeSvgPath!,
-                    size: 15,
-                    color: pillFg,
+          if (showBadge && category != null) ...[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+              decoration: BoxDecoration(
+                color: pillBg,
+                borderRadius: BorderRadius.circular(999),
+                border: Border.all(color: pillBorder),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (badgeSvgPath != null) ...[
+                    SustinaSvgIcon(
+                      assetPath: badgeSvgPath!,
+                      size: 15,
+                      color: pillFg,
+                    ),
+                    const SizedBox(width: 7),
+                  ] else if (badgeIcon != null) ...[
+                    Icon(badgeIcon, size: 15, color: pillFg),
+                    const SizedBox(width: 7),
+                  ],
+                  Text(
+                    category!,
+                    style: AppTextStyles.font12Bold.copyWith(
+                      color: pillFg,
+                    ),
                   ),
-                  const SizedBox(width: 7),
-                ] else if (badgeIcon != null) ...[
-                  Icon(badgeIcon, size: 15, color: pillFg),
-                  const SizedBox(width: 7),
                 ],
-                Text(
-                  category,
-                  style: AppTextStyles.font12Bold.copyWith(
-                    color: pillFg,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
+          ],
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 820),
             child: Text(
@@ -480,6 +484,10 @@ class SustinaFormField extends StatelessWidget {
     this.maxLines = 1,
     this.textInputAction = TextInputAction.next,
     this.prefixSvgPath,
+    this.obscureText = false,
+    this.suffixIcon,
+    this.readOnly = false,
+    this.onTap,
   });
 
   final TextEditingController controller;
@@ -492,6 +500,10 @@ class SustinaFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final int maxLines;
   final TextInputAction textInputAction;
+  final bool obscureText;
+  final Widget? suffixIcon;
+  final bool readOnly;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -509,6 +521,9 @@ class SustinaFormField extends StatelessWidget {
           keyboardType: keyboardType,
           maxLines: maxLines,
           textInputAction: textInputAction,
+          obscureText: obscureText,
+          readOnly: readOnly,
+          onTap: onTap,
           style: AppTextStyles.font14Medium.copyWith(
             color: colors.neutral900,
           ),
@@ -517,6 +532,7 @@ class SustinaFormField extends StatelessWidget {
             hint: hint,
             prefixIcon: prefixIcon,
             prefixSvgPath: prefixSvgPath,
+            suffixIcon: suffixIcon,
             isDark: isDark,
             alignIconTop: maxLines > 1,
           ),
@@ -628,6 +644,7 @@ InputDecoration _sustinaInputDecoration(
   required String hint,
   required IconData prefixIcon,
   String? prefixSvgPath,
+  Widget? suffixIcon,
   required bool isDark,
   bool alignIconTop = false,
 }) {
@@ -646,6 +663,7 @@ InputDecoration _sustinaInputDecoration(
       horizontal: 14,
       vertical: alignIconTop ? 14 : 13,
     ),
+    suffixIcon: suffixIcon,
     prefixIcon: alignIconTop
         ? null
         : Padding(

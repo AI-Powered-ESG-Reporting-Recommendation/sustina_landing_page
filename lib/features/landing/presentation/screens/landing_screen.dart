@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
 import 'package:suatina_web_project/features/landing/presentation/models/landing_nav_item.dart';
+import 'package:suatina_web_project/features/landing/presentation/widgets/landing_contact_section.dart';
 import 'package:suatina_web_project/features/landing/presentation/widgets/landing_cta_section.dart';
 import 'package:suatina_web_project/features/landing/presentation/widgets/landing_demo_section.dart';
+import 'package:suatina_web_project/features/landing/presentation/widgets/landing_faq_section.dart';
 import 'package:suatina_web_project/features/landing/presentation/widgets/landing_features_section.dart';
 import 'package:suatina_web_project/features/landing/presentation/widgets/landing_footer.dart';
 import 'package:suatina_web_project/features/landing/presentation/widgets/landing_header.dart';
@@ -31,6 +33,7 @@ class _LandingScreenState extends State<LandingScreen> {
   final GlobalKey _workflowKey = GlobalKey();
   final GlobalKey _demoKey = GlobalKey();
   final GlobalKey _registrationKey = GlobalKey();
+  final GlobalKey _faqKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
 
   final ValueNotifier<String> _activeSectionNotifier = ValueNotifier<String>(
@@ -48,6 +51,8 @@ class _LandingScreenState extends State<LandingScreen> {
     (LandingNavCatalog.workflowId, _workflowKey),
     (LandingNavCatalog.demoId, _demoKey),
     (LandingNavCatalog.registrationId, _registrationKey),
+    (LandingNavCatalog.faqId, _faqKey),
+    (LandingNavCatalog.contactId, _contactKey),
   ];
 
   @override
@@ -80,8 +85,8 @@ class _LandingScreenState extends State<LandingScreen> {
     final position = _scrollController.position;
     if (offset >= position.maxScrollExtent - 40 &&
         position.maxScrollExtent > 0) {
-      if (_activeSectionNotifier.value != LandingNavCatalog.registrationId) {
-        _activeSectionNotifier.value = LandingNavCatalog.registrationId;
+      if (_activeSectionNotifier.value != LandingNavCatalog.contactId) {
+        _activeSectionNotifier.value = LandingNavCatalog.contactId;
       }
       return;
     }
@@ -128,6 +133,9 @@ class _LandingScreenState extends State<LandingScreen> {
       case LandingNavCatalog.registrationId:
         targetKey = _registrationKey;
         break;
+      case LandingNavCatalog.faqId:
+        targetKey = _faqKey;
+        break;
       case LandingNavCatalog.contactId:
         targetKey = _contactKey;
         break;
@@ -138,9 +146,7 @@ class _LandingScreenState extends State<LandingScreen> {
 
     final activeTargetId = sectionKey == 'about'
         ? LandingNavCatalog.heroId
-        : (sectionKey == LandingNavCatalog.contactId
-              ? LandingNavCatalog.registrationId
-              : sectionKey);
+        : sectionKey;
 
     _activeSectionNotifier.value = activeTargetId;
     _programmaticScrollActive = true;
@@ -245,6 +251,24 @@ class _LandingScreenState extends State<LandingScreen> {
                   ),
                 ),
 
+                // 7. Frequently Asked Questions (FAQ) Section
+                KeyedSubtree(
+                  key: _faqKey,
+                  child: LandingFaqSection(
+                    onContactPressed: () =>
+                        _scrollToSection(LandingNavCatalog.contactId),
+                  ),
+                ),
+
+                // 8. Contact Us Section
+                KeyedSubtree(
+                  key: _contactKey,
+                  child: LandingContactSection(
+                    onBookDemoPressed: () =>
+                        _scrollToSection(LandingNavCatalog.demoId),
+                  ),
+                ),
+
                 // Call To Action Banner
                 LandingCtaSection(
                   onBookDemoPressed: () =>
@@ -252,11 +276,8 @@ class _LandingScreenState extends State<LandingScreen> {
                 ),
 
                 // Footer
-                KeyedSubtree(
-                  key: _contactKey,
-                  child: LandingFooter(
-                    onNavigateToSection: _scrollToSection,
-                  ),
+                LandingFooter(
+                  onNavigateToSection: _scrollToSection,
                 ),
               ],
             ),

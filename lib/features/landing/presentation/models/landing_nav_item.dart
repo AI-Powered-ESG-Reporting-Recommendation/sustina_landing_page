@@ -24,6 +24,7 @@ class LandingNavCatalog {
   static const String workflowId = 'workflow';
   static const String demoId = 'demo';
   static const String registrationId = 'registration';
+  static const String faqId = 'faq';
   static const String contactId = 'contact';
 
   /// Ordered section items whose labels match the actual landing page sections.
@@ -56,6 +57,16 @@ class LandingNavCatalog {
         LandingNavItem(
           sectionId: registrationId,
           label: l10n.navRegisterSection,
+          svgIconPath: AppIcons.organization,
+        ),
+        LandingNavItem(
+          sectionId: faqId,
+          label: l10n.navFaq,
+          svgIconPath: AppIcons.chat,
+        ),
+        LandingNavItem(
+          sectionId: contactId,
+          label: l10n.navContact,
           svgIconPath: AppIcons.organization,
         ),
       ];

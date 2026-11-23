@@ -6,8 +6,7 @@ import 'package:suatina_web_project/core/responsive/responsive.dart';
 import 'package:suatina_web_project/core/routing/routes.dart';
 import 'package:suatina_web_project/core/theme/app_texts/app_text_styles.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
-import 'package:suatina_web_project/core/utils/app_icons.dart';
-import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
+
 
 class LandingCtaSection extends StatelessWidget {
   const LandingCtaSection({
@@ -120,46 +119,6 @@ class LandingCtaSection extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: colors.secondary500.withValues(alpha: 0.20),
-                            borderRadius: BorderRadius.circular(999),
-                            border: Border.all(
-                              color: colors.secondary400.withValues(alpha: 0.45),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SustinaSvgIcon(
-                                assetPath: AppIcons.getStarted,
-                                size: 15,
-                                color: isDark
-                                    ? colors.secondary600
-                                    : colors.secondary300,
-                                fallbackIcon: Icons.rocket_launch_rounded,
-                              ),
-                              const SizedBox(width: 8),
-                              Flexible(
-                                child: Text(
-                                  l10n.ctaBadge,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTextStyles.font12Bold.copyWith(
-                                    color: isDark
-                                        ? colors.secondary700
-                                        : colors.secondary200,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-
                         Text(
                           l10n.ctaTitle,
                           textAlign: TextAlign.center,

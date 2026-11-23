@@ -226,7 +226,6 @@ class _HeroCopyAndActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.customAppColors;
-    final isDark = context.isDarkMode;
 
     final titleFontSize = context.responsiveValue<double>(
       mobile: 28,
@@ -245,74 +244,6 @@ class _HeroCopyAndActions extends StatelessWidget {
       crossAxisAlignment:
           isCentered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
-        // Live ESG Badge with Pulsing Dot
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-          decoration: BoxDecoration(
-            color: colors.white.withValues(alpha: isDark ? 0.85 : 0.90),
-            borderRadius: BorderRadius.circular(999),
-            border: Border.all(
-              color: colors.primary500.withValues(alpha: isDark ? 0.42 : 0.28),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: colors.black.withValues(alpha: isDark ? 0.22 : 0.04),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RepaintBoundary(
-                child: AnimatedBuilder(
-                  animation: ambientController,
-                  builder: (context, _) {
-                    final pulse = disableAnimations
-                        ? 0.6
-                        : 0.45 +
-                            0.55 *
-                                (0.5 +
-                                    0.5 *
-                                        math.sin(
-                                          ambientController.value * 2 * math.pi,
-                                        ));
-                    return Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: colors.primary500,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: colors.primary500.withValues(
-                              alpha: 0.55 * pulse,
-                            ),
-                            blurRadius: 8 * pulse,
-                            spreadRadius: 2 * pulse,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(width: 9),
-              Flexible(
-                child: Text(
-                  l10n.heroTrustLiveBadge,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.font12Bold.copyWith(
-                    color: isDark ? colors.primary700 : colors.primary600,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
-
         // Headline
         Text(
           l10n.refHeroTitle,

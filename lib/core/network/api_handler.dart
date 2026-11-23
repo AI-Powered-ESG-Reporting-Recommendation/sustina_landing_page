@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:suatina_web_project/core/di/service_locator.dart';
 import 'package:suatina_web_project/core/network/api_result.dart';
-import 'package:suatina_web_project/core/network/error_response_model.dart';
 import 'package:suatina_web_project/core/network/network_failure.dart';
 import 'package:suatina_web_project/core/network/network_manager.dart';
 
@@ -28,8 +27,15 @@ class ApiHandler {
     if (e.type == DioExceptionType.badResponse) {
       if (e.response?.data != null &&
           e.response!.data is Map<String, dynamic>) {
-        final errorModel = ErrorResponseModel.fromJson(e.response!.data);
-        return NetworkFailure.serverError(errorModel.error);
+        final data = e.response!.data as Map<String, dynamic>;
+        final dynamic rawMsg = data['message'];
+        if (rawMsg is List && rawMsg.isNotEmpty) {
+          return NetworkFailure.serverError(rawMsg.map((e) => e.toString()).join('\n'));
+        } else if (rawMsg is String && rawMsg.isNotEmpty) {
+          return NetworkFailure.serverError(rawMsg);
+        } else if (data['error'] != null) {
+          return NetworkFailure.serverError(data['error'].toString());
+        }
       }
       return const NetworkFailure.unknown("Unknown server error");
     }

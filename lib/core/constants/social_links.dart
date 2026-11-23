@@ -29,7 +29,7 @@ class SustinaSocialCatalog {
   const SustinaSocialCatalog._();
 
   static const String facebookUrl = 'https://www.facebook.com/sustiina';
-  static const String instagramUrl = 'https://www.instagram.com/__sustina__';
+  static const String instagramUrl = 'https://www.instagram.com/__sustina__/';
   static const String linkedinUrl =
       'https://www.linkedin.com/company/sustiina/';
   static const String xUrl = 'https://x.com/__sustina__';

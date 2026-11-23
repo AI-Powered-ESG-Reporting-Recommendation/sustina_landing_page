@@ -2101,6 +2101,498 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sustina on X'**
   String get socialXLabel;
+
+  /// No description provided for @navFaq.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQ'**
+  String get navFaq;
+
+  /// No description provided for @footerLinkFaq.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQ'**
+  String get footerLinkFaq;
+
+  /// No description provided for @footerLinkContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Us'**
+  String get footerLinkContact;
+
+  /// No description provided for @faqBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'FREQUENTLY ASKED QUESTIONS'**
+  String get faqBadge;
+
+  /// No description provided for @faqTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything You Need to Know About Sustina'**
+  String get faqTitle;
+
+  /// No description provided for @faqSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear answers about platform capabilities, demo arrangements, ESG packages, and corporate onboarding.'**
+  String get faqSubtitle;
+
+  /// No description provided for @faqQ1.
+  ///
+  /// In en, this message translates to:
+  /// **'How does the Sustina platform work and what services does it provide?'**
+  String get faqQ1;
+
+  /// No description provided for @faqA1.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustina is an intelligent, cloud-native ESG data management platform. It automates cross-departmental sustainability data collection, calculates Scope 1, Scope 2, and Scope 3 greenhouse gas emissions, benchmarks resource consumption (water, energy, waste), and generates audit-ready ESG disclosure reports aligned with global and regional frameworks including GRI, CSRD, and ISSB.'**
+  String get faqA1;
+
+  /// No description provided for @faqQ2.
+  ///
+  /// In en, this message translates to:
+  /// **'How can our organization request a live demo and contact administration?'**
+  String get faqQ2;
+
+  /// No description provided for @faqA2.
+  ///
+  /// In en, this message translates to:
+  /// **'You can request an interactive demo directly through the \'Book a Demo\' section on our landing page, or reach out to our team at support@sustina.io. Our ESG solution architects will schedule a 30-minute tailored walkthrough showcasing customized dashboards, data pipelines, and reporting features specific to your industry.'**
+  String get faqA2;
+
+  /// No description provided for @faqQ3.
+  ///
+  /// In en, this message translates to:
+  /// **'How are subscription packages selected and pricing arranged?'**
+  String get faqQ3;
+
+  /// No description provided for @faqA3.
+  ///
+  /// In en, this message translates to:
+  /// **'Sustina follows a consultative onboarding model. We do not impose immediate online payments or rigid packages. Following your initial registration, our administration evaluates your operational footprint, number of facilities, and regulatory reporting scope to recommend a transparent, tailored subscription package that aligns perfectly with your enterprise requirements.'**
+  String get faqA3;
+
+  /// No description provided for @faqQ4.
+  ///
+  /// In en, this message translates to:
+  /// **'How do organizations register and what verification documents are required?'**
+  String get faqQ4;
+
+  /// No description provided for @faqA4.
+  ///
+  /// In en, this message translates to:
+  /// **'Organizations submit their legal name, headquarters country, first reporting year, industry classification, and administrative credentials through the registration portal, accompanied by an official verification document (such as a Commercial Registration certificate or official authorization in PDF format) to ensure verified enterprise identity.'**
+  String get faqA4;
+
+  /// No description provided for @faqQ5.
+  ///
+  /// In en, this message translates to:
+  /// **'How are corporate registration requests reviewed and approved?'**
+  String get faqQ5;
+
+  /// No description provided for @faqA5.
+  ///
+  /// In en, this message translates to:
+  /// **'Upon submission, each organization receives a unique reference tracking code. Our compliance administration team reviews the submitted corporate credentials and verification documents within 24–48 business hours. Once verified, our team coordinates package alignment, invoice settlement, and activates the dedicated enterprise workspace.'**
+  String get faqA5;
+
+  /// No description provided for @faqStillQuestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Still have questions? Our advisory team is always ready to assist.'**
+  String get faqStillQuestions;
+
+  /// No description provided for @faqContactCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact ESG Specialists'**
+  String get faqContactCta;
+
+  /// No description provided for @contactBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'GET IN TOUCH'**
+  String get contactBadge;
+
+  /// No description provided for @contactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s Build Your Sustainable Future Together'**
+  String get contactTitle;
+
+  /// No description provided for @contactSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Have inquiries about compliance, framework integration, or enterprise deployment? Speak directly with our sustainability specialists.'**
+  String get contactSubtitle;
+
+  /// No description provided for @contactDirectChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct Channels'**
+  String get contactDirectChannels;
+
+  /// No description provided for @contactSupportEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'support@sustina.io'**
+  String get contactSupportEmail;
+
+  /// No description provided for @contactSupportEmailDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Official support & partnership inquiries'**
+  String get contactSupportEmailDesc;
+
+  /// No description provided for @contactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'0101591764'**
+  String get contactPhone;
+
+  /// No description provided for @contactPhoneDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Direct Support & Consultation Line'**
+  String get contactPhoneDesc;
+
+  /// No description provided for @contactSlaBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Guaranteed Response Within 24 Business Hours'**
+  String get contactSlaBadge;
+
+  /// No description provided for @contactFormTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Us a Message'**
+  String get contactFormTitle;
+
+  /// No description provided for @fieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Name'**
+  String get fieldName;
+
+  /// No description provided for @hintName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get hintName;
+
+  /// No description provided for @fieldMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get fieldMessage;
+
+  /// No description provided for @hintMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us about your organization\'s sustainability goals or questions...'**
+  String get hintMessage;
+
+  /// No description provided for @contactSubmitButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get contactSubmitButton;
+
+  /// No description provided for @contactSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending...'**
+  String get contactSubmitting;
+
+  /// No description provided for @contactSuccessTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Message Sent Successfully!'**
+  String get contactSuccessTitle;
+
+  /// No description provided for @contactSuccessDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for reaching out. Our ESG advisory team has received your message and will get back to you within 24 business hours.'**
+  String get contactSuccessDesc;
+
+  /// No description provided for @contactSendAnother.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Another Message'**
+  String get contactSendAnother;
+
+  /// No description provided for @valMessageRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your message'**
+  String get valMessageRequired;
+
+  /// No description provided for @valMessageMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Message must be at least 10 characters'**
+  String get valMessageMin;
+
+  /// No description provided for @fieldLegalName.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization Legal Name'**
+  String get fieldLegalName;
+
+  /// No description provided for @hintLegalName.
+  ///
+  /// In en, this message translates to:
+  /// **'Official registered entity name'**
+  String get hintLegalName;
+
+  /// No description provided for @fieldSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Economic Sector'**
+  String get fieldSector;
+
+  /// No description provided for @hintSector.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Sector'**
+  String get hintSector;
+
+  /// No description provided for @fieldSubIndustry.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub-Industry Classification'**
+  String get fieldSubIndustry;
+
+  /// No description provided for @hintSubIndustry.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Sub-Industry'**
+  String get hintSubIndustry;
+
+  /// No description provided for @fieldHqCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Headquarters Country'**
+  String get fieldHqCountry;
+
+  /// No description provided for @hintHqCountry.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Headquarters Country'**
+  String get hintHqCountry;
+
+  /// No description provided for @fieldFirstReportingYear.
+  ///
+  /// In en, this message translates to:
+  /// **'First Reporting Year'**
+  String get fieldFirstReportingYear;
+
+  /// No description provided for @hintFirstReportingYear.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 2026'**
+  String get hintFirstReportingYear;
+
+  /// No description provided for @fieldAdminEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Admin Email'**
+  String get fieldAdminEmail;
+
+  /// No description provided for @hintAdminEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'admin@company.com'**
+  String get hintAdminEmail;
+
+  /// No description provided for @fieldPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Portal Password'**
+  String get fieldPassword;
+
+  /// No description provided for @hintPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum 12 characters with upper, lower, number, special'**
+  String get hintPassword;
+
+  /// No description provided for @fieldConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get fieldConfirmPassword;
+
+  /// No description provided for @hintConfirmPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-enter the password'**
+  String get hintConfirmPassword;
+
+  /// No description provided for @fieldVerificationDoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Official Verification Document (PDF)'**
+  String get fieldVerificationDoc;
+
+  /// No description provided for @fieldVerificationDocHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Commercial Register or Official Authorization (PDF only)'**
+  String get fieldVerificationDocHint;
+
+  /// No description provided for @btnUploadDoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose PDF Document'**
+  String get btnUploadDoc;
+
+  /// No description provided for @btnChangeDoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Document'**
+  String get btnChangeDoc;
+
+  /// No description provided for @btnRemoveDoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get btnRemoveDoc;
+
+  /// No description provided for @termsCheckboxLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'I confirm that I am an authorized corporate representative and accept the Sustina Platform Terms of Service and Verification Protocol.'**
+  String get termsCheckboxLabel;
+
+  /// No description provided for @termsRequiredError.
+  ///
+  /// In en, this message translates to:
+  /// **'You must accept the terms and conditions to proceed'**
+  String get termsRequiredError;
+
+  /// No description provided for @docRequiredError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload an official PDF verification document'**
+  String get docRequiredError;
+
+  /// No description provided for @selectSectorFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a Sector first'**
+  String get selectSectorFirst;
+
+  /// No description provided for @selectIndustryFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an Industry first'**
+  String get selectIndustryFirst;
+
+  /// No description provided for @loadingSectors.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading sectors...'**
+  String get loadingSectors;
+
+  /// No description provided for @loadingIndustries.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading industries...'**
+  String get loadingIndustries;
+
+  /// No description provided for @loadingSubIndustries.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading sub-industries...'**
+  String get loadingSubIndustries;
+
+  /// No description provided for @retryLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryLoading;
+
+  /// No description provided for @valLegalNameMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal name must be at least 2 characters'**
+  String get valLegalNameMin;
+
+  /// No description provided for @valReportingYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid year between 2000 and 2100'**
+  String get valReportingYear;
+
+  /// No description provided for @valPasswordMin.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 12 characters'**
+  String get valPasswordMin;
+
+  /// No description provided for @valPasswordComplexity.
+  ///
+  /// In en, this message translates to:
+  /// **'Must include uppercase, lowercase, digit, and special char (@\$!%*?&)'**
+  String get valPasswordComplexity;
+
+  /// No description provided for @valPasswordMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get valPasswordMatch;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'PENDING REVIEW'**
+  String get statusPending;
+
+  /// No description provided for @refCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference Code'**
+  String get refCodeLabel;
+
+  /// No description provided for @submissionDateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Submission Date'**
+  String get submissionDateLabel;
+
+  /// No description provided for @organizationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Organization'**
+  String get organizationLabel;
+
+  /// No description provided for @adminLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Email'**
+  String get adminLabel;
+
+  /// No description provided for @classificationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Classification'**
+  String get classificationLabel;
+
+  /// No description provided for @reportingYearLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'First Reporting Year'**
+  String get reportingYearLabel;
+
+  /// No description provided for @documentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded Document'**
+  String get documentLabel;
 }
 
 class _AppLocalizationsDelegate

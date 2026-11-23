@@ -1079,4 +1079,272 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get socialXLabel => 'Sustina on X';
+
+  @override
+  String get navFaq => 'FAQ';
+
+  @override
+  String get footerLinkFaq => 'FAQ';
+
+  @override
+  String get footerLinkContact => 'Contact Us';
+
+  @override
+  String get faqBadge => 'FREQUENTLY ASKED QUESTIONS';
+
+  @override
+  String get faqTitle => 'Everything You Need to Know About Sustina';
+
+  @override
+  String get faqSubtitle =>
+      'Clear answers about platform capabilities, demo arrangements, ESG packages, and corporate onboarding.';
+
+  @override
+  String get faqQ1 =>
+      'How does the Sustina platform work and what services does it provide?';
+
+  @override
+  String get faqA1 =>
+      'Sustina is an intelligent, cloud-native ESG data management platform. It automates cross-departmental sustainability data collection, calculates Scope 1, Scope 2, and Scope 3 greenhouse gas emissions, benchmarks resource consumption (water, energy, waste), and generates audit-ready ESG disclosure reports aligned with global and regional frameworks including GRI, CSRD, and ISSB.';
+
+  @override
+  String get faqQ2 =>
+      'How can our organization request a live demo and contact administration?';
+
+  @override
+  String get faqA2 =>
+      'You can request an interactive demo directly through the \'Book a Demo\' section on our landing page, or reach out to our team at support@sustina.io. Our ESG solution architects will schedule a 30-minute tailored walkthrough showcasing customized dashboards, data pipelines, and reporting features specific to your industry.';
+
+  @override
+  String get faqQ3 =>
+      'How are subscription packages selected and pricing arranged?';
+
+  @override
+  String get faqA3 =>
+      'Sustina follows a consultative onboarding model. We do not impose immediate online payments or rigid packages. Following your initial registration, our administration evaluates your operational footprint, number of facilities, and regulatory reporting scope to recommend a transparent, tailored subscription package that aligns perfectly with your enterprise requirements.';
+
+  @override
+  String get faqQ4 =>
+      'How do organizations register and what verification documents are required?';
+
+  @override
+  String get faqA4 =>
+      'Organizations submit their legal name, headquarters country, first reporting year, industry classification, and administrative credentials through the registration portal, accompanied by an official verification document (such as a Commercial Registration certificate or official authorization in PDF format) to ensure verified enterprise identity.';
+
+  @override
+  String get faqQ5 =>
+      'How are corporate registration requests reviewed and approved?';
+
+  @override
+  String get faqA5 =>
+      'Upon submission, each organization receives a unique reference tracking code. Our compliance administration team reviews the submitted corporate credentials and verification documents within 24–48 business hours. Once verified, our team coordinates package alignment, invoice settlement, and activates the dedicated enterprise workspace.';
+
+  @override
+  String get faqStillQuestions =>
+      'Still have questions? Our advisory team is always ready to assist.';
+
+  @override
+  String get faqContactCta => 'Contact ESG Specialists';
+
+  @override
+  String get contactBadge => 'GET IN TOUCH';
+
+  @override
+  String get contactTitle => 'Let\'s Build Your Sustainable Future Together';
+
+  @override
+  String get contactSubtitle =>
+      'Have inquiries about compliance, framework integration, or enterprise deployment? Speak directly with our sustainability specialists.';
+
+  @override
+  String get contactDirectChannels => 'Direct Channels';
+
+  @override
+  String get contactSupportEmail => 'support@sustina.io';
+
+  @override
+  String get contactSupportEmailDesc =>
+      'Official support & partnership inquiries';
+
+  @override
+  String get contactPhone => '0101591764';
+
+  @override
+  String get contactPhoneDesc => 'Direct Support & Consultation Line';
+
+  @override
+  String get contactSlaBadge => 'Guaranteed Response Within 24 Business Hours';
+
+  @override
+  String get contactFormTitle => 'Send Us a Message';
+
+  @override
+  String get fieldName => 'Your Name';
+
+  @override
+  String get hintName => 'Enter your full name';
+
+  @override
+  String get fieldMessage => 'Message';
+
+  @override
+  String get hintMessage =>
+      'Tell us about your organization\'s sustainability goals or questions...';
+
+  @override
+  String get contactSubmitButton => 'Send Message';
+
+  @override
+  String get contactSubmitting => 'Sending...';
+
+  @override
+  String get contactSuccessTitle => 'Message Sent Successfully!';
+
+  @override
+  String get contactSuccessDesc =>
+      'Thank you for reaching out. Our ESG advisory team has received your message and will get back to you within 24 business hours.';
+
+  @override
+  String get contactSendAnother => 'Send Another Message';
+
+  @override
+  String get valMessageRequired => 'Please enter your message';
+
+  @override
+  String get valMessageMin => 'Message must be at least 10 characters';
+
+  @override
+  String get fieldLegalName => 'Organization Legal Name';
+
+  @override
+  String get hintLegalName => 'Official registered entity name';
+
+  @override
+  String get fieldSector => 'Economic Sector';
+
+  @override
+  String get hintSector => 'Select Sector';
+
+  @override
+  String get fieldSubIndustry => 'Sub-Industry Classification';
+
+  @override
+  String get hintSubIndustry => 'Select Sub-Industry';
+
+  @override
+  String get fieldHqCountry => 'Headquarters Country';
+
+  @override
+  String get hintHqCountry => 'Select Headquarters Country';
+
+  @override
+  String get fieldFirstReportingYear => 'First Reporting Year';
+
+  @override
+  String get hintFirstReportingYear => 'e.g., 2026';
+
+  @override
+  String get fieldAdminEmail => 'Official Admin Email';
+
+  @override
+  String get hintAdminEmail => 'admin@company.com';
+
+  @override
+  String get fieldPassword => 'Portal Password';
+
+  @override
+  String get hintPassword =>
+      'Minimum 12 characters with upper, lower, number, special';
+
+  @override
+  String get fieldConfirmPassword => 'Confirm Password';
+
+  @override
+  String get hintConfirmPassword => 'Re-enter the password';
+
+  @override
+  String get fieldVerificationDoc => 'Official Verification Document (PDF)';
+
+  @override
+  String get fieldVerificationDocHint =>
+      'Upload Commercial Register or Official Authorization (PDF only)';
+
+  @override
+  String get btnUploadDoc => 'Choose PDF Document';
+
+  @override
+  String get btnChangeDoc => 'Change Document';
+
+  @override
+  String get btnRemoveDoc => 'Remove';
+
+  @override
+  String get termsCheckboxLabel =>
+      'I confirm that I am an authorized corporate representative and accept the Sustina Platform Terms of Service and Verification Protocol.';
+
+  @override
+  String get termsRequiredError =>
+      'You must accept the terms and conditions to proceed';
+
+  @override
+  String get docRequiredError =>
+      'Please upload an official PDF verification document';
+
+  @override
+  String get selectSectorFirst => 'Select a Sector first';
+
+  @override
+  String get selectIndustryFirst => 'Select an Industry first';
+
+  @override
+  String get loadingSectors => 'Loading sectors...';
+
+  @override
+  String get loadingIndustries => 'Loading industries...';
+
+  @override
+  String get loadingSubIndustries => 'Loading sub-industries...';
+
+  @override
+  String get retryLoading => 'Retry';
+
+  @override
+  String get valLegalNameMin => 'Legal name must be at least 2 characters';
+
+  @override
+  String get valReportingYear => 'Enter a valid year between 2000 and 2100';
+
+  @override
+  String get valPasswordMin => 'Password must be at least 12 characters';
+
+  @override
+  String get valPasswordComplexity =>
+      'Must include uppercase, lowercase, digit, and special char (@\$!%*?&)';
+
+  @override
+  String get valPasswordMatch => 'Passwords do not match';
+
+  @override
+  String get statusPending => 'PENDING REVIEW';
+
+  @override
+  String get refCodeLabel => 'Reference Code';
+
+  @override
+  String get submissionDateLabel => 'Submission Date';
+
+  @override
+  String get organizationLabel => 'Organization';
+
+  @override
+  String get adminLabel => 'Admin Email';
+
+  @override
+  String get classificationLabel => 'Classification';
+
+  @override
+  String get reportingYearLabel => 'First Reporting Year';
+
+  @override
+  String get documentLabel => 'Uploaded Document';
 }

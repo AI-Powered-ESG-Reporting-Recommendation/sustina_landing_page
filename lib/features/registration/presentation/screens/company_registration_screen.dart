@@ -1,8 +1,8 @@
-import 'dart:math' as math;
-
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:suatina_web_project/core/di/service_locator.dart';
 import 'package:suatina_web_project/core/helpers/app_reveal_animation.dart';
 import 'package:suatina_web_project/core/localization/app_localizations.dart';
 import 'package:suatina_web_project/core/localization/locale_cubit.dart';
@@ -13,7 +13,8 @@ import 'package:suatina_web_project/core/theme/theme_manager/theme_cubit.dart';
 import 'package:suatina_web_project/core/theme/theme_manager/theme_extensions.dart';
 import 'package:suatina_web_project/core/utils/app_icons.dart';
 import 'package:suatina_web_project/core/widgets/sustina_ui_kit.dart';
-import 'package:suatina_web_project/features/registration/presentation/models/company_registration_data.dart';
+import 'package:suatina_web_project/features/registration/logic/registration_cubit.dart';
+import 'package:suatina_web_project/features/registration/logic/registration_state.dart';
 import 'package:suatina_web_project/features/registration/presentation/widgets/registration_form_card.dart';
 import 'package:suatina_web_project/features/registration/presentation/widgets/registration_stepper_timeline.dart';
 import 'package:suatina_web_project/features/registration/presentation/widgets/registration_success_view.dart';
@@ -29,36 +30,13 @@ class CompanyRegistrationScreen extends StatefulWidget {
 class _CompanyRegistrationScreenState extends State<CompanyRegistrationScreen> {
   final ScrollController _scrollController = ScrollController();
 
-  bool _isSubmitting = false;
-  CompanyRegistrationData? _submittedData;
-
   @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
   }
 
-  Future<void> _handleRegistrationSubmit(CompanyRegistrationData rawData) async {
-    setState(() => _isSubmitting = true);
-    await Future<void>.delayed(const Duration(milliseconds: 700));
-    if (!mounted) return;
-
-    final refNum = 1000 + math.Random().nextInt(8999);
-    setState(() {
-      _isSubmitting = false;
-      _submittedData = CompanyRegistrationData(
-        referenceCode: 'REG-2026-$refNum',
-        companyName: rawData.companyName,
-        companyEmail: rawData.companyEmail,
-        contactPerson: rawData.contactPerson,
-        phone: rawData.phone,
-        industryId: rawData.industryId,
-        companySizeId: rawData.companySizeId,
-        countryId: rawData.countryId,
-        notes: rawData.notes,
-      );
-    });
-
+  void _scrollToTop() {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
         0,
@@ -66,13 +44,6 @@ class _CompanyRegistrationScreenState extends State<CompanyRegistrationScreen> {
         curve: Curves.easeOutCubic,
       );
     }
-  }
-
-  void _resetRegistration() {
-    setState(() {
-      _submittedData = null;
-      _isSubmitting = false;
-    });
   }
 
   @override
@@ -83,194 +54,372 @@ class _CompanyRegistrationScreenState extends State<CompanyRegistrationScreen> {
     final isArabic = context.isArabic;
     final isRtl = context.isRtl;
     final isDesktop = context.isDesktopOrLarger;
-    final isSubmitted = _submittedData != null;
 
-    return Scaffold(
-      backgroundColor: colors.background,
-      body: Column(
-        children: [
-          // Top Branded Navigation Strip
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: colors.white.withValues(alpha: isDark ? 0.94 : 0.96),
-              border: Border(bottom: BorderSide(color: colors.grey200)),
-            ),
-            child: AdaptiveContentContainer(
-              padding: EdgeInsets.symmetric(
-                horizontal: ResponsivePadding.pageHorizontal(context),
-                vertical: 14,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: GestureDetector(
-                          onTap: () => context.go(Routes.landing),
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: SustinaBrandLogo(
-                              logoSize: context.isMobile ? 28 : 32,
-                              wordmarkFontSize: context.isMobile ? 17 : 19,
+    return BlocProvider<RegistrationCubit>(
+      create: (_) => getIt<RegistrationCubit>(),
+      child: BlocConsumer<RegistrationCubit, RegistrationState>(
+        listener: (context, state) {
+          if (state.isSuccess) {
+            _scrollToTop();
+          }
+        },
+        builder: (context, state) {
+          final cubit = context.read<RegistrationCubit>();
+          final isSubmitted = state.isSuccess;
+
+          return Scaffold(
+            backgroundColor: colors.background,
+            body: Stack(
+              children: [
+                // Ambient Radial Background Glows for Enterprise SaaS depth
+                Positioned(
+                  top: -120,
+                  left: isRtl ? null : -100,
+                  right: isRtl ? -100 : null,
+                  child: IgnorePointer(
+                    child: Container(
+                      width: 520,
+                      height: 520,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [
+                            colors.primary500.withValues(
+                              alpha: isDark ? 0.12 : 0.08,
+                            ),
+                            colors.primary500.withValues(alpha: 0.0),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 250,
+                  left: isRtl ? -80 : null,
+                  right: isRtl ? null : -80,
+                  child: IgnorePointer(
+                    child: Container(
+                      width: 480,
+                      height: 480,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(
+                          colors: [
+                            colors.secondary500.withValues(
+                              alpha: isDark ? 0.08 : 0.06,
+                            ),
+                            colors.secondary500.withValues(alpha: 0.0),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Main Column Layout
+                Column(
+                  children: [
+                    // Top Frosted Glassmorphic Navigation Bar
+                    ClipRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: colors.white.withValues(
+                              alpha: isDark ? 0.88 : 0.92,
+                            ),
+                            border: Border(
+                              bottom: BorderSide(
+                                color: colors.grey200.withValues(
+                                  alpha: isDark ? 0.7 : 0.9,
+                                ),
+                              ),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: colors.black.withValues(
+                                  alpha: isDark ? 0.25 : 0.03,
+                                ),
+                                blurRadius: 16,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: AdaptiveContentContainer(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: ResponsivePadding.pageHorizontal(
+                                context,
+                              ),
+                              vertical: 14,
+                            ),
+                            child: Row(
+                              children: [
+                                // Brand Logo
+                                Expanded(
+                                  child: Align(
+                                    alignment: AlignmentDirectional.centerStart,
+                                    child: MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: GestureDetector(
+                                        onTap: () => context.go(Routes.landing),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: SustinaBrandLogo(
+                                            logoSize:
+                                                context.isMobile ? 28 : 34,
+                                            wordmarkFontSize:
+                                                context.isMobile ? 17 : 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+
+                                // Institutional Trust Badge (Desktop Only)
+                                if (isDesktop) ...[
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 6,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: isDark
+                                          ? colors.primary100.withValues(
+                                              alpha: 0.7,
+                                            )
+                                          : colors.primary100,
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: colors.primary500.withValues(
+                                          alpha: 0.35,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.verified_user_rounded,
+                                          size: 15,
+                                          color: isDark
+                                              ? colors.primary700
+                                              : colors.primary600,
+                                        ),
+                                        const SizedBox(width: 6),
+                                        Text(
+                                          isArabic
+                                              ? 'بوابة التسجيل المؤسسي المعتمدة'
+                                              : 'Official Enterprise Onboarding',
+                                          style: AppTextStyles.font12Bold
+                                              .copyWith(
+                                            color: isDark
+                                                ? colors.primary700
+                                                : colors.primary600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                ],
+
+                                // Language Toggle Pill
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(color: colors.grey200),
+                                  ),
+                                  child: TextButton.icon(
+                                    onPressed: () => context
+                                        .read<LocaleCubit>()
+                                        .toggleLocale(),
+                                    style: TextButton.styleFrom(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: context.isMobile ? 8 : 12,
+                                        vertical: 6,
+                                      ),
+                                      minimumSize: Size.zero,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                    icon: Icon(
+                                      Icons.language_rounded,
+                                      size: 16,
+                                      color: isDark
+                                          ? colors.primary700
+                                          : colors.primary600,
+                                    ),
+                                    label: Text(
+                                      context.isMobile
+                                          ? (isArabic ? 'EN' : 'AR')
+                                          : (isArabic
+                                              ? l10n.langNameEn
+                                              : l10n.langNameAr),
+                                      style: AppTextStyles.font12Bold.copyWith(
+                                        color: colors.neutral900,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+
+                                // Theme Toggle Button
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(color: colors.grey200),
+                                  ),
+                                  child: IconButton(
+                                    tooltip: l10n.themeModeTooltip,
+                                    constraints: const BoxConstraints(
+                                      minWidth: 36,
+                                      minHeight: 36,
+                                    ),
+                                    padding: const EdgeInsets.all(6),
+                                    onPressed: () => context
+                                        .read<ThemeCubit>()
+                                        .toggleTheme(),
+                                    icon: Icon(
+                                      isDark
+                                          ? Icons.wb_sunny_rounded
+                                          : Icons.nightlight_round,
+                                      size: 18,
+                                      color: isDark
+                                          ? colors.secondary500
+                                          : colors.primary600,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+
+                                // Back to Landing Button
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: OutlinedButton.icon(
+                                    onPressed: () => context.go(Routes.landing),
+                                    icon: Icon(
+                                      isRtl
+                                          ? Icons.arrow_forward_rounded
+                                          : Icons.arrow_back_rounded,
+                                      size: 16,
+                                    ),
+                                    label: Text(
+                                      context.isMobile
+                                          ? l10n.navHome
+                                          : l10n.regPageBackToHome,
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                      foregroundColor: colors.neutral900,
+                                      side: BorderSide(color: colors.grey300),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: context.isMobile ? 10 : 16,
+                                        vertical: 10,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      textStyle: AppTextStyles.font12Bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
 
-                  // Language Toggle
-                  TextButton.icon(
-                    onPressed: () => context.read<LocaleCubit>().toggleLocale(),
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.isMobile ? 6 : 10,
-                      ),
-                      minimumSize: Size.zero,
-                    ),
-                    icon: Icon(
-                      Icons.language_rounded,
-                      size: 16,
-                      color: isDark ? colors.primary700 : colors.primary600,
-                    ),
-                    label: Text(
-                      context.isMobile
-                          ? (isArabic ? 'EN' : 'AR')
-                          : (isArabic ? l10n.langNameEn : l10n.langNameAr),
-                      style: AppTextStyles.font12Bold.copyWith(
-                        color: colors.neutral900,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-
-                  // Theme Toggle
-                  IconButton(
-                    tooltip: l10n.themeModeTooltip,
-                    constraints: const BoxConstraints(
-                      minWidth: 36,
-                      minHeight: 36,
-                    ),
-                    padding: const EdgeInsets.all(6),
-                    onPressed: () => context.read<ThemeCubit>().toggleTheme(),
-                    icon: Icon(
-                      isDark
-                          ? Icons.wb_sunny_rounded
-                          : Icons.nightlight_round,
-                      size: 19,
-                      color: isDark ? colors.secondary500 : colors.primary600,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-
-                  // Back to Landing Button
-                  OutlinedButton.icon(
-                    onPressed: () => context.go(Routes.landing),
-                    icon: Icon(
-                      isRtl
-                          ? Icons.arrow_forward_rounded
-                          : Icons.arrow_back_rounded,
-                      size: 16,
-                    ),
-                    label: Text(
-                      context.isMobile
-                          ? l10n.navHome
-                          : l10n.regPageBackToHome,
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: colors.neutral900,
-                      side: BorderSide(color: colors.grey300),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.isMobile ? 10 : 16,
-                        vertical: 10,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      textStyle: AppTextStyles.font12Bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Scrollable Registration Workspace
-          Expanded(
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: AdaptiveContentContainer(
-                padding: EdgeInsets.symmetric(
-                  horizontal: ResponsivePadding.pageHorizontal(context),
-                  vertical: context.responsiveValue<double>(
-                    mobile: 28,
-                    tablet: 40,
-                    desktop: 52,
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    // Hero Intro
-                    AppRevealAnimation(
-                      triggerOnVisible: false,
-                      child: SustinaSectionHeader(
-                        category: l10n.regPageBadge,
-                        title: l10n.regPageTitle,
-                        subtitle: l10n.regPageSubtitle,
-                        badgeSvgPath: AppIcons.organization,
-                        useSecondaryAccent: true,
-                      ),
-                    ),
-                    SizedBox(
-                      height: context.responsiveValue(mobile: 28, desktop: 44),
-                    ),
-
-                    if (isDesktop)
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Form OR Stage 2 Confirmation View
-                          Expanded(
-                            flex: 12,
-                            child: _buildFormOrConfirmation(),
-                          ),
-                          const SizedBox(width: 30),
-
-                          // Live 6-Stage Animated Stepper Timeline
-                          Expanded(
-                            flex: 9,
-                            child: RegistrationStepperTimeline(
-                              isSubmitted: isSubmitted,
+                    // Scrollable Registration Workspace
+                    Expanded(
+                      child: SingleChildScrollView(
+                        controller: _scrollController,
+                        child: AdaptiveContentContainer(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: ResponsivePadding.pageHorizontal(context),
+                            vertical: context.responsiveValue<double>(
+                              mobile: 24,
+                              tablet: 36,
+                              desktop: 48,
                             ),
                           ),
-                        ],
-                      )
-                    else
-                      Column(
-                        children: [
-                          _buildFormOrConfirmation(),
-                          const SizedBox(height: 26),
-                          RegistrationStepperTimeline(
-                            isSubmitted: isSubmitted,
+                          child: Column(
+                            children: [
+                              // Hero Intro (Notice: showBadge is false by default in SustinaSectionHeader)
+                              AppRevealAnimation(
+                                triggerOnVisible: false,
+                                child: SustinaSectionHeader(
+                                  category: l10n.regPageBadge,
+                                  title: l10n.regPageTitle,
+                                  subtitle: l10n.regPageSubtitle,
+                                  badgeSvgPath: AppIcons.organization,
+                                  useSecondaryAccent: true,
+                                ),
+                              ),
+                              SizedBox(
+                                height: context.responsiveValue(
+                                  mobile: 24,
+                                  desktop: 40,
+                                ),
+                              ),
+
+                              if (isDesktop)
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Form OR Confirmation View
+                                    Expanded(
+                                      flex: 13,
+                                      child: _buildFormOrConfirmation(
+                                        state,
+                                        cubit,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 32),
+
+                                    // Live 6-Stage Animated Stepper Timeline & Security Info
+                                    Expanded(
+                                      flex: 9,
+                                      child: RegistrationStepperTimeline(
+                                        isSubmitted: isSubmitted,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              else
+                                Column(
+                                  children: [
+                                    _buildFormOrConfirmation(state, cubit),
+                                    const SizedBox(height: 28),
+                                    RegistrationStepperTimeline(
+                                      isSubmitted: isSubmitted,
+                                    ),
+                                  ],
+                                ),
+                              const SizedBox(height: 48),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    const SizedBox(height: 36),
+                    ),
                   ],
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 
-  Widget _buildFormOrConfirmation() {
+  Widget _buildFormOrConfirmation(
+    RegistrationState state,
+    RegistrationCubit cubit,
+  ) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 450),
       switchInCurve: Curves.easeOutCubic,
@@ -287,18 +436,15 @@ class _CompanyRegistrationScreenState extends State<CompanyRegistrationScreen> {
           ),
         );
       },
-      child: _submittedData == null
-          ? RegistrationFormCard(
-              key: const ValueKey('reg_form'),
-              isSubmitting: _isSubmitting,
-              onSubmit: _handleRegistrationSubmit,
+      child: state.registrationResponse == null
+          ? const RegistrationFormCard(
+              key: ValueKey('reg_form'),
             )
           : RegistrationSuccessView(
               key: const ValueKey('reg_success'),
-              data: _submittedData!,
-              onReset: _resetRegistration,
+              response: state.registrationResponse!,
+              onReset: cubit.reset,
             ),
     );
   }
 }
-

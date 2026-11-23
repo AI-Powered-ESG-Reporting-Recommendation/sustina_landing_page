@@ -1072,4 +1072,267 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get socialXLabel => 'Sustina على منصة X';
+
+  @override
+  String get navFaq => 'الأسئلة الشائعة';
+
+  @override
+  String get footerLinkFaq => 'الأسئلة الشائعة';
+
+  @override
+  String get footerLinkContact => 'تواصل معنا';
+
+  @override
+  String get faqBadge => 'الأسئلة الشائعة';
+
+  @override
+  String get faqTitle => 'كل ما تحتاج معرفته عن منصة ستينا';
+
+  @override
+  String get faqSubtitle =>
+      'إجابات واضحة حول آلية عمل المنصة، طلب العروض التوضيحية، باقات الاشتراك، وإجراءات تسجيل المؤسسات.';
+
+  @override
+  String get faqQ1 =>
+      'كيف تعمل منصة ستينا وما هي الخدمات التي تقدمها للمؤسسات؟';
+
+  @override
+  String get faqA1 =>
+      'ستينا هي منصة سحابية ذكية لإدارة بيانات الاستدامة. تعمل على أتمتة جمع البيانات البيئية والمجتمعية والحوكمة من مختلف أقسام المؤسسة، وحساب انبعاثات الغازات الدفيئة (النطاق 1 و 2 و 3)، ومراقبة استهلاك الطاقة والمياه والنفايات، وتوليد تقارير إفصاح معتمدة وجاهزة للتدقيق متوافقة مع معايير GRI و CSRD و ISSB.';
+
+  @override
+  String get faqQ2 =>
+      'كيف يمكن لمنشأتنا طلب عرض توضيحي مباشر والتواصل مع إدارة المنصة؟';
+
+  @override
+  String get faqA2 =>
+      'يمكنك طلب عرض توضيحي تفاعلي مباشرة عبر قسم \'طلب عرض توضيحي\' في الصفحة الرئيسية، أو عبر مراسلتنا على support@sustina.io. سيقوم خبراء الاستدامة بجدولة جلسة تفاعلية مخصصة مدتها 30 دقيقة لاستعراض لوحات التحكم ونماذج التقارير الملائمة لقطاع عملك.';
+
+  @override
+  String get faqQ3 => 'كيف يتم اختيار باقات الاشتراك وتحديد تكلفة الخدمة؟';
+
+  @override
+  String get faqA3 =>
+      'تعتمد ستينا نموذجاً استشارياً مرناً لا يفرض دفعاً فورياً أو باقات ثابتة. بعد تقديم طلب التسجيل، يقوم فريقنا بدراسة نطاق عمليات مؤسستك وعدد فروعها ومتطلباتها التنظيمية لاقتراح باقة اشتراك مخصصة وشفافة تلائم احتياجاتك الفعلية قبل الدفع والتفعيل.';
+
+  @override
+  String get faqQ4 =>
+      'كيف تسجل المؤسسات في المنصة وما هي وثائق التحقق المطلوبة؟';
+
+  @override
+  String get faqA4 =>
+      'تقوم المؤسسة بتقديم بياناتها الأساسية بما في ذلك الاسم القانوني، بلد المقر، أول سنة إفصاح، التصنيف الصناعي، وحساب المسؤول عبر بوابة التسجيل، مع إرفاق وثيقة تحقق رسمية (مثل السجل التجاري أو خطاب تفويض بصيغة PDF) لضمان موثوقية الهوية المؤسسية.';
+
+  @override
+  String get faqQ5 => 'كيف تتم مراجعة طلبات التسجيل واعتماد الحسابات المؤسسية؟';
+
+  @override
+  String get faqA5 =>
+      'يحصل كل طلب تسجيل على كود مرجعي فريد للمتابعة. يراجع فريق الامتثال الوثائق وبيانات المنشأة خلال 24 إلى 48 ساعة عمل. بعد التحقق، يتم التنسيق لاختيار الباقة وسداد الفاتورة وتفعيل مساحة العمل الخاصة بالمؤسسة بكامل صلاحياتها.';
+
+  @override
+  String get faqStillQuestions =>
+      'هل لديك استفسارات إضافية؟ فريقنا الاستشاري على أتم الاستعداد لمساعدتك.';
+
+  @override
+  String get faqContactCta => 'تواصل مع خبراء الاستدامة';
+
+  @override
+  String get contactBadge => 'تواصل معنا';
+
+  @override
+  String get contactTitle => 'لنبنِ معاً مستقبلاً مؤسسياً مستداماً';
+
+  @override
+  String get contactSubtitle =>
+      'هل لديك استفسارات حول معايير الامتثال أو الربط التقني أو متطلبات مؤسستك؟ تواصل مباشرة مع فريق خبراء ستينا.';
+
+  @override
+  String get contactDirectChannels => 'قنوات التواصل المباشر';
+
+  @override
+  String get contactSupportEmail => 'support@sustina.io';
+
+  @override
+  String get contactSupportEmailDesc =>
+      'للاستفسارات الرسمية والدعم وشراكات الأعمال';
+
+  @override
+  String get contactPhone => '0101591764';
+
+  @override
+  String get contactPhoneDesc => 'خط الدعم والاستشارات المباشر';
+
+  @override
+  String get contactSlaBadge => 'استجابة مضمونة خلال 24 ساعة عمل';
+
+  @override
+  String get contactFormTitle => 'أرسل لنا استفسارك';
+
+  @override
+  String get fieldName => 'الاسم الكريم';
+
+  @override
+  String get hintName => 'أدخل اسمك بالكامل';
+
+  @override
+  String get fieldMessage => 'نص الرسالة';
+
+  @override
+  String get hintMessage => 'أخبرنا عن أهداف الاستدامة لمؤسستك أو استفسارك...';
+
+  @override
+  String get contactSubmitButton => 'إرسال الرسالة';
+
+  @override
+  String get contactSubmitting => 'جارٍ الإرسال...';
+
+  @override
+  String get contactSuccessTitle => 'تم إرسال رسالتك بنجاح!';
+
+  @override
+  String get contactSuccessDesc =>
+      'شكراً لتواصلك معنا. تلقى فريق خبراء الاستدامة رسالتك وسيتواصل معك خلال 24 ساعة عمل.';
+
+  @override
+  String get contactSendAnother => 'إرسال رسالة أخرى';
+
+  @override
+  String get valMessageRequired => 'يرجى كتابة نص الرسالة';
+
+  @override
+  String get valMessageMin => 'يجب أن تحتوي الرسالة على 10 أحرف على الأقل';
+
+  @override
+  String get fieldLegalName => 'الاسم القانوني للمنظمة';
+
+  @override
+  String get hintLegalName => 'الاسم الرسمي المسجل للمنشأة';
+
+  @override
+  String get fieldSector => 'القطاع الاقتصادي';
+
+  @override
+  String get hintSector => 'اختر القطاع';
+
+  @override
+  String get fieldSubIndustry => 'التصنيف الفرعي للصناعة';
+
+  @override
+  String get hintSubIndustry => 'اختر الصناعة الفرعية';
+
+  @override
+  String get fieldHqCountry => 'دولة المقر الرئيسي';
+
+  @override
+  String get hintHqCountry => 'اختر دولة المقر الرئيسي';
+
+  @override
+  String get fieldFirstReportingYear => 'أول سنة إفصاح';
+
+  @override
+  String get hintFirstReportingYear => 'مثال: 2026';
+
+  @override
+  String get fieldAdminEmail => 'البريد الإلكتروني الرسمي للمسؤول';
+
+  @override
+  String get hintAdminEmail => 'admin@company.com';
+
+  @override
+  String get fieldPassword => 'كلمة المرور للمنصة';
+
+  @override
+  String get hintPassword =>
+      '12 حرفاً على الأقل تشمل أحرفاً كبيرة وصغيرة وأرقام ورموز';
+
+  @override
+  String get fieldConfirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get hintConfirmPassword => 'أعد كتابة كلمة المرور';
+
+  @override
+  String get fieldVerificationDoc => 'وثيقة التحقق الرسمية (PDF)';
+
+  @override
+  String get fieldVerificationDocHint =>
+      'ارفع السجل التجاري أو خطاب التفويض الرسمي (PDF فقط)';
+
+  @override
+  String get btnUploadDoc => 'اختيار ملف PDF';
+
+  @override
+  String get btnChangeDoc => 'تغيير الملف';
+
+  @override
+  String get btnRemoveDoc => 'حذف';
+
+  @override
+  String get termsCheckboxLabel =>
+      'أقر بصفتي مفوضاً نظامياً عن المنشأة بالموافقة على شروط خدمة منصة ستينا وبروتوكول التحقق المؤسسي.';
+
+  @override
+  String get termsRequiredError => 'يجب الموافقة على الشروط والأحكام للمتابعة';
+
+  @override
+  String get docRequiredError => 'يرجى إرفاق وثيقة التحقق الرسمية بصيغة PDF';
+
+  @override
+  String get selectSectorFirst => 'يرجى اختيار القطاع أولاً';
+
+  @override
+  String get selectIndustryFirst => 'يرجى اختيار الصناعة أولاً';
+
+  @override
+  String get loadingSectors => 'جارٍ تحميل القطاعات...';
+
+  @override
+  String get loadingIndustries => 'جارٍ تحميل الصناعات...';
+
+  @override
+  String get loadingSubIndustries => 'جارٍ تحميل الصناعات الفرعية...';
+
+  @override
+  String get retryLoading => 'إعادة المحاولة';
+
+  @override
+  String get valLegalNameMin => 'يجب ألا يقل الاسم القانوني عن حرفين';
+
+  @override
+  String get valReportingYear => 'أدخل سنة صحيحة بين 2000 و 2100';
+
+  @override
+  String get valPasswordMin => 'يجب ألا تقل كلمة المرور عن 12 حرفاً';
+
+  @override
+  String get valPasswordComplexity =>
+      'يجب أن تحتوي على أحرف كبيرة وصغيرة ورقم ورمز (@\$!%*?&)';
+
+  @override
+  String get valPasswordMatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get statusPending => 'قيد المراجعة';
+
+  @override
+  String get refCodeLabel => 'الكود المرجعي';
+
+  @override
+  String get submissionDateLabel => 'تاريخ التقديم';
+
+  @override
+  String get organizationLabel => 'المنشأة';
+
+  @override
+  String get adminLabel => 'بريد المسؤول';
+
+  @override
+  String get classificationLabel => 'التصنيف';
+
+  @override
+  String get reportingYearLabel => 'أول سنة إفصاح';
+
+  @override
+  String get documentLabel => 'الوثيقة المرفقة';
 }
