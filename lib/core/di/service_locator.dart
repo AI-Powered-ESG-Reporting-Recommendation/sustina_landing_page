@@ -8,7 +8,11 @@ import 'package:suatina_web_project/core/helpers/shared_pref_helper.dart';
 import 'package:suatina_web_project/core/network/api_client.dart';
 import 'package:suatina_web_project/core/network/api_handler.dart';
 import 'package:suatina_web_project/core/network/dio_factory.dart';
+import 'package:suatina_web_project/core/localization/locale_cubit.dart';
 import 'package:suatina_web_project/core/network/network_manager.dart';
+import 'package:suatina_web_project/core/theme/theme_manager/theme_cubit.dart';
+import 'package:suatina_web_project/features/registration/data/repos/registration_repo.dart';
+import 'package:suatina_web_project/features/registration/logic/registration_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -36,4 +40,19 @@ Future<void> initServiceLocator() async {
   getIt.registerLazySingleton<ApiClient>(() => ApiClient(getIt<Dio>()));
 
   getIt.registerLazySingleton<ApiHandler>(() => ApiHandler());
+
+  getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
+
+  getIt.registerLazySingleton<LocaleCubit>(() => LocaleCubit());
+
+  getIt.registerLazySingleton<RegistrationRepo>(
+    () => RegistrationRepo(
+      apiClient: getIt<ApiClient>(),
+      apiHandler: getIt<ApiHandler>(),
+    ),
+  );
+
+  getIt.registerFactory<RegistrationCubit>(
+    () => RegistrationCubit(repo: getIt<RegistrationRepo>()),
+  );
 }

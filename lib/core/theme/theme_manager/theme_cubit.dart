@@ -12,9 +12,10 @@ class ThemeCubit extends Cubit<ThemeMode> {
   // Load the saved theme from SharedPreferences
   void _loadSavedTheme() {
     final savedThemeIndex = SharedPrefHelper.getInt(key: _themeKey);
-    if (savedThemeIndex != null && savedThemeIndex != 0) {
-      final themeMode = ThemeMode.values[savedThemeIndex];
-      emit(themeMode);
+    if (savedThemeIndex != null &&
+        savedThemeIndex >= 0 &&
+        savedThemeIndex < ThemeMode.values.length) {
+      emit(ThemeMode.values[savedThemeIndex]);
     }
   }
 
@@ -23,6 +24,17 @@ class ThemeCubit extends Cubit<ThemeMode> {
     await SharedPrefHelper.setData(key: _themeKey, value: newMode.index);
     emit(newMode);
   }
+
+  // Toggle between light and dark modes
+  Future<void> toggleTheme() async {
+    if (state == ThemeMode.dark) {
+      await updateTheme(ThemeMode.light);
+    } else {
+      await updateTheme(ThemeMode.dark);
+    }
+  }
+
+  bool get isDark => state == ThemeMode.dark;
 
   // Get current theme mode as string for display
   String get currentThemeName {
